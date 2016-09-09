@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 03:37 PM
+-- Generation Time: Sep 09, 2016 at 05:00 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -30,6 +30,8 @@ BEGIN
     DECLARE 	p_lastnameRand	INT;
 	DECLARE  	p_natRand 		INT;
 	DECLARE  	p_skinRand 		INT;
+    DECLARE		p_supplierRand  INT;
+    DECLARE		p_hairRand		INT;
 	DECLARE		p_note			varchar(520) DEFAULT '';
 	DECLARE   	p_noteRand 		INT;
 	DECLARE   	p_noteCount		INT;
@@ -44,6 +46,8 @@ BEGIN
 	SET p_natRand = (select floor(1+rand()*count(*)) from nationality);
 	SET p_skinRand = (select floor(1+rand()*count(*)) from skintone);
 	SET p_noteRand = (select floor(1+rand()*count(*)) from notes);
+    SET p_supplierRand = (select floor(1+rand()*count(*)) from supplier);
+    SET p_hairRand = (select floor(1+rand()*count(*)) from hairstyle);
     
     #get the number of notes and randomly select the number of notes we want.
 	SET p_noteCount = (select count(*) from notes);
@@ -64,24 +68,36 @@ BEGIN
 		END IF;
 		LEAVE concatNotes;
 	END LOOP concatNotes;
+    
+    #Save calculated data in person table
+    INSERT INTO person (	NameID, 
+							lastnameID, 
+                            NationalityID, 
+                            SkinToneID, 
+                            HairID, 
+                            SupplierID, 
+                            Notes, 
+                            IssueDate, 
+                            ExpiryDate
+	)VALUES (p_nameRand , 
+			p_lastnameRand, 
+            p_natRand, 
+            p_skinRand, 
+            p_hairRand, 
+            p_supplierRand, 
+            p_note, 
+            issueDate, 
+            expiryDate);
   
 	#Select all the data from the randomly generated ID's
-	select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, st.SkinTone, p_note, issueDate, expiryDate
-	from name nam, Nationality nat, skintone st, lastname lst 
+	select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, st.SkinTone, p_note as Notes, issueDate, expiryDate, sup.Name as Supplier
+	from name nam, Nationality nat, skintone st, lastname lst, supplier sup
 	where nam.ID = p_nameRand 
 	AND nat.ID = p_natRand
 	AND st.ID = p_skinRand
-    AND	lst.ID = p_lastnameRand;
+    AND	lst.ID = p_lastnameRand
+    AND sup.ID = p_supplierRand;
 END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spPersonInfoGet` (IN `@PersonID` INT)  NO SQL
-Select *
-from Person p, nationality nat, skintone st, name nam, hairstyle h
-where p.ID = @p0
-AND p.NationalityID = nat.ID
-AND p.NameID = nam.ID
-AND p.SkinToneID = st.ID
-AND p.HairID = h.ID$$
 
 DELIMITER ;
 
@@ -239,37 +255,15 @@ INSERT INTO `notes` (`ID`, `Notes`) VALUES
 CREATE TABLE `person` (
   `ID` int(11) NOT NULL,
   `NameID` int(11) NOT NULL,
-  `NationalityID` int(11) NOT NULL,
-  `NotesID` int(11) DEFAULT NULL,
+  `lastnameID` int(11) NOT NULL,
+  `NationalityID` int(11) DEFAULT NULL,
   `SkinToneID` int(11) NOT NULL,
-  `HairID` int(11) NOT NULL
+  `HairID` int(11) NOT NULL,
+  `SupplierID` int(11) NOT NULL,
+  `Notes` varchar(520) NOT NULL,
+  `IssueDate` datetime NOT NULL,
+  `ExpiryDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `person`
---
-
-INSERT INTO `person` (`ID`, `NameID`, `NationalityID`, `NotesID`, `SkinToneID`, `HairID`) VALUES
-(1, 1, 1, 1, 1, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `personnotes`
---
-
-CREATE TABLE `personnotes` (
-  `PersonID` int(11) NOT NULL,
-  `NotesID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `personnotes`
---
-
-INSERT INTO `personnotes` (`PersonID`, `NotesID`) VALUES
-(1, 1),
-(1, 2);
 
 -- --------------------------------------------------------
 
@@ -289,6 +283,34 @@ CREATE TABLE `skintone` (
 INSERT INTO `skintone` (`ID`, `SkinTone`) VALUES
 (1, 'White'),
 (2, 'Black');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier`
+--
+
+CREATE TABLE `supplier` (
+  `ID` int(11) NOT NULL,
+  `Name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`ID`, `Name`) VALUES
+(1, 'AsiaAir'),
+(2, 'China Air'),
+(3, 'Qantas'),
+(4, 'British Airways	 '),
+(5, 'easyJet'),
+(6, 'Alitalia'),
+(7, 'Iberia Group'),
+(8, 'Norwegian Air Shuttle'),
+(9, 'el plano'),
+(10, 'Air Berlin Group'),
+(11, 'Air France KLM');
 
 --
 -- Indexes for dumped tables
@@ -343,6 +365,12 @@ ALTER TABLE `skintone`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `supplier`
+--
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -380,12 +408,17 @@ ALTER TABLE `notes`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `skintone`
 --
 ALTER TABLE `skintone`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `supplier`
+--
+ALTER TABLE `supplier`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
