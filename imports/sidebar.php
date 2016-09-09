@@ -15,5 +15,9 @@
         <sidebar-item data-icon="flag-de">
             <p>German</p>
         </sidebar-item>
+        <sidebar-item data-icon="flag-aub">
+            <p>Aubrey</p>
+        </sidebar-item>
+
     </sidebar-group>
 </sidebar>
