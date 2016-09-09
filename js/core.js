@@ -1,17 +1,25 @@
 var drawInstance;
 var canvas;
 var canvasCtx;
-var mouseX = 0;
-var mouseY = 0;
+var mouseLocation = {x: 0, y: 0};
+var mouseButtons = {lmb: false, mmb: false, rmb: false};
 var canvasBounds = {x1:0, y1:0, x2:0, y2:0};
-var graphicDeskCoffeeStain = new Image();
+var graphicDesk = new Image();
+var graphicDesk1 = new Image();
+var graphicDesk2 = new Image();
+var graphicDesk3 = new Image();
+var desk;
 
 $(document).ready(function() {
+	resizeCanvas();
 	initialise();
 });
 
 function initialiseGraphics() {
-	graphicDeskCoffeeStain.src = 'images/desk/desk-coffee.png';
+	graphicDesk.src = 'images/desk/desk.png';
+	graphicDesk1.src = 'images/desk/desk-coffee.png';
+	graphicDesk2.src = 'images/desk/desk-pen1.png';
+	graphicDesk3.src = 'images/desk/desk-bread.png';
 }
 
 function initialise() {
@@ -54,8 +62,10 @@ function contextHandler(e) {
 }
 
 function mouseMoveHandler(e) {
-    mouseX = (e.clientX - canvasBounds.x1);
-    mouseY = (e.clientY - canvasBounds.y1);
+	mouseLocation = {
+		x: (e.clientX - canvasBounds.x1),
+		y: (e.clientY - canvasBounds.y1)
+	};
 }
 
 function mouseWheel(e) {
@@ -70,6 +80,9 @@ function mouseDownHandler(e) {
 	switch(e.which) {
 		case 1:
 			//LMB
+			mouseButtons.lmb = true;
+			captureMouse(mouseLocation);
+			checkInput(mouseLocation, mouseButtons);
 			break;
 		case 2:
 			//MMB
@@ -84,6 +97,8 @@ function mouseUpHandler(e) {
 	switch(e.which) {
 		case 1:
 			//LMB
+			mouseButtons.lmb = false;
+			checkInput(mouseLocation, mouseButtons);
 			break;
 		case 2:
 			//MMB
@@ -95,10 +110,10 @@ function mouseUpHandler(e) {
 }
 
 function mouseInBounds() {
-    if(mouseX > canvasBounds.x1
-		&& mouseX < canvasBounds.x2
-		&& mouseY > canvasBounds.y1
-		&& mouseY < canvasBounds.y2
+    if(mouseLocation.x > canvasBounds.x1
+		&& mouseLocation.x < canvasBounds.x2
+		&& mouseLocation.y > canvasBounds.y1
+		&& mouseLocation.y < canvasBounds.y2
 	) {
         return true;
     } else {
@@ -106,9 +121,79 @@ function mouseInBounds() {
     }
 }
 
+var yLocation = {
+	x: 100,
+	y: 100
+}
+var ySize = {
+	w: 800,
+	h: 500
+}
+function checkInput(mouseLocation, mouseButtons) {
+	if(mouseInBounds2(mouseLocation) && mouseButtons.lmb) {
+		console.log('youve clicked me');
+	}
+	if(!mouseButtons.lmb && capturedLocation != null) {
+		yLocation = {
+			x: yLocation.x -= diff(mouseLocation.x, capturedLocation.x),
+			y: yLocation.y -= diff(mouseLocation.y, capturedLocation.y)
+		}
+		capturedLocation = null;
+	}
+}
+var capturedLocation = null;
+function captureMouse(mouseLocation) {
+	capturedLocation = mouseLocation;
+}
+function mouseInBounds2(mouseLocation) {
+    if(mouseLocation.x > yLocation.x
+		&& mouseLocation.x < (yLocation.x + ySize.w)
+		&& mouseLocation.y > yLocation.y
+		&& mouseLocation.y < (yLocation.y + ySize.h)
+	) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function render() {
+	var newLocation = {
+		x: yLocation.x,
+		y: yLocation.y
+	};
+	if(mouseButtons.lmb && capturedLocation != null) {
+		newLocation.x -= diff(mouseLocation.x, capturedLocation.x);
+		newLocation.y -= diff(mouseLocation.y, capturedLocation.y);
+	}
+	canvasCtx.beginPath();
+	canvasCtx.fillStyle = "#212121";
+	canvasCtx.rect(newLocation.x, newLocation.y, ySize.w, ySize.h);
+	canvasCtx.fill();
+	canvasCtx.closePath();
+}
+
+function diff(a, b) {
+	var ret = Math.abs(a - b);
+	if(b < a) {
+		ret = -ret;
+	}
+	return ret;
+}
+
 function draw() {
 	resizeCanvas();
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+	if(desk) {
+		desk.render(canvasCtx);
+	}
+	render();
+	/*
+	canvasCtx.beginPath();
+	canvasCtx.fillStyle = "#454545";
+	canvasCtx.rect(500, 500, 800, 300);
+	canvasCtx.fill();
+	canvasCtx.closePath();
+	*/
 	// Image
 	//canvasCtx.drawImage(graphicDeskCoffeeStain, 100, 100, 512, 512);
 	// Text
@@ -118,7 +203,8 @@ function draw() {
 	canvasCtx.fillText(canvasCtx.measureText("Some Text").width, 20, 20);
 	*/
 	centerTextXY("Welcome to Tickets Please!", "30", {x:null, y:-10});
-	centerTextXY("To begin a game, select New Game from the menu.", "15", {x:null, y:10});
+	centerTextXY("", "15", {x:null, y:10});
+	//centerTextXY("To begin a game, select New Game from the menu.", "15", {x:null, y:10});
 	// Square
 	/*
 	canvasCtx.beginPath();

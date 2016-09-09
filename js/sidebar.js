@@ -21,6 +21,7 @@ function switchSidebar(type) {
         data: {},
         success: function(response) {
             $('sidebar').html(response);
+        	desk = new Desk();
         }
     })
 }
