@@ -16,6 +16,7 @@ function handleSidebarMain($sender) {
     }
 }
 function switchSidebar(type) {
+    state = type.split('.')[1];
     $.ajax({
         url: 'imports/' + type + '.php',
         data: {},

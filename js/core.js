@@ -5,9 +5,9 @@ var mouseLocation = {x: 0, y: 0};
 var mouseButtons = {lmb: false, mmb: false, rmb: false};
 var canvasBounds = {x1:0, y1:0, x2:0, y2:0};
 var graphicDesk = new Image();
-var graphicDesk1 = new Image();
-var graphicDesk2 = new Image();
-var graphicDesk3 = new Image();
+var graphicDeskAlt1 = new Image();
+var graphicDeskAlt2 = new Image();
+var graphicPassportBase = new Image();
 var desk;
 
 $(document).ready(function() {
@@ -17,9 +17,9 @@ $(document).ready(function() {
 
 function initialiseGraphics() {
 	graphicDesk.src = 'images/desk/desk.png';
-	graphicDesk1.src = 'images/desk/desk-coffee.png';
-	graphicDesk2.src = 'images/desk/desk-pen1.png';
-	graphicDesk3.src = 'images/desk/desk-bread.png';
+	graphicDeskAlt1.src = 'images/desk/desk-alt1.png';
+	graphicDeskAlt2.src = 'images/desk/desk-alt2.png';
+	graphicPassportBase.src = 'images/passport-base.png';
 }
 
 function initialise() {
@@ -165,11 +165,7 @@ function render() {
 		newLocation.x -= diff(mouseLocation.x, capturedLocation.x);
 		newLocation.y -= diff(mouseLocation.y, capturedLocation.y);
 	}
-	canvasCtx.beginPath();
-	canvasCtx.fillStyle = "#212121";
-	canvasCtx.rect(newLocation.x, newLocation.y, ySize.w, ySize.h);
-	canvasCtx.fill();
-	canvasCtx.closePath();
+	canvasCtx.drawImage(graphicPassportBase, newLocation.x, newLocation.y);
 }
 
 function diff(a, b) {
@@ -180,13 +176,22 @@ function diff(a, b) {
 	return ret;
 }
 
+var state = 'menu';
 function draw() {
 	resizeCanvas();
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-	if(desk) {
-		desk.render(canvasCtx);
+	switch(state) {
+		case 'menu':
+			centerTextXY("Welcome to Tickets Please!", "30", {x:null, y:-10});
+			centerTextXY("To begin a game, select New Game from the menu.", "15", {x:null, y:10});
+			break;
+		case 'game':
+			if(desk) {
+				desk.render(canvasCtx);
+			}
+			render();
+			break;
 	}
-	render();
 	/*
 	canvasCtx.beginPath();
 	canvasCtx.fillStyle = "#454545";
@@ -202,9 +207,6 @@ function draw() {
 	canvasCtx.font = "20px Arial";
 	canvasCtx.fillText(canvasCtx.measureText("Some Text").width, 20, 20);
 	*/
-	centerTextXY("Welcome to Tickets Please!", "30", {x:null, y:-10});
-	centerTextXY("", "15", {x:null, y:10});
-	//centerTextXY("To begin a game, select New Game from the menu.", "15", {x:null, y:10});
 	// Square
 	/*
 	canvasCtx.beginPath();
