@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 06:04 PM
+-- Generation Time: Sep 09, 2016 at 06:46 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -294,25 +294,26 @@ INSERT INTO `skintone` (`ID`, `SkinTone`) VALUES
 
 CREATE TABLE `supplier` (
   `ID` int(11) NOT NULL,
-  `Name` varchar(100) NOT NULL
+  `Name` varchar(100) NOT NULL,
+  `RegionalCode` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`ID`, `Name`) VALUES
-(1, 'AsiaAir'),
-(2, 'China Air'),
-(3, 'Qantas'),
-(4, 'British Airways	 '),
-(5, 'easyJet'),
-(6, 'Alitalia'),
-(7, 'Iberia Group'),
-(8, 'Norwegian Air Shuttle'),
-(9, 'el plano'),
-(10, 'Air Berlin Group'),
-(11, 'Air France KLM');
+INSERT INTO `supplier` (`ID`, `Name`, `RegionalCode`) VALUES
+(1, 'AsiaAir', 'hk'),
+(2, 'China Air', 'prc'),
+(3, 'Qantas', 'gb'),
+(4, 'British Airways	 ', 'fr'),
+(5, 'easyJet', 'de'),
+(6, 'Alitalia', 'gb'),
+(7, 'Iberia Group', 'gb'),
+(8, 'Norwegian Air Shuttle', 'fr'),
+(9, 'el plano', 'de'),
+(10, 'Air Berlin Group', 'de'),
+(11, 'Air France KLM', 'fr');
 
 --
 -- Indexes for dumped tables
