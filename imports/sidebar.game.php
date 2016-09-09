@@ -1,5 +1,8 @@
+<sidebar-header>
+    <h3>Tickets Please!</h3>
+</sidebar-header>
 <sidebar-inner id="sidebar-game">
-    <sidebar-group id="sidebar-group-main">
+<sidebar-group id="sidebar-group-main">
         <sidebar-item data-icon="arrow-left">
             <p>Main Menu</p>
         </sidebar-item>
@@ -24,13 +27,19 @@
             <h3>Valid Tickets</h3>
         </sidebar-title>
         <sidebar-item data-icon="flag-gb">
-            <p>British</p>
+            <p>EasyPlane</p>
         </sidebar-item>
-        <sidebar-item data-icon="flag-fr">
-            <p>French</p>
+        <sidebar-item data-icon="flag-gb">
+            <p>DavidAir</p>
+        </sidebar-item>
+        <sidebar-item data-icon="flag-gb">
+            <p>British Planeways</p>
         </sidebar-item>
         <sidebar-item data-icon="flag-de">
-            <p>German</p>
+            <p>Lifthansa</p>
+        </sidebar-item>
+        <sidebar-item data-icon="flag-fr">
+            <p>Wind France</p>
         </sidebar-item>
     </sidebar-group>
 </sidebar-inner>

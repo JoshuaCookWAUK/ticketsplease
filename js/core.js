@@ -10,10 +10,6 @@ $(document).ready(function() {
 	initialise();
 });
 
-$(window).resize(function() {
-    resizeCanvas();
-});
-
 function initialiseGraphics() {
 	graphicDeskCoffeeStain.src = 'images/desk/desk-coffee.png';
 }
@@ -23,13 +19,12 @@ function initialise() {
 	initialiseGraphics();
 	initialiseControls();
 	initialiseCanvas();
-	drawInstance = setInterval(draw, 1);
+	drawInstance = setInterval(draw, 10);
 }
 
 function initialiseCanvas() {
 	canvas = document.getElementById('canvas');
 	canvasCtx = canvas.getContext("2d");
-    resizeCanvas();
 }
 
 function resizeCanvas() {
@@ -112,6 +107,7 @@ function mouseInBounds() {
 }
 
 function draw() {
+	resizeCanvas();
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 	// Image
 	//canvasCtx.drawImage(graphicDeskCoffeeStain, 100, 100, 512, 512);
@@ -140,7 +136,6 @@ function centerTextXY(text, size, offset) {
 		x: ((canvasBounds.x2 - canvasBounds.x1) / 2) - (canvasCtx.measureText(text).width / 2),
 		y: (canvasBounds.y2 / 2) - (size / 2)
 	}
-	console.log(newLocation);
 	if(offset.x != null) newLocation.x += offset.x;
 	if(offset.y != null) newLocation.y += offset.y;
 	canvasCtx.fillText(text, newLocation.x, newLocation.y);
