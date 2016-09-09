@@ -7,6 +7,9 @@
 [data-icon="flag-de"] {
     background-image: url('../images/gfx/flags/de.png');
 }
-[data-icon="flag-aub"]{
-    background-image: url('../images/gfx/flags/aub.png');
+[data-icon="arrow-left"] {
+    background-image: url('../images/gfx/icons/arrow-left.png');
+}
+[data-icon="plus"] {
+    background-image: url('../images/gfx/icons/plus.png');
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 12:17 PM
+-- Generation Time: Sep 09, 2016 at 02:22 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -24,6 +24,42 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spPersonGet` ()  NO SQL
+BEGIN
+  DECLARE 	p_nameRand 		INT;
+  DECLARE   p_natRand 		INT;
+  DECLARE   p_skinRand 		INT;
+  DECLARE	p_note			varchar(520) DEFAULT '';
+  DECLARE   p_noteRand 		INT;
+  DECLARE   p_noteCount		INT;
+  DECLARE 	p_noteAmount 	INT;
+  DECLARE   p1				INT DEFAULT 0;
+  
+  SET p_nameRand = (select floor(1+rand()*count(*)) from name);
+  SET p_natRand = (select floor(1+rand()*count(*)) from nationality);
+  SET p_skinRand = (select floor(1+rand()*count(*)) from skintone);
+  SET p_noteRand = (select floor(1+rand()*count(*)) from notes);
+  SET p_noteCount = (select count(*) from notes);
+  SET p_noteAmount = (select floor(1+RAND()*5));
+  
+  concatNotes: LOOP
+	SET p1 = p1 + 1;
+    if p1 < p_noteAmount THEN
+		SET p_noteRand = (select floor(1+rand()*p_noteCount));
+		SET p_note = CONCAT(p_note, (select Notes from notes where ID = p_noteRand));
+        SET p_note = CONCAT(p_note, ':');
+		ITERATE concatNotes;
+	END IF;
+	LEAVE concatNotes;
+  END LOOP concatNotes;
+  
+  select nam.Name, nam.Gender, nat.Country, st.SkinTone, p_note
+  from name nam, Nationality nat, skintone st 
+  where nam.ID = p_nameRand 
+  AND nat.ID = p_natRand
+  AND st.ID = p_skinRand;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spPersonInfoGet` (IN `@PersonID` INT)  NO SQL
 Select *
 from Person p, nationality nat, skintone st, name nam, hairstyle h
@@ -85,7 +121,9 @@ CREATE TABLE `name` (
 --
 
 INSERT INTO `name` (`Name`, `Gender`, `ID`) VALUES
-('Lee Flaherty', 'Male', 1);
+('Lee Flaherty', 'Male', 1),
+('Joshua Cook', 'Male', 2),
+('Aubrey Boorer', 'Male', 3);
 
 -- --------------------------------------------------------
 
@@ -103,7 +141,9 @@ CREATE TABLE `nationality` (
 --
 
 INSERT INTO `nationality` (`ID`, `Country`) VALUES
-(1, 'England');
+(1, 'England'),
+(2, 'France'),
+(3, 'Germany');
 
 -- --------------------------------------------------------
 
@@ -122,7 +162,10 @@ CREATE TABLE `notes` (
 
 INSERT INTO `notes` (`ID`, `Notes`) VALUES
 (1, 'test note 1'),
-(2, 'test note 2');
+(2, 'test note 2'),
+(3, 'test 3'),
+(4, 'test 4'),
+(5, 'test note 5');
 
 -- --------------------------------------------------------
 
@@ -181,7 +224,8 @@ CREATE TABLE `skintone` (
 --
 
 INSERT INTO `skintone` (`ID`, `SkinTone`) VALUES
-(1, 'White');
+(1, 'White'),
+(2, 'Black');
 
 --
 -- Indexes for dumped tables
@@ -247,17 +291,17 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `name`
 --
 ALTER TABLE `name`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `nationality`
 --
 ALTER TABLE `nationality`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `person`
 --
@@ -267,7 +311,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `skintone`
 --
 ALTER TABLE `skintone`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
