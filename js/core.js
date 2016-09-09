@@ -3,7 +3,7 @@ var canvas;
 var canvasCtx;
 var mouseX = 0;
 var mouseY = 0;
-var gridBounds = {x1:40, y1:0, x2:0, y2:0};
+var canvasBounds = {x1:0, y1:0, x2:0, y2:0};
 var graphicDeskCoffeeStain = new Image();
 
 $(document).ready(function() {
@@ -38,13 +38,12 @@ function resizeCanvas() {
 	$('#canvas').css({
 		left:$('sidebar').outerWidth()
 	});
-	gridBounds = {
+	canvasBounds = {
 		x1:($('sidebar').position().left + $('sidebar').outerWidth()),
 		y1:0,
 		x2:$(window).width(),
 		y2:$(window).height()
 	}
-	console.log(gridBounds);
 }
 
 function initialiseControls() {
@@ -60,8 +59,8 @@ function contextHandler(e) {
 }
 
 function mouseMoveHandler(e) {
-    mouseX = (e.clientX - gridBounds.x1);
-    mouseY = (e.clientY - gridBounds.y1);
+    mouseX = (e.clientX - canvasBounds.x1);
+    mouseY = (e.clientY - canvasBounds.y1);
 }
 
 function mouseWheel(e) {
@@ -101,10 +100,10 @@ function mouseUpHandler(e) {
 }
 
 function mouseInBounds() {
-    if(mouseX > gridBounds.x1
-		&& mouseX < gridBounds.x2
-		&& mouseY > gridBounds.y1
-		&& mouseY < gridBounds.y2
+    if(mouseX > canvasBounds.x1
+		&& mouseX < canvasBounds.x2
+		&& mouseY > canvasBounds.y1
+		&& mouseY < canvasBounds.y2
 	) {
         return true;
     } else {
