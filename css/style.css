@@ -1,0 +1,18 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+* {
+    margin: 0 auto;
+    padding: 0;
+}
+html, body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-size: 0px;
+}
+canvas {
+    position: absolute;
+    background-color: #EEEEEE;
+    z-index: 100;
+}
