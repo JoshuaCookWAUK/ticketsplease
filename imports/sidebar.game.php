@@ -2,7 +2,7 @@
     include "../php/credentials.php";
     $conn = getConnection();
     $validPassports = mysqli_query($conn, "SELECT * FROM nationality");
-    $validTickets = mysqli_query($conn, "SELECT * FROM AirlineSupplier");
+    $validTickets = mysqli_query($conn, "SELECT * FROM supplier");
     mysqli_close($conn);
 
  ?>

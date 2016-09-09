@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 06:46 PM
+-- Generation Time: Sep 09, 2016 at 06:52 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -295,14 +295,14 @@ INSERT INTO `skintone` (`ID`, `SkinTone`) VALUES
 CREATE TABLE `supplier` (
   `ID` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
-  `RegionalCode` varchar(3) NOT NULL
+  `RegionCode` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`ID`, `Name`, `RegionalCode`) VALUES
+INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`) VALUES
 (1, 'AsiaAir', 'hk'),
 (2, 'China Air', 'prc'),
 (3, 'Qantas', 'gb'),
