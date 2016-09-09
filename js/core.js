@@ -114,15 +114,34 @@ function mouseInBounds() {
 function draw() {
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 	// Image
-	canvasCtx.drawImage(graphicDeskCoffeeStain, 100, 100, 512, 512);
+	//canvasCtx.drawImage(graphicDeskCoffeeStain, 100, 100, 512, 512);
 	// Text
+	/*
 	canvasCtx.fillStyle = "#212121";
 	canvasCtx.font = "20px Arial";
-	canvasCtx.fillText("Some Text", 20, 20);
+	canvasCtx.fillText(canvasCtx.measureText("Some Text").width, 20, 20);
+	*/
+	centerTextXY("Welcome to Tickets Please!", "30", {x:null, y:-10});
+	centerTextXY("To begin a game, select New Game from the menu.", "15", {x:null, y:10});
 	// Square
+	/*
 	canvasCtx.beginPath();
 	canvasCtx.fillStyle = "#212121";
 	canvasCtx.rect(50, 50, 20, 20);
 	canvasCtx.fill();
 	canvasCtx.closePath();
+	*/
+}
+
+function centerTextXY(text, size, offset) {
+	canvasCtx.fillStyle = "#212121";
+	canvasCtx.font = size + "px Arial";
+	var newLocation = {
+		x: ((canvasBounds.x2 - canvasBounds.x1) / 2) - (canvasCtx.measureText(text).width / 2),
+		y: (canvasBounds.y2 / 2) - (size / 2)
+	}
+	console.log(newLocation);
+	if(offset.x != null) newLocation.x += offset.x;
+	if(offset.y != null) newLocation.y += offset.y;
+	canvasCtx.fillText(text, newLocation.x, newLocation.y);
 }
