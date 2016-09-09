@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 05:00 PM
+-- Generation Time: Sep 09, 2016 at 06:04 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -40,8 +40,7 @@ BEGIN
 	DECLARE		issueDate		DateTime;
 	DECLARE   	expiryDate		DateTime;
   
-    #Select random ID's that will correspond to random data to return
-	SET p_nameRand = (select floor(1+rand()*count(*)) from name);
+    	SET p_nameRand = (select floor(1+rand()*count(*)) from name);
     SET p_lastnameRand = (select floor(1+rand()*count(*)) from lastname);
 	SET p_natRand = (select floor(1+rand()*count(*)) from nationality);
 	SET p_skinRand = (select floor(1+rand()*count(*)) from skintone);
@@ -49,16 +48,13 @@ BEGIN
     SET p_supplierRand = (select floor(1+rand()*count(*)) from supplier);
     SET p_hairRand = (select floor(1+rand()*count(*)) from hairstyle);
     
-    #get the number of notes and randomly select the number of notes we want.
-	SET p_noteCount = (select count(*) from notes);
+    	SET p_noteCount = (select count(*) from notes);
 	SET p_noteAmount = (select floor(1+RAND()*5));
     
-    #Get a random date for the issue date and set expiration date 5 years after the issue date
-	SET issueDate = TIMESTAMPADD(SECOND, FLOOR(RAND() * TIMESTAMPDIFF(SECOND, '2011-01-01 00:00:00', '2016-12-31 00:00:00')), '2011-01-01 00:00:00');
+    	SET issueDate = TIMESTAMPADD(SECOND, FLOOR(RAND() * TIMESTAMPDIFF(SECOND, '2011-01-01 00:00:00', '2016-12-31 00:00:00')), '2011-01-01 00:00:00');
 	SET expiryDate = DATE_ADD(issueDate, INTERVAL 5 YEAR);
   
-    #Concatonate 'n' number of random notes together, where n is the random number of notes we want given before.
-	concatNotes: LOOP
+    	concatNotes: LOOP
 		SET p1 = p1 + 1;
 		if p1 < p_noteAmount THEN
 			SET p_noteRand = (select floor(1+rand()*p_noteCount));
@@ -69,8 +65,7 @@ BEGIN
 		LEAVE concatNotes;
 	END LOOP concatNotes;
     
-    #Save calculated data in person table
-    INSERT INTO person (	NameID, 
+        INSERT INTO person (	NameID, 
 							lastnameID, 
                             NationalityID, 
                             SkinToneID, 
@@ -89,8 +84,7 @@ BEGIN
             issueDate, 
             expiryDate);
   
-	#Select all the data from the randomly generated ID's
-	select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, st.SkinTone, p_note as Notes, issueDate, expiryDate, sup.Name as Supplier
+		select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, st.SkinTone, p_note as Notes, issueDate, expiryDate, sup.Name as Supplier
 	from name nam, Nationality nat, skintone st, lastname lst, supplier sup
 	where nam.ID = p_nameRand 
 	AND nat.ID = p_natRand
@@ -212,17 +206,18 @@ INSERT INTO `name` (`Name`, `Gender`, `ID`) VALUES
 
 CREATE TABLE `nationality` (
   `ID` int(11) NOT NULL,
-  `Country` varchar(100) NOT NULL
+  `Country` varchar(100) NOT NULL,
+  `RegionCode` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `nationality`
 --
 
-INSERT INTO `nationality` (`ID`, `Country`) VALUES
-(1, 'England'),
-(2, 'France'),
-(3, 'Germany');
+INSERT INTO `nationality` (`ID`, `Country`, `RegionCode`) VALUES
+(1, 'Great Britain', 'gb'),
+(2, 'France', 'fr'),
+(3, 'Germany', 'de');
 
 -- --------------------------------------------------------
 
@@ -264,6 +259,13 @@ CREATE TABLE `person` (
   `IssueDate` datetime NOT NULL,
   `ExpiryDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `person`
+--
+
+INSERT INTO `person` (`ID`, `NameID`, `lastnameID`, `NationalityID`, `SkinToneID`, `HairID`, `SupplierID`, `Notes`, `IssueDate`, `ExpiryDate`) VALUES
+(1, 9, 11, 1, 1, 1, 1, 'test note 5:test 3:', '2012-07-03 05:40:23', '2017-07-03 05:40:23');
 
 -- --------------------------------------------------------
 
@@ -408,7 +410,7 @@ ALTER TABLE `notes`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `skintone`
 --

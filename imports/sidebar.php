@@ -1,4 +1,8 @@
-<sidebar-header>
+<?php
+    include "php/credentials.php";
+    $query = mysqli_query(getConnection(), "SELECT * FROM nationality");
+ ?>
+ <sidebar-header>
     <h3>Tickets Please!</h3>
 </sidebar-header>
 <sidebar-inner id="sidebar-main">

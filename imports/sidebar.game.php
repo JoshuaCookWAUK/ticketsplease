@@ -1,3 +1,8 @@
+<?php
+    include "../php/credentials.php";
+    $query = mysqli_query(getConnection(), "SELECT * FROM nationality");
+ ?>
+
 <sidebar-header>
     <h3>Tickets Please!</h3>
 </sidebar-header>
@@ -12,15 +17,11 @@
         <sidebar-title>
             <h3>Valid Passports</h3>
         </sidebar-title>
-        <sidebar-item data-icon="flag-gb">
-            <p>British</p>
-        </sidebar-item>
-        <sidebar-item data-icon="flag-fr">
-            <p>French</p>
-        </sidebar-item>
-        <sidebar-item data-icon="flag-de">
-            <p>German</p>
-        </sidebar-item>
+        <?php while($queryData = $query->fetch_assoc()): ?>
+            <sidebar-item id="new-game" data-icon="flag-<?= $queryData["RegionCode"] ?>">
+                <p><?= $queryData["Country"] ?></p>
+            </sidebar-item>
+        <?php endwhile; ?>
     </sidebar-group>
     <sidebar-group id="sidebar-group-passports">
         <sidebar-title>
