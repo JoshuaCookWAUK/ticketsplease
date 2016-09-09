@@ -1,23 +1,8 @@
-<sidebar>
-    <sidebar-header>
-        <h3>Tickets Please!</h3>
-    </sidebar-header>
-    <sidebar-group>
-        <sidebar-title>
-            <h3>Passports</h3>
-        </sidebar-title>
-        <sidebar-item data-icon="flag-gb">
-            <p>British</p>
+<sidebar-inner id="sidebar-main">
+    <sidebar-group id="sidebar-group-main">
+        <sidebar-item data-icon="plus">
+            <p>New Game</p>
         </sidebar-item>
-        <sidebar-item data-icon="flag-fr">
-            <p>French</p>
-        </sidebar-item>
-        <sidebar-item data-icon="flag-de">
-            <p>German</p>
-        </sidebar-item>
-        <sidebar-item data-icon="flag-aub">
-            <p>Aubrey</p>
-        </sidebar-item>
-
     </sidebar-group>
-</sidebar>
+    </sidebar-group>
+</sidebar-inner>

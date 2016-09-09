@@ -8,7 +8,12 @@
         <title>Game</title>
     </head>
     <body>
-        <?php include "imports/sidebar.php"; ?>
+        <sidebar>
+            <sidebar-header>
+                <h3>Tickets Please!</h3>
+            </sidebar-header>
+            <?php include "imports/sidebar.php"; ?>
+        </sidebar>
         <canvas id="canvas"></canvas>
     </body>
 </html>
