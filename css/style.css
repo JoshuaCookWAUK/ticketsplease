@@ -15,4 +15,5 @@ canvas {
     position: absolute;
     background-color: #EEEEEE;
     z-index: 100;
+    cursor: default;
 }
