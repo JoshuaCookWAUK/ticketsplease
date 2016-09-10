@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2016 at 09:59 AM
+-- Generation Time: Sep 10, 2016 at 10:36 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -91,6 +91,54 @@ BEGIN
 	AND st.ID = p_skinRand
     AND	lst.ID = p_lastnameRand
     AND sup.ID = p_supplierRand;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidNatGet` (IN `amount` INT)  BEGIN
+	DECLARE natCount INT;
+    DECLARE whileCount INT;
+    SET natCount = (select count(*) from nationality);
+    SET whileCount = 0;
+	WHILE whileCount < natCount DO
+		SET whileCount = whileCount + 1;
+		update nationality
+		SET randAssign = floor(1+rand()*1000)
+		WHERE ID = whileCount;
+	END WHILE;
+        
+	if amount = 0 then
+		select Country,RegionCode 
+		from nationality 
+		ORDER BY RandAssign;
+    ELSE
+		select Country,RegionCode 
+		from nationality 
+		ORDER BY RandAssign
+		LIMIT amount;
+	END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidTicketGet` (IN `amount` INT)  BEGIN
+	DECLARE natCount INT;
+    DECLARE whileCount INT;
+    SET natCount = (select count(*) from supplier);
+    SET whileCount = 0;
+	WHILE whileCount < natCount DO
+		SET whileCount = whileCount + 1;
+		update supplier
+		SET randAssign = floor(1+rand()*1000)
+		WHERE ID = whileCount;
+	END WHILE;
+        
+	if amount = 0 then
+		select Name,RegionCode 
+		from supplier 
+		ORDER BY RandAssign;
+	ELSE 
+		select Name,RegionCode 
+		from supplier 
+		ORDER BY RandAssign
+		LIMIT amount;
+    end if;
 END$$
 
 DELIMITER ;
@@ -207,17 +255,18 @@ INSERT INTO `name` (`Name`, `Gender`, `ID`) VALUES
 CREATE TABLE `nationality` (
   `ID` int(11) NOT NULL,
   `Country` varchar(100) NOT NULL,
-  `RegionCode` varchar(4) NOT NULL
+  `RegionCode` varchar(4) NOT NULL,
+  `RandAssign` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `nationality`
 --
 
-INSERT INTO `nationality` (`ID`, `Country`, `RegionCode`) VALUES
-(1, 'Great Britain', 'gb'),
-(2, 'France', 'fr'),
-(3, 'Germany', 'de');
+INSERT INTO `nationality` (`ID`, `Country`, `RegionCode`, `RandAssign`) VALUES
+(1, 'Great Britain', 'gb', 785),
+(2, 'France', 'fr', 183),
+(3, 'Germany', 'de', 560);
 
 -- --------------------------------------------------------
 
@@ -295,25 +344,26 @@ INSERT INTO `skintone` (`ID`, `SkinTone`) VALUES
 CREATE TABLE `supplier` (
   `ID` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
-  `RegionCode` varchar(3) NOT NULL
+  `RegionCode` varchar(3) NOT NULL,
+  `RandAssign` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`) VALUES
-(1, 'AsiaAir', 'hk'),
-(2, 'China Air', 'cn'),
-(3, 'Qantas', 'gb'),
-(4, 'British Airways	 ', 'fr'),
-(5, 'easyJet', 'de'),
-(6, 'Alitalia', 'gb'),
-(7, 'Iberia Group', 'gb'),
-(8, 'Norwegian Air Shuttle', 'fr'),
-(9, 'el plano', 'de'),
-(10, 'Air Berlin Group', 'de'),
-(11, 'Air France KLM', 'fr');
+INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`, `RandAssign`) VALUES
+(1, 'AsiaAir', 'hk', 558),
+(2, 'China Air', 'cn', 518),
+(3, 'Qantas', 'gb', 917),
+(4, 'British Airways	 ', 'fr', 32),
+(5, 'easyJet', 'de', 409),
+(6, 'Alitalia', 'gb', 946),
+(7, 'Iberia Group', 'gb', 502),
+(8, 'Norwegian Air Shuttle', 'fr', 671),
+(9, 'el plano', 'de', 849),
+(10, 'Air Berlin Group', 'de', 231),
+(11, 'Air France KLM', 'fr', 610);
 
 --
 -- Indexes for dumped tables
