@@ -1,10 +1,7 @@
 <?php
     include "../php/credentials.php";
-    $conn = getConnection();
-    $validPassports = mysqli_query($conn, "SELECT * FROM nationality");
-    $validTickets = mysqli_query($conn, "SELECT * FROM supplier");
-    mysqli_close($conn);
-
+    $validPassports = getConnection()->query("CALL spValidNatGet(3)");
+    $validTickets = getConnection()->query("CALL spValidTicketGet(3)");
  ?>
 
 <sidebar-header>
@@ -17,6 +14,11 @@
         </sidebar-item>
     </sidebar-group>
     <sidebar-break></sidebar-break>
+	<sidebar-break></sidebar-break>
+	<sidebar-group id="sidebar-group-buttons">
+
+	</sidebar-group>
+	
     <sidebar-group id="sidebar-group-passports">
         <sidebar-title>
             <h3>Valid Passports</h3>
