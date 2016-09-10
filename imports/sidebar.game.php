@@ -1,19 +1,33 @@
 <?php
     include "../php/credentials.php";
-    $validPassports = getConnection()->query("CALL spValidNatGet(3)");
-    $validTickets = getConnection()->query("CALL spValidTicketGet(3)");
+	$validPassportCONN = getConnection();
+	$validPassportCONN->query("SET @param  = 0");
+	$validPassports = $validPassportCONN->query("CALL spValidNatGet(@param)");
+	
+	$validTicketCONN = getConnection();
+	$validTicketCONN->query("SET @ticketAmount  = 0");
+	$validTickets = $validTicketCONN->query("CALL spValidTicketGet(@ticketAmount)");
  ?>
 
 <sidebar-header>
     <h3>Tickets Please!</h3>
 </sidebar-header>
 <sidebar-inner id="sidebar-game">
-<sidebar-group id="sidebar-group-main">
+	<sidebar-group id="sidebar-group-main">
         <sidebar-item data-icon="arrow-left">
             <p>Main Menu</p>
         </sidebar-item>
-    </sidebar-group>
+	</sidebar-group>
     <sidebar-break></sidebar-break>
+	 <sidebar-group id="sidebar-group-buttons">
+        <sidebar-item id="accept-button">
+            <p>Accept</p>
+        </sidebar-item>
+        <sidebar-item id="decline-button">
+            <p>Decline</p>
+        </sidebar-item>
+    </sidebar-group>
+	
 	<sidebar-break></sidebar-break>
 	<sidebar-group id="sidebar-group-buttons">
 
