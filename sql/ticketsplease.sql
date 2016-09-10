@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2016 at 06:52 PM
+-- Generation Time: Sep 10, 2016 at 09:59 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -304,7 +304,7 @@ CREATE TABLE `supplier` (
 
 INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`) VALUES
 (1, 'AsiaAir', 'hk'),
-(2, 'China Air', 'prc'),
+(2, 'China Air', 'cn'),
 (3, 'Qantas', 'gb'),
 (4, 'British Airways	 ', 'fr'),
 (5, 'easyJet', 'de'),

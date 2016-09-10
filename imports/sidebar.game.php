@@ -27,12 +27,12 @@
             </sidebar-item>
         <?php endwhile; ?>
     </sidebar-group>
-    <sidebar-group id="sidebar-group-passports">
+    <sidebar-group id="sidebar-group-ticket">
         <sidebar-title>
             <h3>Valid Tickets</h3>
         </sidebar-title>
         <?php while($queryData = $validTickets->fetch_assoc()): ?>
-            <sidebar-item id="new-game" data-icon="flag-<?= $queryData["RegionCode"] ?>">
+            <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p><?= $queryData["Name"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
