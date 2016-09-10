@@ -3,11 +3,10 @@ $(document).ready(function() {
 	Canvas.initialise();
 	Graphics.initialise();
 	Input.initialise();
+	Sidebar.initialise();
 	Graphics.addGraphic('passport', 'images/passport-base.png');
 	Graphics.addGraphic('desk', 'images/desk/desk.png');
-	console.log(Graphics.getGraphics());
-	switchSidebar('sidebar');
-	Canvas.addCanvas("menu", new CanvasMenu());
+	Canvas.addCanvas("main", new CanvasMenu());
 	Canvas.addCanvas("game", new CanvasGame());
-	Canvas.setActiveCanvas('menu');
+	Canvas.setActiveCanvas('main');
 });

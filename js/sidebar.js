@@ -1,40 +1,26 @@
-$('html').on('click', 'sidebar-item', function() {
-    switch(getSidebarParent($(this)).attr('id')) {
-        case 'sidebar-main':
-            handleSidebarMain($(this));
-            break;
-        case 'sidebar-game':
-            handleSidebarGame($(this));
-            break;
+class Sidebar {
+    static initialise() {
+        this.setActiveSidebar('main');
+        $('html').on('click', 'sidebar-item', (e, parent = this)=>{
+            switch(e.currentTarget.attributes['data-func'].value) {
+                case "newGame":
+                    parent.setActiveSidebar('game');
+                    Canvas.setActiveCanvas('game', true);
+                    break;
+                case 'backToMenu':
+                    parent.setActiveSidebar('main');
+            	    Canvas.setActiveCanvas('main');
+                    break;
+            }
+        });
     }
-});
-function getSidebarParent($sender) {
-    return $sender.closest('sidebar-inner');
-}
-function handleSidebarMain($sender) {
-    switch($sender.attr('id')) {
-        case 'new-game':
-    	   Canvas.setActiveCanvas('game', true);
-            switchSidebar('sidebar.game');
-            break;
+    static setActiveSidebar(name, params) {
+        $.ajax({
+            url: 'imports/sidebar.' + name + '.php',
+            data: params,
+            success: function(response) {
+                $('sidebar').html(response);
+            }
+        })
     }
-}
-function handleSidebarGame($sender){
-    switch ($sender.attr('id')){
-        case 'main-menu':
-    	   Canvas.setActiveCanvas('menu');
-            switchSidebar('sidebar');
-            break;
-    }
-}
-function switchSidebar(type) {
-    state = type.split('.')[1];
-    $.ajax({
-        url: 'imports/' + type + '.php',
-        data: {},
-        success: function(response) {
-            $('sidebar').html(response);
-        	//desk = new Desk();
-        }
-    })
 }

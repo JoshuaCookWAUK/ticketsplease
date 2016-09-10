@@ -10,7 +10,6 @@ class Canvas {
         var initialise = intialise || false;
         if(hasCanvas.has) {
             this.disableAll();
-            console.log('initialise -> ' + initialise);
             if(initialise) {
                 this.canvas[hasCanvas.index].ref.initialise();
             }
