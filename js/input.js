@@ -1,54 +1,62 @@
-function Input() {
-    this.mouseLocation = {x: 0, y: 0};
-    document.addEventListener("mousemove", mouseMoveHandler, false);
-    document.addEventListener("mousedown", mouseDownHandler, false);
-    document.addEventListener("mouseup", mouseUpHandler, false);
-    document.addEventListener("contextmenu", contextHandler, false);
-	document.addEventListener("mousewheel", mouseWheel, false);
-    function contextHandler(e) {
-    	e.preventDefault();
+class Input {
+    static initialise() {
+        this.mouseLocation = {x: -1, y: -1};
+        this.mouseButtons = {lmb: false, mmb: false, rmb: false};
+        this.mouseScroll = {deltaX: 0, deltaY: 0};
+        document.addEventListener("mousemove", (e, parent = this)=>{
+            parent.mouseLocation = {
+                x: e.clientX,
+                y: e.clientY
+            }
+        });
+        document.addEventListener("mousedown", (e, parent = this)=>{
+            parent.mouseButtons = {
+                lmb: ((e.which == 1) ? true : false),
+                mmb: ((e.which == 2) ? true : false),
+                rmb: ((e.which == 3) ? true : false)
+            }
+        });
+        document.addEventListener("mouseup", (e, parent = this)=>{
+            parent.mouseButtons = {
+                lmb: ((e.which == 1) ? false : true),
+                mmb: ((e.which == 2) ? false : true),
+                rmb: ((e.which == 3) ? false : true)
+            }
+        });
+        document.addEventListener("mousewheel", (e, parent = this)=>{
+            parent.mouseScroll = {
+                deltaX: e.deltaX,
+                deltaY: e.deltaY
+            }
+        });
+        document.addEventListener("contextmenu", (e)=>{
+            e.preventDefault();
+        });
+        document.addEventListener("mouseout", (e, parent = this)=>{
+            parent.mouseLocation = {
+                x: -1,
+                y: -1
+            }
+        });
     }
-    function mouseMoveHandler(e) {
-        mouseMoveHandler.mouseLocation = {
-            x: e.clientX,
-            y: e.clientY
-        };
+    static getMouseLocation() {
+        return this.mouseLocation;
     }
-    function mouseWheel(e) {
-    	if(e.deltaY > 0) { /* Zoom Out */ } else if(e.deltaY < 0) { /* Zoom In */ }
+    static getMouseButtons() {
+        return this.mouseButtons;
     }
-    function mouseDownHandler(e) {
-    	switch(e.which) {
-    		case 1:
-    			//LMB
-                //console.log('lmb down');
-    			break;
-    		case 2:
-    			//MMB
-    			break;
-    		case 3:
-    			//RMB
-    			break;
-    	}
+    static getMouseScroll() {
+        return this.mouseScroll;
     }
-    function mouseUpHandler(e) {
-    	switch(e.which) {
-    		case 1:
-    			//LMB
-                //console.log('lmb up');
-    			break;
-    		case 2:
-    			//MMB
-    			break;
-    		case 3:
-    			//RMB
-    			break;
-    	}
+    static mouseInBounds(bounds) {
+        if(this.mouseLocation.x > bounds.x1
+    		&& this.mouseLocation.x < bounds.x2
+    		&& this.mouseLocation.y > bounds.y1
+    		&& this.mouseLocation.y < bounds.y2
+    	) {
+            return true;
+        } else {
+            return false;
+        }
     }
-}
-Input.prototype.setMouseLocation = function(location) {
-    this.mouseLocation = location;
-}
-Input.prototype.getMouseLocation = function() {
-    return this.mouseLocation;
 }
