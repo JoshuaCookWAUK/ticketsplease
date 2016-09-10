@@ -17,6 +17,33 @@ class Passport{
 			async: false
 		}).responseText;
 		this.dataArray = this.dataString.split(';');
-		console.log(this.dataArray[0]);
     }
+	
+	getName(){
+		return this.dataArray[0];
+	}
+	getGender(){
+		return this.dataArray[1];
+	}
+	getCountry(){
+		return this.dataArray[2];
+	}
+	getSkinTone(){
+		return this.dataArray[3];
+	}
+	getNotes(){
+		return this.dataArray[4];
+	}
+	getissueDate(){
+		return this.dataArray[5];
+	}
+	getexpiryDate(){
+		return this.dataArray[6];
+	}
+	getSupplier(){
+		return this.dataArray[7];
+	}
+	getRegionCode(){
+		return this.dataArray[8];
+	}
 }

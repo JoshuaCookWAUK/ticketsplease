@@ -1,0 +1,5 @@
+class Ticket{
+	constructor(dataArray) {
+		
+    }
+}
