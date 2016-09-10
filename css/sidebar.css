@@ -19,6 +19,8 @@ sidebar-break {
 }
 sidebar-group {
     display: block;
+    max-height: 240px;
+    overflow-y: auto;
 }
 sidebar-header {
     display: block;

@@ -2,6 +2,30 @@
 * {
     margin: 0 auto;
     padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+::-webkit-scrollbar {
+    width: 6px;
+	height: 0px;
+}
+::-webkit-scrollbar-track {
+    /*background-color: rgba(0, 0, 0, 0.75);*/
+    box-shadow: inset 4px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
+::-webkit-scrollbar-thumb {
+	background: rgb(4,154,230);
+	background: -moz-linear-gradient(-45deg,  rgba(4,154,230,1) 0%, rgba(4,107,216,1) 100%);
+	background: -webkit-linear-gradient(-45deg,  rgba(4,154,230,1) 0%,rgba(4,107,216,1) 100%);
+	background: linear-gradient(135deg,  rgba(4,154,230,1) 0%,rgba(4,107,216,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#049ae6', endColorstr='#046bd8',GradientType=1 );
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #37474F;
 }
 html, body {
     font-family: 'Open Sans', sans-serif;
@@ -13,7 +37,13 @@ html, body {
 }
 canvas {
     position: absolute;
-    background-color: #EEEEEE;
+    background-color: transparent;
     z-index: 100;
     cursor: default;
+}
+canvas[data-hidden="true"] {
+    visibility: hidden;
+}
+canvas[data-hidden="false"] {
+    visibility: visible;
 }

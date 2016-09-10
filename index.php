@@ -9,6 +9,7 @@
         <sidebar>
             <?php include "imports/sidebar.php"; ?>
         </sidebar>
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas-menu" data-hidden="false"></canvas>
+        <canvas id="canvas-game" data-hidden="true"></canvas>
     </body>
 </html>

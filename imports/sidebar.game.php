@@ -17,20 +17,20 @@
         </sidebar-item>
     </sidebar-group>
     <sidebar-break></sidebar-break>
+    <sidebar-title>
+        <h3>Valid Passports</h3>
+    </sidebar-title>
     <sidebar-group id="sidebar-group-passports">
-        <sidebar-title>
-            <h3>Valid Passports</h3>
-        </sidebar-title>
         <?php while($queryData = $validPassports->fetch_assoc()): ?>
             <sidebar-item id="passport-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p><?= $queryData["Country"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
     </sidebar-group>
+    <sidebar-title>
+        <h3>Valid Tickets</h3>
+    </sidebar-title>
     <sidebar-group id="sidebar-group-passports">
-        <sidebar-title>
-            <h3>Valid Tickets</h3>
-        </sidebar-title>
         <?php while($queryData = $validTickets->fetch_assoc()): ?>
             <sidebar-item id="new-game" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p><?= $queryData["Name"] ?></p>
