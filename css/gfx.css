@@ -19,3 +19,9 @@
 [data-icon="plus"] {
     background-image: url('../images/gfx/icons/plus.png');
 }
+[data-icon="accept"] {
+    background-image: url('../images/gfx/icons/accept.png');
+}
+[data-icon="decline"] {
+    background-image: url('../images/gfx/icons/decline.png');
+}

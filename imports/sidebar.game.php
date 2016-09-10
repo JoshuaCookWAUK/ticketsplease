@@ -16,7 +16,20 @@
             <p>Main Menu</p>
         </sidebar-item>
     </sidebar-group>
+
     <sidebar-break></sidebar-break>
+
+    <sidebar-group id="sidebar-group-buttons">
+        <sidebar-item id="accept-button" data-icon="accept">
+            <p>Accept</p>
+        </sidebar-item>
+        <sidebar-item id="decline-button" data-icon="decline">
+            <p>Decline</p>
+        </sidebar-item>
+    </sidebar-group>
+
+    <sidebar-break></sidebar-break>
+
     <sidebar-group id="sidebar-group-passports">
         <sidebar-title>
             <h3>Valid Passports</h3>
