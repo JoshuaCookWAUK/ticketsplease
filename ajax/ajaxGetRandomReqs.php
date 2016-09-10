@@ -1,4 +1,10 @@
 <?php
-//This gets the random requirements to accept a passport
-
+	include "../php/credentials.php";
+    $validTickets = getConnection()->query("CALL spReqGet()");
+	$Results = $validTickets->fetch_assoc();
+	printf($Results['SupplierName']);
+	printf(";");
+	printf($Results['RegionCode']);
+	printf(";");
+	printf($Results['PersonName']);
 ?>

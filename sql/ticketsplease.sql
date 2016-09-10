@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2016 at 10:36 AM
+-- Generation Time: Sep 10, 2016 at 03:49 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -40,7 +40,7 @@ BEGIN
 	DECLARE		issueDate		DateTime;
 	DECLARE   	expiryDate		DateTime;
   
-    	SET p_nameRand = (select floor(1+rand()*count(*)) from name);
+	SET p_nameRand = (select floor(1+rand()*count(*)) from name);
     SET p_lastnameRand = (select floor(1+rand()*count(*)) from lastname);
 	SET p_natRand = (select floor(1+rand()*count(*)) from nationality);
 	SET p_skinRand = (select floor(1+rand()*count(*)) from skintone);
@@ -48,10 +48,10 @@ BEGIN
     SET p_supplierRand = (select floor(1+rand()*count(*)) from supplier);
     SET p_hairRand = (select floor(1+rand()*count(*)) from hairstyle);
     
-    	SET p_noteCount = (select count(*) from notes);
+	SET p_noteCount = (select count(*) from notes);
 	SET p_noteAmount = (select floor(1+RAND()*5));
     
-    	SET issueDate = TIMESTAMPADD(SECOND, FLOOR(RAND() * TIMESTAMPDIFF(SECOND, '2011-01-01 00:00:00', '2016-12-31 00:00:00')), '2011-01-01 00:00:00');
+	SET issueDate = TIMESTAMPADD(SECOND, FLOOR(RAND() * TIMESTAMPDIFF(SECOND, '2011-01-01 00:00:00', '2016-12-31 00:00:00')), '2011-01-01 00:00:00');
 	SET expiryDate = DATE_ADD(issueDate, INTERVAL 5 YEAR);
   
     	concatNotes: LOOP
@@ -65,15 +65,15 @@ BEGIN
 		LEAVE concatNotes;
 	END LOOP concatNotes;
     
-        INSERT INTO person (	NameID, 
-							lastnameID, 
-                            NationalityID, 
-                            SkinToneID, 
-                            HairID, 
-                            SupplierID, 
-                            Notes, 
-                            IssueDate, 
-                            ExpiryDate
+	INSERT INTO person (NameID, 
+						lastnameID, 
+						NationalityID, 
+						SkinToneID, 
+						HairID, 
+						SupplierID, 
+						Notes, 
+						IssueDate, 
+						ExpiryDate
 	)VALUES (p_nameRand , 
 			p_lastnameRand, 
             p_natRand, 
@@ -84,13 +84,38 @@ BEGIN
             issueDate, 
             expiryDate);
   
-		select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, st.SkinTone, p_note as Notes, issueDate, expiryDate, sup.Name as Supplier
+	select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, st.SkinTone, p_note as Notes, issueDate, expiryDate, sup.Name as Supplier, sup.RegionCode
 	from name nam, Nationality nat, skintone st, lastname lst, supplier sup
 	where nam.ID = p_nameRand 
 	AND nat.ID = p_natRand
 	AND st.ID = p_skinRand
     AND	lst.ID = p_lastnameRand
     AND sup.ID = p_supplierRand;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
+	DECLARE 	p_nameRand 		INT;
+    DECLARE 	p_lastnameRand	INT;
+	DECLARE 	natCount INT;
+    DECLARE 	whileCount INT;
+    SET 		natCount = (select count(*) from supplier);
+    SET 		whileCount = 0;
+	SET			p_nameRand = (select floor(1+rand()*count(*)) from name);
+    SET 		p_lastnameRand = (select floor(1+rand()*count(*)) from lastname);
+    
+	WHILE whileCount < natCount DO
+		SET whileCount = whileCount + 1;
+		update supplier
+		SET randAssign = floor(1+rand()*1000)
+		WHERE ID = whileCount;
+	END WHILE;
+        
+	select 	s.Name as SupplierName,s.RegionCode as RegionCode,CONCAT(nam.Name,CONCAT(' ',lst.name)) as PersonName
+	from	supplier s, name nam, lastname lst
+    WHERE 	nam.ID = p_nameRand 
+    AND 	lst.ID = p_lastnameRand
+	ORDER BY s.RandAssign
+    LIMIT 1;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidNatGet` (IN `amount` INT)  BEGIN
@@ -264,9 +289,9 @@ CREATE TABLE `nationality` (
 --
 
 INSERT INTO `nationality` (`ID`, `Country`, `RegionCode`, `RandAssign`) VALUES
-(1, 'Great Britain', 'gb', 785),
-(2, 'France', 'fr', 183),
-(3, 'Germany', 'de', 560);
+(1, 'Great Britain', 'gb', 763),
+(2, 'France', 'fr', 140),
+(3, 'Germany', 'de', 412);
 
 -- --------------------------------------------------------
 
@@ -309,14 +334,6 @@ CREATE TABLE `person` (
   `ExpiryDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `person`
---
-
-INSERT INTO `person` (`ID`, `NameID`, `lastnameID`, `NationalityID`, `SkinToneID`, `HairID`, `SupplierID`, `Notes`, `IssueDate`, `ExpiryDate`) VALUES
-(1, 9, 11, 1, 1, 1, 1, 'test note 5:test 3:', '2012-07-03 05:40:23', '2017-07-03 05:40:23');
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `skintone`
@@ -353,17 +370,17 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`, `RandAssign`) VALUES
-(1, 'AsiaAir', 'hk', 558),
-(2, 'China Air', 'cn', 518),
-(3, 'Qantas', 'gb', 917),
-(4, 'British Airways	 ', 'fr', 32),
-(5, 'easyJet', 'de', 409),
-(6, 'Alitalia', 'gb', 946),
-(7, 'Iberia Group', 'gb', 502),
-(8, 'Norwegian Air Shuttle', 'fr', 671),
-(9, 'el plano', 'de', 849),
-(10, 'Air Berlin Group', 'de', 231),
-(11, 'Air France KLM', 'fr', 610);
+(1, 'AsiaAir', 'hk', 173),
+(2, 'China Air', 'cn', 86),
+(3, 'Qantas', 'gb', 911),
+(4, 'British Airways	 ', 'fr', 295),
+(5, 'easyJet', 'de', 743),
+(6, 'Alitalia', 'gb', 828),
+(7, 'Iberia Group', 'gb', 913),
+(8, 'Norwegian Air Shuttle', 'fr', 77),
+(9, 'el plano', 'de', 649),
+(10, 'Air Berlin Group', 'de', 10),
+(11, 'Air France KLM', 'fr', 105);
 
 --
 -- Indexes for dumped tables
@@ -461,7 +478,7 @@ ALTER TABLE `notes`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT for table `skintone`
 --
