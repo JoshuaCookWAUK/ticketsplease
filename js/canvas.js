@@ -1,6 +1,7 @@
 class Canvas {
     static initialise() {
         this.canvas = new Array();
+		this.state = new State();
     }
     static addCanvas(name, reference) {
         this.canvas.push({name: name, ref: reference});

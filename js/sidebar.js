@@ -11,6 +11,18 @@ class Sidebar {
                     parent.setActiveSidebar('main');
             	    Canvas.setActiveCanvas('main');
                     break;
+				case 'acceptPerson':
+					//console.log(Canvas.state.getPass().getRegionCode());
+					if(document.getElementById("passport-gb")==null && Canvas.state.getPass().getRegionCode()=='gb'){
+						console.log('false region code');
+					}
+					else if(document.getElementById("passport-fr")==null && Canvas.state.getPass().getRegionCode()=='fr'){
+						console.log('false region code');
+					}
+					else if(document.getElementById("passport-de")==null && Canvas.state.getPass().getRegionCode()=='de'){
+						console.log('false region code');
+					}
+					break;
             }
         });
     }

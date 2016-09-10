@@ -1,7 +1,7 @@
 <?php
     include "../php/credentials.php";
     $validPassportCONN = getConnection();
-    $validPassportCONN->query("SET @param  = 0");
+    $validPassportCONN->query("SET @param  = 1");
     $validPassports = $validPassportCONN->query("CALL spValidNatGet(@param)");
     $validTicketCONN = getConnection();
     $validTicketCONN->query("SET @ticketAmount  = 0");
@@ -18,7 +18,7 @@
     </sidebar-group>
     <sidebar-break></sidebar-break>
     <sidebar-group id="sidebar-group-buttons">
-        <sidebar-item id="accept-button" data-func"acceptPerson" data-icon="accept">
+        <sidebar-item id="accept-button" data-func="acceptPerson" data-icon="accept">
             <p>Accept</p>
         </sidebar-item>
         <sidebar-item id="decline-button" data-func="declinePerson" data-icon="decline">
@@ -31,8 +31,8 @@
     </sidebar-title>
     <sidebar-group id="sidebar-group-passports">
         <?php while($queryData = $validPassports->fetch_assoc()): ?>
-            <sidebar-item id="passport-<?= $queryData["RegionCode"] ?>" data-func"viewFlag-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
-                <p><?= $queryData["Country"] ?></p>
+            <sidebar-item id="passport-<?= $queryData["RegionCode"] ?>" data-func="viewFlag-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
+                <p id="passport-<?= $queryData["RegionCode"] ?>"><?= $queryData["Country"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
     </sidebar-group>
@@ -41,7 +41,7 @@
     </sidebar-title>
     <sidebar-group id="sidebar-group-ticket">
         <?php while($queryData = $validTickets->fetch_assoc()): ?>
-            <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-func"viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
+            <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-func="viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p><?= $queryData["Name"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
