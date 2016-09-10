@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	new State();
 	Canvas.initialise();
 	Graphics.initialise();
 	Input.initialise();

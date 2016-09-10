@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2016 at 03:49 PM
+-- Generation Time: Sep 10, 2016 at 06:53 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -289,9 +289,9 @@ CREATE TABLE `nationality` (
 --
 
 INSERT INTO `nationality` (`ID`, `Country`, `RegionCode`, `RandAssign`) VALUES
-(1, 'Great Britain', 'gb', 763),
-(2, 'France', 'fr', 140),
-(3, 'Germany', 'de', 412);
+(1, 'Great Britain', 'gb', 488),
+(2, 'France', 'fr', 611),
+(3, 'Germany', 'de', 590);
 
 -- --------------------------------------------------------
 
@@ -334,7 +334,6 @@ CREATE TABLE `person` (
   `ExpiryDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
 --
 -- Table structure for table `skintone`
 --
@@ -370,17 +369,17 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`, `RandAssign`) VALUES
-(1, 'AsiaAir', 'hk', 173),
-(2, 'China Air', 'cn', 86),
-(3, 'Qantas', 'gb', 911),
-(4, 'British Airways	 ', 'fr', 295),
-(5, 'easyJet', 'de', 743),
-(6, 'Alitalia', 'gb', 828),
-(7, 'Iberia Group', 'gb', 913),
-(8, 'Norwegian Air Shuttle', 'fr', 77),
-(9, 'el plano', 'de', 649),
-(10, 'Air Berlin Group', 'de', 10),
-(11, 'Air France KLM', 'fr', 105);
+(1, 'AsiaAir', 'hk', 848),
+(2, 'China Air', 'cn', 512),
+(3, 'Qantas', 'gb', 15),
+(4, 'British Airways	 ', 'fr', 537),
+(5, 'easyJet', 'de', 638),
+(6, 'Alitalia', 'gb', 582),
+(7, 'Iberia Group', 'gb', 994),
+(8, 'Norwegian Air Shuttle', 'fr', 223),
+(9, 'el plano', 'de', 134),
+(10, 'Air Berlin Group', 'de', 2),
+(11, 'Air France KLM', 'fr', 605);
 
 --
 -- Indexes for dumped tables

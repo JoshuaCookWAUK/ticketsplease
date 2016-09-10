@@ -12,7 +12,9 @@ class Sidebar {
             	    Canvas.setActiveCanvas('main');
                     break;
 				case 'acceptPerson':
-					//console.log(Canvas.state.getPass().getRegionCode());
+					console.log(Canvas.state.getPass().getRegionCode());
+					this.valid = Canvas.state.isValid();
+					this.validationMessage = Canvas.state.validationNote;
 					if(document.getElementById("passport-gb")==null && Canvas.state.getPass().getRegionCode()=='gb'){
 						console.log('false region code');
 					}
@@ -22,6 +24,7 @@ class Sidebar {
 					else if(document.getElementById("passport-de")==null && Canvas.state.getPass().getRegionCode()=='de'){
 						console.log('false region code');
 					}
+					console.log(this.validationMessage);
 					break;
             }
         });
