@@ -11,6 +11,7 @@ var graphicPassportBase = new Image();
 var desk;
 
 $(document).ready(function() {
+	switchSidebar('sidebar');
 	resizeCanvas();
 	initialise();
 });

@@ -4,7 +4,6 @@
     $validPassports = mysqli_query($conn, "SELECT * FROM nationality");
     $validTickets = mysqli_query($conn, "SELECT * FROM supplier");
     mysqli_close($conn);
-
  ?>
 
 <sidebar-header>
@@ -12,7 +11,7 @@
 </sidebar-header>
 <sidebar-inner id="sidebar-game">
 <sidebar-group id="sidebar-group-main">
-        <sidebar-item data-icon="arrow-left">
+        <sidebar-item id="main-menu" data-icon="arrow-left">
             <p>Main Menu</p>
         </sidebar-item>
     </sidebar-group>

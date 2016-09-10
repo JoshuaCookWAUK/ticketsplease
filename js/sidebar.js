@@ -3,6 +3,9 @@ $('html').on('click', 'sidebar-item', function() {
         case 'sidebar-main':
             handleSidebarMain($(this));
             break;
+        case 'sidebar-game':
+            handleSidebarGame($(this));
+            break;
     }
 });
 function getSidebarParent($sender) {
@@ -15,12 +18,20 @@ function handleSidebarMain($sender) {
             break;
     }
 }
+function handleSidebarGame($sender){
+    switch ($sender.attr('id')){
+        case 'main-menu':
+            switchSidebar('sidebar');
+            break;
+    }
+}
 function switchSidebar(type) {
     state = type.split('.')[1];
     $.ajax({
         url: 'imports/' + type + '.php',
         data: {},
         success: function(response) {
+            console.log(response);
             $('sidebar').html(response);
         	desk = new Desk();
         }

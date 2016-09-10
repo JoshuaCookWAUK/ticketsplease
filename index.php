@@ -7,7 +7,6 @@
     </head>
     <body>
         <sidebar>
-            <?php include "imports/sidebar.php"; ?>
         </sidebar>
         <canvas id="canvas"></canvas>
     </body>
