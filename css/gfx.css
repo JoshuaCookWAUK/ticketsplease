@@ -16,6 +16,9 @@
 [data-icon="arrow-left"] {
     background-image: url('../images/gfx/icons/arrow-left.png');
 }
+[data-icon="arrow-right"] {
+    background-image: url('../images/gfx/icons/arrow-right.png');
+}
 [data-icon="plus"] {
     background-image: url('../images/gfx/icons/plus.png');
 }

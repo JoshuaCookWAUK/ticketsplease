@@ -1,7 +1,9 @@
 class CanvasGame {
     constructor() {
         this.resize();
-        this.resume();
+    }
+    initialise() {
+        this.desk = new Desk(this);
     }
     getBounds() {
         return this.bounds;
@@ -12,15 +14,9 @@ class CanvasGame {
     resume() {
         this.instance = setInterval(()=>{ this.render(this) }, 10);
     }
-    render(parent) {
-        parent.resize();
-        parent.context.clearRect(0, 0, parent.canvas.width, parent.canvas.height);
-        centerTextXY(parent.context, "Welcome to Tickets Please!", "30", parent.bounds, {x:null, y:-10});
-        centerTextXY(parent.context, "To begin a game, select New Game from the menu.", "15", parent.bounds, {x:null, y:10});
-    }
     resize() {
-        this.canvasid = 'canvas-menu'
-        this.$jqhandle = $('#canvas-menu');
+        this.canvasid = 'canvas'
+        this.$jqhandle = $('#canvas');
         this.bounds = {
             x1: ($('sidebar').position().left + $('sidebar').outerWidth()),
             y1: 0,
@@ -35,8 +31,14 @@ class CanvasGame {
     	this.canvas = document.getElementById(this.canvasid);
     	this.context = this.canvas.getContext("2d");
     }
+    render(parent) {
+        parent.resize();
+        parent.context.clearRect(0, 0, parent.canvas.width, parent.canvas.height);
+        parent.desk.render(parent.context);
+        parent.context.drawImage(Graphics.getGraphicByName('passport').image, 100, 100);
+    }
 }
-
+/*
 
 var drawInstance;
 var canvas;
@@ -254,9 +256,8 @@ function draw() {
 	canvasCtx.rect(50, 50, 20, 20);
 	canvasCtx.fill();
 	canvasCtx.closePath();
-	*/
+	*
 }
-
 function centerTextXY(text, size, offset) {
 	canvasCtx.fillStyle = "#212121";
 	canvasCtx.font = size + "px Arial";
@@ -268,3 +269,4 @@ function centerTextXY(text, size, offset) {
 	if(offset.y != null) newLocation.y += offset.y;
 	canvasCtx.fillText(text, newLocation.x, newLocation.y);
 }
+*/

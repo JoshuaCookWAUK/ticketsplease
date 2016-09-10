@@ -1,15 +1,13 @@
 class Desk {
-    constructor(type) {
-        console.log('new desk');
-        this.type = type;
+    constructor(canvas) {
         this.graphics = new Array();
-        for(var x = 0; x < Math.ceil(getCanvasSize().width / 512); x++) {
-            for(var y = 0; y < Math.ceil(getCanvasSize().height / 512); y++) {
+        for(var x = 0; x < Math.ceil(getCanvasSize(canvas).width / 512); x++) {
+            for(var y = 0; y < Math.ceil(getCanvasSize(canvas).height / 512); y++) {
                 var seed = Math.floor(1 + (Math.random() * 12));
-                var src = 'graphicDesk' + (seed > 10 ? ('Alt' + (seed - 10)) : '');
-                console.log(seed + ' | ' + src);
+                //var src = 'graphicDesk' + (seed > 10 ? ('Alt' + (seed - 10)) : '');
+                var src = 'desk';
                 this.graphics.push({
-                    src: src,
+                    imagename: src,
                     x: (512 * x),
                     y: (512 * y)
                 });
@@ -18,7 +16,7 @@ class Desk {
     }
     render(context) {
         for(var i = 0; i < this.graphics.length; i++) {
-            context.drawImage(window[this.graphics[i].src], this.graphics[i].x, this.graphics[i].y, 512, 512);
+            context.drawImage(Graphics.getGraphicByName(this.graphics[i].imagename).image, this.graphics[i].x, this.graphics[i].y, 512, 512);
         }
     }
 }

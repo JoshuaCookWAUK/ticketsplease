@@ -14,6 +14,7 @@ function getSidebarParent($sender) {
 function handleSidebarMain($sender) {
     switch($sender.attr('id')) {
         case 'new-game':
+    	   Canvas.setActiveCanvas('game', true);
             switchSidebar('sidebar.game');
             break;
     }
@@ -21,6 +22,7 @@ function handleSidebarMain($sender) {
 function handleSidebarGame($sender){
     switch ($sender.attr('id')){
         case 'main-menu':
+    	   Canvas.setActiveCanvas('menu');
             switchSidebar('sidebar');
             break;
     }
@@ -31,9 +33,8 @@ function switchSidebar(type) {
         url: 'imports/' + type + '.php',
         data: {},
         success: function(response) {
-            console.log(response);
             $('sidebar').html(response);
-        	desk = new Desk();
+        	//desk = new Desk();
         }
     })
 }

@@ -62,14 +62,19 @@ sidebar-item {
     line-height: 48px;
     background-repeat: no-repeat;
     background-position: 10px center;
-    opacity: 0.75;
-    cursor: pointer;
+    opacity: 0.25;
+    cursor: default;
     box-sizing: border-box;
 }
-sidebar-item:hover {
+sidebar-item:not([data-disabled]) {
+    cursor: pointer;
+    opacity: 0.75;
+}
+sidebar-item:not([data-disabled]):hover {
     background-color: rgba(255, 255, 255, 0.125);
     opacity: 1;
 }
 sidebar-item p {
     font-size: 12px;
+    cursor: inherit;
 }

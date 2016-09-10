@@ -8,7 +8,6 @@
     <body>
         <sidebar>
         </sidebar>
-        <canvas id="canvas-menu" data-hidden="false"></canvas>
-        <canvas id="canvas-game" data-hidden="true"></canvas>
+        <canvas id="canvas"></canvas>
     </body>
 </html>

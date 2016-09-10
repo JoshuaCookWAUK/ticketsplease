@@ -1,6 +1,6 @@
-function getCanvasSize() {
+function getCanvasSize(canvas) {
     return {
-        width: (canvasBounds.x2 - canvasBounds.x1),
-        height: (canvasBounds.y2 - canvasBounds.y1)
+        width: (canvas.getBounds().x2 - canvas.getBounds().x1),
+        height: (canvas.getBounds().y2 - canvas.getBounds().y1)
     };
 }

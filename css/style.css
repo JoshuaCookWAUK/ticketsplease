@@ -41,9 +41,3 @@ canvas {
     z-index: 100;
     cursor: default;
 }
-canvas[data-hidden="true"] {
-    visibility: hidden;
-}
-canvas[data-hidden="false"] {
-    visibility: visible;
-}

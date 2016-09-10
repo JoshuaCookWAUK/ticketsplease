@@ -1,5 +1,12 @@
-var canvasHandles = new Array();
 $(document).ready(function() {
+	new State();
+	Canvas.initialise();
+	Graphics.initialise();
+	Graphics.addGraphic('passport', 'images/passport-base.png');
+	Graphics.addGraphic('desk', 'images/desk/desk.png');
+	console.log(Graphics.getGraphics());
 	switchSidebar('sidebar');
-	canvasHandles.push({name: "menu", handle: new CanvasMenu()});
+	Canvas.addCanvas("menu", new CanvasMenu());
+	Canvas.addCanvas("game", new CanvasGame());
+	Canvas.setActiveCanvas('menu');
 });
