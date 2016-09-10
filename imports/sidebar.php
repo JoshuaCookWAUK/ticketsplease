@@ -1,5 +1,5 @@
 <?php
-    include "php/credentials.php";
+    include "../php/credentials.php";
     $query = mysqli_query(getConnection(), "SELECT * FROM nationality");
  ?>
  <sidebar-header>

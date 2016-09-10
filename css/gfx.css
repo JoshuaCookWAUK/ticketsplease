@@ -7,9 +7,21 @@
 [data-icon="flag-de"] {
     background-image: url('../images/gfx/flags/de.png');
 }
+[data-icon="flag-hk"] {
+    background-image: url('../images/gfx/flags/hk.png');
+}
+[data-icon="flag-cn"] {
+    background-image: url('../images/gfx/flags/cn.png');
+}
 [data-icon="arrow-left"] {
     background-image: url('../images/gfx/icons/arrow-left.png');
 }
 [data-icon="plus"] {
     background-image: url('../images/gfx/icons/plus.png');
+}
+[data-icon="accept"] {
+    background-image: url('../images/gfx/icons/accept.png');
+}
+[data-icon="decline"] {
+    background-image: url('../images/gfx/icons/decline.png');
 }
