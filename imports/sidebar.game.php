@@ -1,9 +1,13 @@
 <?php
     include "../php/credentials.php";
-    $conn = getConnection();
-    $validPassports = mysqli_query($conn, "SELECT * FROM nationality");
-    $validTickets = mysqli_query($conn, "SELECT * FROM supplier");
-    mysqli_close($conn);
+	$validPassportCONN = getConnection();
+	$validPassportCONN->query("SET @param  = 0");
+	$validPassports = $validPassportCONN->query("CALL spValidNatGet(@param)");
+
+	$validTicketCONN = getConnection();
+	$validTicketCONN->query("SET @ticketAmount  = 0");
+	$validTickets = $validTicketCONN->query("CALL spValidTicketGet(@ticketAmount)");
+
  ?>
 
 <sidebar-header>
