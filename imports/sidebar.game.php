@@ -4,7 +4,7 @@
     $validPassportCONN->query("SET @param  = 1");
     $validPassports = $validPassportCONN->query("CALL spValidNatGet(@param)");
     $validTicketCONN = getConnection();
-    $validTicketCONN->query("SET @ticketAmount  = 0");
+    $validTicketCONN->query("SET @ticketAmount  = 4");
     $validTickets = $validTicketCONN->query("CALL spValidTicketGet(@ticketAmount)");
 ?>
 <sidebar-header>
@@ -42,7 +42,7 @@
     <sidebar-group id="sidebar-group-ticket">
         <?php while($queryData = $validTickets->fetch_assoc()): ?>
             <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-func="viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
-                <p><?= $queryData["Name"] ?></p>
+                <p id="validTicket-<?= $queryData['RegionCode'] ?>"><?= $queryData["Name"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
     </sidebar-group>
