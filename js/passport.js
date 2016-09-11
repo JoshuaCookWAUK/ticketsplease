@@ -12,13 +12,17 @@ class Passport{
 		dataArray[9] = RegionCode
 	*/
 	constructor() {
+		//Call database to get the person and supplier info
 		this.dataString = $.ajax({
 			url: 'ajax/ajaxGetRandomPerson.php',
 			type: 'GET',
 			async: false
 		}).responseText;
+
+		//Put the database information into a string array called dataArray
 		this.dataArray = this.dataString.split(';');
-		console.log(this.dataArray);
+
+		//Set initial location of passport
 		this.location = {
 			x: 100,
 			y: 100
@@ -36,6 +40,8 @@ class Passport{
         };
         this.capturedLocation = null;
     }
+
+	//A collection of methods that pass information about the passport from dataArray
 	getBounds() {
 		return this.bounds;
 	}
@@ -69,7 +75,10 @@ class Passport{
 	getRegionCode(){
 		return this.dataArray[9];
 	}
+
+	//Code to render the passport
 	render(context) {
+		//Draw the passport graphic
 		context.drawImage(
 			Graphics.getGraphicByName('passport').image,
 			this.location.x,

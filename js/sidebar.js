@@ -112,11 +112,33 @@ class Sidebar {
             return false;
         if(document.getElementById("passport-de")==null && State.getPassport().getCountryRegionCode()=='de')
             return false;
+        if(document.getElementById("validTicket-roi")==null && State.getPass().getRegionCode()=='roi')
+            return false;
+        if(document.getElementById("validTicket-us")==null && State.getPass().getRegionCode()=='us')
+            return false;
+        if(document.getElementById("validTicket-esp")==null && State.getPass().getRegionCode()=='esp')
+            return false;
+        if(document.getElementById("validTicket-hk")==null && State.getPass().getRegionCode()=='hk')
+            return false;
+        if(document.getElementById("validTicket-cn")==null && State.getPass().getRegionCode()=='cn')
+            return false;
         if(document.getElementById("validTicket-gb")==null && State.getTicket().getRegionCode()=='gb')
             return false;
         if(document.getElementById("validTicket-fr")==null && State.getTicket().getRegionCode()=='fr')
             return false;
         if(document.getElementById("validTicket-de")==null && State.getTicket().getRegionCode()=='de')
+            return false;
+        if(document.getElementById("validTicket-roi")==null && State.getTicket().getRegionCode()=='roi')
+            return false;
+        if(document.getElementById("validTicket-us")==null && State.getTicket().getRegionCode()=='us')
+            return false;
+        if(document.getElementById("validTicket-esp")==null && State.getTicket().getRegionCode()=='esp')
+            return false;
+        if(document.getElementById("validTicket-hk")==null && State.getTicket().getRegionCode()=='hk')
+            return false;
+        if(document.getElementById("validTicket-cn")==null && State.getTicket().getRegionCode()=='cn')
+            return false;
+        if(document.getElementsByClassName(State.getTicket().getSupplier().replace(/\s+/g, ''))==null)
             return false;
         return true;
     }

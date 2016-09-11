@@ -40,13 +40,8 @@ class Ticket{
 			}).responseText;
 
 			var dataArrayTicket = this.data.split(';');
-			var rand = Math.random();
-			if(rand<0.33) this.SupplierName = dataArrayTicket[0];
-			else if(rand<0.66) this.RegionCode = dataArrayTicket[1];
-			else this.Name = dataArrayTicket[2];
+			this.Name = dataArrayTicket[2];
 		}
-		console.log(this.SupplierName + ' ' + this.RegionCode + ' ' + this.Name);
-
 		this.location = {
 			x: 500,
 			y: 500

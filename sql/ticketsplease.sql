@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2016 at 05:33 PM
+-- Generation Time: Sep 11, 2016 at 08:54 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -27,10 +27,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spPersonGet` ()  NO SQL
 BEGIN
 
-	/*
-		Name: spPersonGet
-        Description: Generate and return the details of a person
-    */
+	
 
 	DECLARE 	p_nameRand 		INT;
     DECLARE 	p_lastnameRand	INT;
@@ -46,8 +43,7 @@ BEGIN
 	DECLARE		issueDate		DateTime;
 	DECLARE   	expiryDate		DateTime;
   
-	#Select Random ID's for each peice of data
-	SET p_nameRand =	(	SELECT	floor(1+rand()*count(*)) 
+		SET p_nameRand =	(	SELECT	floor(1+rand()*count(*)) 
 							FROM 	name);
     SET p_lastnameRand =(	SELECT 	floor(1+rand()*count(*)) 
 							FROM 	lastname);
@@ -62,21 +58,18 @@ BEGIN
     SET p_hairRand = 	(	SELECT 	floor(1+rand()*count(*)) 
 							FROM 	hairstyle);
                             
-	#Get the number of notes and a random number of notes to return
-	SET p_noteCount = 	(	SELECT 	count(*) 
+		SET p_noteCount = 	(	SELECT 	count(*) 
 							FROM 	notes);
 	SET p_noteAmount = 	(	SELECT 	floor(1+RAND()*5));
     
-    #Set issue data as random date and set expiry date as issue date + 5 years
-	SET issueDate = 	TIMESTAMPADD(SECOND
+    	SET issueDate = 	TIMESTAMPADD(SECOND
 									, FLOOR(RAND() * TIMESTAMPDIFF(SECOND
 																   , '2011-01-01 00:00:00', '2016-12-31 00:00:00'))
 									, '2011-01-01 00:00:00');
 	SET expiryDate = 	DATE_ADD(issueDate
 								, INTERVAL 5 YEAR);
   
-	#Get a set amount of notes and concat them into one string
-	concatNotes: LOOP
+		concatNotes: LOOP
 		SET p1 = p1 + 1;
 		if p1 < p_noteAmount 	THEN
 			SET p_noteRand = 	(SELECT floor(1+rand()*p_noteCount));
@@ -89,8 +82,7 @@ BEGIN
 		LEAVE concatNotes;
 	END LOOP concatNotes;
     
-    #Insert generated person ID's into the person table
-	INSERT INTO person (NameID, 
+    	INSERT INTO person (NameID, 
 						lastnameID, 
 						NationalityID, 
 						SkinToneID, 
@@ -109,8 +101,7 @@ BEGIN
             issueDate, 
             expiryDate);
   
-	#Return the relevant data of the person instead of the ID's 
-	
+		
 	SELECT 	CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, 
 			nam.Gender, 
             nat.Country, 
@@ -135,21 +126,14 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
 
-	/*
-		Name: spReqGet
-        Description: This Store procedure returns a random name and supplier info
-					 to be used as a potential wrong value in evaluation.
-    */
+	
 
-	#Declaration for random name ID's
-	DECLARE 	p_nameRand 		INT;
+		DECLARE 	p_nameRand 		INT;
     DECLARE 	p_lastnameRand	INT;
     
-    #the number of nationalities
-	DECLARE 	natCount 		INT;
+    	DECLARE 	natCount 		INT;
     
-    #index for while loop
-    DECLARE 	whileCount 		INT;
+        DECLARE 	whileCount 		INT;
 		
     SET 		natCount = (		SELECT count(*) 
 									FROM supplier);
@@ -157,10 +141,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
 									FROM name);
     SET 		p_lastnameRand = (	SELECT floor(1+rand()*count(*)) 
 									FROM lastname);
-    /*                                
-		For each Supplier, assign a random number between 1 and 1000 to be used later 
-		to randomly order the suppliers
-    */
+    
 	SET 	whileCount = 0;
 	WHILE 	whileCount < natCount DO
 		SET 	whileCount = whileCount + 1;
@@ -169,8 +150,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
 		WHERE 	ID = whileCount;
 	END WHILE;
         
-	#Return the new randomly selected supplier and name.
-	SELECT 	s.Name as SupplierName,
+		SELECT 	s.Name as SupplierName,
 			s.RegionCode as RegionCode,
             CONCAT(nam.Name,CONCAT(' ',lst.name)) as PersonName
 	FROM	supplier s, 
@@ -183,16 +163,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidNatGet` (IN `amount` INT)  BEGIN
-	/*
-		Name: spValidNatGet
-        Description: 	Return a specified number of Nationality info.
-						If input parameter = 0, return them all.
-    */
+	
 	DECLARE 	natCount INT;
     DECLARE 	whileCount INT;
     
-    #Select number of nationalities. For each one assign
-    SET 	natCount = (SELECT count(*) 
+        SET 	natCount = (SELECT count(*) 
 						FROM nationality);
     SET 	whileCount = 0;
 	WHILE 	whileCount < natCount DO
@@ -202,10 +177,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidNatGet` (IN `amount` INT)  B
 		WHERE 	ID = whileCount;
 	END WHILE;
         
-	/*    
-		If given number is 0, return all nationalities, 
-		Else return specified amount
-	*/
+	
 	IF amount = 0 then
 		SELECT 	Country,RegionCode 
 		FROM 	nationality 
@@ -219,20 +191,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidNatGet` (IN `amount` INT)  B
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidTicketGet` (IN `amount` INT)  BEGIN
-	/*
-		Name: spValidTicketGet
-        Description: 	Return a specified number of suppliers.
-						If input parameter = 0, return them all.
-    */
+	
 	DECLARE natCount INT;
     DECLARE whileCount INT;
     
-    #Get the number of suppliers
-    SET 	natCount = (	SELECT 	count(*) 
+        SET 	natCount = (	SELECT 	count(*) 
 							FROM 	supplier);
                             
-	#Assign each supplier a random number for random ordering
-    SET 	whileCount = 0;
+	    SET 	whileCount = 0;
 	WHILE 	whileCount < natCount DO
 		SET 	whileCount = whileCount + 1;
 		UPDATE 	supplier
@@ -240,9 +206,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidTicketGet` (IN `amount` INT)
 		WHERE 	ID = whileCount;
 	END WHILE;
         
-	#if given number is 0, return all suppliers, 
-	#Else return specified amount
-	IF amount = 0 THEN
+			IF amount = 0 THEN
 		SELECT 	Name,RegionCode 
 		FROM 	supplier 
 		ORDER BY RandAssign;
@@ -377,9 +341,9 @@ CREATE TABLE `nationality` (
 --
 
 INSERT INTO `nationality` (`ID`, `Country`, `RegionCode`, `RandAssign`) VALUES
-(1, 'Great Britain', 'gb', 858),
-(2, 'France', 'fr', 61),
-(3, 'Germany', 'de', 730);
+(1, 'Great Britain', 'gb', 856),
+(2, 'France', 'fr', 537),
+(3, 'Germany', 'de', 117);
 
 -- --------------------------------------------------------
 
@@ -423,6 +387,16 @@ CREATE TABLE `person` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `person`
+--
+
+INSERT INTO `person` (`ID`, `NameID`, `lastnameID`, `NationalityID`, `SkinToneID`, `HairID`, `SupplierID`, `Notes`, `IssueDate`, `ExpiryDate`) VALUES
+(1, 11, 6, 2, 2, 1, 8, 'test 4:test note 1:', '2011-06-25 03:02:00', '2016-06-25 03:02:00'),
+(2, 9, 19, 3, 2, 1, 5, 'test 3:test 3:test 4:test note 2:', '2011-06-17 00:42:51', '2016-06-17 00:42:51');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `skintone`
 --
 
@@ -457,17 +431,17 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`, `RandAssign`) VALUES
-(1, 'difficultJet ', 'gb', 304),
-(2, 'DavidAir', 'gb', 261),
-(3, 'HongKongCO2', 'hk', 391),
-(4, 'El Plane-o ', 'esp', 173),
-(5, 'Aer Cunni Lingus ', 'roi', 692),
-(6, 'Joshua Cook', 'gb', 940),
-(7, 'WebAppsAir ', 'gb', 623),
-(8, 'BravoTwoZero ', 'us', 295),
-(9, 'LiftHamza ', 'de', 607),
-(10, 'Sacre Bleu', 'fr', 150),
-(11, 'Air France KLM', 'fr', 926);
+(1, 'difficultJet ', 'gb', 675),
+(2, 'DavidAir', 'roi', 168),
+(3, 'HongKongCO2', 'hk', 815),
+(4, 'El Plane-o ', 'esp', 568),
+(5, 'Aer Cunni Lingus ', 'roi', 397),
+(6, 'Joshua Cook', 'gb', 277),
+(7, 'WebAppsAir ', 'gb', 197),
+(8, 'BravoTwoZero ', 'us', 150),
+(9, 'LiftHamza ', 'de', 161),
+(10, 'Sacre Bleu', 'fr', 353),
+(11, 'Air France', 'fr', 283);
 
 --
 -- Indexes for dumped tables
@@ -565,7 +539,7 @@ ALTER TABLE `notes`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `skintone`
 --
