@@ -1,11 +1,10 @@
 class Desk {
     constructor(canvas) {
         this.graphics = new Array();
-        for(var x = 0; x < Math.ceil(getCanvasSize(canvas).width / 512); x++) {
-            for(var y = 0; y < Math.ceil(getCanvasSize(canvas).height / 512); y++) {
+        for(var x = 0; x < Math.ceil(2560 / 512); x++) {
+            for(var y = 0; y < Math.ceil(1600 / 512); y++) {
                 var seed = Math.floor(1 + (Math.random() * 12));
-                //var src = 'graphicDesk' + (seed > 10 ? ('Alt' + (seed - 10)) : '');
-                var src = 'desk';
+                var src = 'desk' + (seed > 10 ? ((seed - 10)) : '');
                 this.graphics.push({
                     imagename: src,
                     x: (512 * x),
