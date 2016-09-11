@@ -23,8 +23,22 @@ class Passport{
 			x: 100,
 			y: 100
 		};
+        this.locationActual = this.location;
+        this.size = {
+            w: 800,
+            h: 500
+        };
+        this.bounds = {
+            x1: this.location.x,
+            x2: (this.location.x + this.size.w),
+            y1: this.location.y,
+            y2: (this.location.y + this.size.h)
+        };
+        this.capturedLocation = null;
     }
-
+	getBounds() {
+		return this.bounds;
+	}
 	getName(){
 		return this.dataArray[0];
 	}
@@ -80,4 +94,29 @@ class Passport{
 				this.location.y + 150
 			);
 	}
+    update() {
+        if(Input.mouseInBounds(this.getBounds()) && Input.getMouseButtons().lmb) {
+            if(this.capturedLocation == null)
+                this.capturedLocation = Input.getMouseLocation();
+            var difference = Input.mouseDifference(this.capturedLocation);
+            var newLocation = {
+                x: this.locationActual.x + difference.x,
+                y: this.locationActual.y + difference.y
+            };
+            this.location = {
+                x: (Input.outBoundsX(newLocation.x, this.size) ? this.location.x : newLocation.x),
+                y: (Input.outBoundsY(newLocation.y, this.size) ? this.location.y : newLocation.y)
+            };
+            this.bounds = {
+                x1: this.location.x,
+                x2: (this.location.x + this.size.w),
+                y1: this.location.y,
+                y2: (this.location.y + this.size.h)
+            };
+        }
+        if(!Input.getMouseButtons().lmb) {
+            this.locationActual = this.location;
+            this.capturedLocation = null;
+        }
+    }
 }

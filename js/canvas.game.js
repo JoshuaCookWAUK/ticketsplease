@@ -43,7 +43,6 @@ class CanvasGame {
         parent.context.clearRect(0, 0, parent.canvas.width, parent.canvas.height);
         parent.desk.render(parent.context);
         State.getPass().render(parent.context);
-        State.getPassm().render(parent.context);
 		State.getTicket().render(parent.context);
     }
 }

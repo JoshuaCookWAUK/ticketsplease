@@ -9,7 +9,6 @@
 <script src="js/objects/desk.js"></script>
 <script src="js/core.js"></script>
 <script src="js/passport.js"></script>
-<script src="js/passport-move.js"></script>
 <script src="js/ticket.js"></script>
 <script src="js/sidebar.js"></script>
 <script src="js/utils/utilCanvasHelper.js"></script>
