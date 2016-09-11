@@ -8,6 +8,10 @@ class Sidebar {
                     Canvas.setActiveCanvas('game', true);
 					Canvas.state = new State();
                     break;
+				case "continueGame":
+					parent.setActiveSidebar('game');
+                    Canvas.setActiveCanvas('game', true);
+                    break;
                 case 'backToMenu':
                     parent.setActiveSidebar('main');
             	    Canvas.setActiveCanvas('main');
