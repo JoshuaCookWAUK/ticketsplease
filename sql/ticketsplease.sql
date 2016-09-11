@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2016 at 10:30 AM
+-- Generation Time: Sep 11, 2016 at 05:33 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -26,6 +26,12 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spPersonGet` ()  NO SQL
 BEGIN
+
+	/*
+		Name: spPersonGet
+        Description: Generate and return the details of a person
+    */
+
 	DECLARE 	p_nameRand 		INT;
     DECLARE 	p_lastnameRand	INT;
 	DECLARE  	p_natRand 		INT;
@@ -40,31 +46,50 @@ BEGIN
 	DECLARE		issueDate		DateTime;
 	DECLARE   	expiryDate		DateTime;
   
-	SET p_nameRand = (select floor(1+rand()*count(*)) from name);
-    SET p_lastnameRand = (select floor(1+rand()*count(*)) from lastname);
-	SET p_natRand = (select floor(1+rand()*count(*)) from nationality);
-	SET p_skinRand = (select floor(1+rand()*count(*)) from skintone);
-	SET p_noteRand = (select floor(1+rand()*count(*)) from notes);
-    SET p_supplierRand = (select floor(1+rand()*count(*)) from supplier);
-    SET p_hairRand = (select floor(1+rand()*count(*)) from hairstyle);
+	#Select Random ID's for each peice of data
+	SET p_nameRand =	(	SELECT	floor(1+rand()*count(*)) 
+							FROM 	name);
+    SET p_lastnameRand =(	SELECT 	floor(1+rand()*count(*)) 
+							FROM 	lastname);
+	SET p_natRand = 	(	SELECT 	floor(1+rand()*count(*)) 
+							FROM 	nationality);
+	SET p_skinRand = 	(	SELECT 	floor(1+rand()*count(*)) 
+							FROM 	skintone);
+	SET p_noteRand = 	(	SELECT 	floor(1+rand()*count(*)) 
+							FROM 	notes);
+    SET p_supplierRand =(	SELECT 	floor(1+rand()*count(*)) 
+							FROM 	supplier);
+    SET p_hairRand = 	(	SELECT 	floor(1+rand()*count(*)) 
+							FROM 	hairstyle);
+                            
+	#Get the number of notes and a random number of notes to return
+	SET p_noteCount = 	(	SELECT 	count(*) 
+							FROM 	notes);
+	SET p_noteAmount = 	(	SELECT 	floor(1+RAND()*5));
     
-	SET p_noteCount = (select count(*) from notes);
-	SET p_noteAmount = (select floor(1+RAND()*5));
-    
-	SET issueDate = TIMESTAMPADD(SECOND, FLOOR(RAND() * TIMESTAMPDIFF(SECOND, '2011-01-01 00:00:00', '2016-12-31 00:00:00')), '2011-01-01 00:00:00');
-	SET expiryDate = DATE_ADD(issueDate, INTERVAL 5 YEAR);
+    #Set issue data as random date and set expiry date as issue date + 5 years
+	SET issueDate = 	TIMESTAMPADD(SECOND
+									, FLOOR(RAND() * TIMESTAMPDIFF(SECOND
+																   , '2011-01-01 00:00:00', '2016-12-31 00:00:00'))
+									, '2011-01-01 00:00:00');
+	SET expiryDate = 	DATE_ADD(issueDate
+								, INTERVAL 5 YEAR);
   
-    	concatNotes: LOOP
+	#Get a set amount of notes and concat them into one string
+	concatNotes: LOOP
 		SET p1 = p1 + 1;
-		if p1 < p_noteAmount THEN
-			SET p_noteRand = (select floor(1+rand()*p_noteCount));
-			SET p_note = CONCAT(p_note, (select Notes from notes where ID = p_noteRand));
-			SET p_note = CONCAT(p_note, ':');
+		if p1 < p_noteAmount 	THEN
+			SET p_noteRand = 	(SELECT floor(1+rand()*p_noteCount));
+			SET p_note = 		CONCAT(p_note, (SELECT Notes 
+												FROM notes 
+												WHERE ID = p_noteRand));
+			SET p_note = 		CONCAT(p_note, ':');
 			ITERATE concatNotes;
 		END IF;
 		LEAVE concatNotes;
 	END LOOP concatNotes;
     
+    #Insert generated person ID's into the person table
 	INSERT INTO person (NameID, 
 						lastnameID, 
 						NationalityID, 
@@ -84,34 +109,73 @@ BEGIN
             issueDate, 
             expiryDate);
   
-	select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, nat.RegionCode as natRegionCode, st.SkinTone, p_note as Notes, issueDate, expiryDate, sup.Name as Supplier, sup.RegionCode
-	from name nam, Nationality nat, skintone st, lastname lst, supplier sup
-	where nam.ID = p_nameRand 
-	AND nat.ID = p_natRand
-	AND st.ID = p_skinRand
-    AND	lst.ID = p_lastnameRand
-    AND sup.ID = p_supplierRand;
+	#Return the relevant data of the person instead of the ID's 
+	
+	SELECT 	CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, 
+			nam.Gender, 
+            nat.Country, 
+            nat.RegionCode as natRegionCode, 
+            st.SkinTone, 
+            p_note as Notes, 
+            issueDate, 
+            expiryDate, 
+            sup.Name as Supplier, 
+            sup.RegionCode
+	FROM 	name nam, 
+			Nationality nat, 
+            skintone st, 
+            lastname lst, 
+            supplier sup
+	WHERE 	nam.ID = p_nameRand 
+	AND 	nat.ID = p_natRand
+	AND 	st.ID = p_skinRand
+    AND		lst.ID = p_lastnameRand
+    AND 	sup.ID = p_supplierRand;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
+
+	/*
+		Name: spReqGet
+        Description: This Store procedure returns a random name and supplier info
+					 to be used as a potential wrong value in evaluation.
+    */
+
+	#Declaration for random name ID's
 	DECLARE 	p_nameRand 		INT;
     DECLARE 	p_lastnameRand	INT;
-	DECLARE 	natCount INT;
-    DECLARE 	whileCount INT;
-    SET 		natCount = (select count(*) from supplier);
-    SET 		whileCount = 0;
-	SET			p_nameRand = (select floor(1+rand()*count(*)) from name);
-    SET 		p_lastnameRand = (select floor(1+rand()*count(*)) from lastname);
     
-	WHILE whileCount < natCount DO
-		SET whileCount = whileCount + 1;
-		update supplier
-		SET randAssign = floor(1+rand()*1000)
-		WHERE ID = whileCount;
+    #the number of nationalities
+	DECLARE 	natCount 		INT;
+    
+    #index for while loop
+    DECLARE 	whileCount 		INT;
+		
+    SET 		natCount = (		SELECT count(*) 
+									FROM supplier);
+	SET			p_nameRand = (		SELECT floor(1+rand()*count(*)) 
+									FROM name);
+    SET 		p_lastnameRand = (	SELECT floor(1+rand()*count(*)) 
+									FROM lastname);
+    /*                                
+		For each Supplier, assign a random number between 1 and 1000 to be used later 
+		to randomly order the suppliers
+    */
+	SET 	whileCount = 0;
+	WHILE 	whileCount < natCount DO
+		SET 	whileCount = whileCount + 1;
+		UPDATE 	supplier
+		SET 	randAssign = floor(1+rand()*1000)
+		WHERE 	ID = whileCount;
 	END WHILE;
         
-	select 	s.Name as SupplierName,s.RegionCode as RegionCode,CONCAT(nam.Name,CONCAT(' ',lst.name)) as PersonName
-	from	supplier s, name nam, lastname lst
+	#Return the new randomly selected supplier and name.
+	SELECT 	s.Name as SupplierName,
+			s.RegionCode as RegionCode,
+            CONCAT(nam.Name,CONCAT(' ',lst.name)) as PersonName
+	FROM	supplier s, 
+			name nam, 
+            lastname lst
     WHERE 	nam.ID = p_nameRand 
     AND 	lst.ID = p_lastnameRand
 	ORDER BY s.RandAssign
@@ -119,51 +183,75 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidNatGet` (IN `amount` INT)  BEGIN
-	DECLARE natCount INT;
-    DECLARE whileCount INT;
-    SET natCount = (select count(*) from nationality);
-    SET whileCount = 0;
-	WHILE whileCount < natCount DO
-		SET whileCount = whileCount + 1;
-		update nationality
-		SET randAssign = floor(1+rand()*1000)
-		WHERE ID = whileCount;
+	/*
+		Name: spValidNatGet
+        Description: 	Return a specified number of Nationality info.
+						If input parameter = 0, return them all.
+    */
+	DECLARE 	natCount INT;
+    DECLARE 	whileCount INT;
+    
+    #Select number of nationalities. For each one assign
+    SET 	natCount = (SELECT count(*) 
+						FROM nationality);
+    SET 	whileCount = 0;
+	WHILE 	whileCount < natCount DO
+		SET 	whileCount = whileCount + 1;
+		UPDATE 	nationality
+		SET 	randAssign = floor(1+rand()*1000)
+		WHERE 	ID = whileCount;
 	END WHILE;
         
-	if amount = 0 then
-		select Country,RegionCode 
-		from nationality 
+	/*    
+		If given number is 0, return all nationalities, 
+		Else return specified amount
+	*/
+	IF amount = 0 then
+		SELECT 	Country,RegionCode 
+		FROM 	nationality 
 		ORDER BY RandAssign;
     ELSE
-		select Country,RegionCode 
-		from nationality 
+		SELECT 	Country,RegionCode 
+		FROM 	nationality 
 		ORDER BY RandAssign
-		LIMIT amount;
+		LIMIT 	amount;
 	END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidTicketGet` (IN `amount` INT)  BEGIN
+	/*
+		Name: spValidTicketGet
+        Description: 	Return a specified number of suppliers.
+						If input parameter = 0, return them all.
+    */
 	DECLARE natCount INT;
     DECLARE whileCount INT;
-    SET natCount = (select count(*) from supplier);
-    SET whileCount = 0;
-	WHILE whileCount < natCount DO
-		SET whileCount = whileCount + 1;
-		update supplier
-		SET randAssign = floor(1+rand()*1000)
-		WHERE ID = whileCount;
+    
+    #Get the number of suppliers
+    SET 	natCount = (	SELECT 	count(*) 
+							FROM 	supplier);
+                            
+	#Assign each supplier a random number for random ordering
+    SET 	whileCount = 0;
+	WHILE 	whileCount < natCount DO
+		SET 	whileCount = whileCount + 1;
+		UPDATE 	supplier
+		SET 	randAssign = floor(1+rand()*1000)
+		WHERE 	ID = whileCount;
 	END WHILE;
         
-	if amount = 0 then
-		select Name,RegionCode 
-		from supplier 
+	#if given number is 0, return all suppliers, 
+	#Else return specified amount
+	IF amount = 0 THEN
+		SELECT 	Name,RegionCode 
+		FROM 	supplier 
 		ORDER BY RandAssign;
 	ELSE 
-		select Name,RegionCode 
-		from supplier 
+		SELECT 	Name,RegionCode 
+		FROM 	supplier 
 		ORDER BY RandAssign
-		LIMIT amount;
-    end if;
+		LIMIT 	amount;
+    end IF;
 END$$
 
 DELIMITER ;
@@ -289,9 +377,9 @@ CREATE TABLE `nationality` (
 --
 
 INSERT INTO `nationality` (`ID`, `Country`, `RegionCode`, `RandAssign`) VALUES
-(1, 'Great Britain', 'gb', 196),
-(2, 'France', 'fr', 15),
-(3, 'Germany', 'de', 486);
+(1, 'Great Britain', 'gb', 858),
+(2, 'France', 'fr', 61),
+(3, 'Germany', 'de', 730);
 
 -- --------------------------------------------------------
 
@@ -334,8 +422,6 @@ CREATE TABLE `person` (
   `ExpiryDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `skintone`
 --
@@ -371,17 +457,17 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`, `RandAssign`) VALUES
-(1, 'AsiaAir', 'hk', 865),
-(2, 'China Air', 'cn', 436),
-(3, 'Qantas', 'gb', 585),
-(4, 'British Airways	 ', 'fr', 619),
-(5, 'easyJet', 'de', 338),
-(6, 'Alitalia', 'gb', 832),
-(7, 'Iberia Group', 'gb', 147),
-(8, 'Norwegian Air Shuttle', 'fr', 239),
-(9, 'el plano', 'de', 751),
-(10, 'Air Berlin Group', 'de', 40),
-(11, 'Air France KLM', 'fr', 945);
+(1, 'difficultJet ', 'gb', 304),
+(2, 'DavidAir', 'gb', 261),
+(3, 'HongKongCO2', 'hk', 391),
+(4, 'El Plane-o ', 'esp', 173),
+(5, 'Aer Cunni Lingus ', 'roi', 692),
+(6, 'Joshua Cook', 'gb', 940),
+(7, 'WebAppsAir ', 'gb', 623),
+(8, 'BravoTwoZero ', 'us', 295),
+(9, 'LiftHamza ', 'de', 607),
+(10, 'Sacre Bleu', 'fr', 150),
+(11, 'Air France KLM', 'fr', 926);
 
 --
 -- Indexes for dumped tables
