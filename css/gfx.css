@@ -19,6 +19,9 @@
 [data-icon="flag-us"] {
     background-image: url('../images/gfx/flags/us.png');
 }
+[data-icon="flag-esp"] {
+    background-image: url('../images/gfx/flags/esp.png');
+}
 [data-icon="arrow-left"] {
     background-image: url('../images/gfx/icons/arrow-left.png');
 }
