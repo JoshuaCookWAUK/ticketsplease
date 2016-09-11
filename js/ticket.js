@@ -1,9 +1,12 @@
 class Ticket{
 	constructor(dataArray) {
+		//initial values in Ticket are set to the same as 
 		this.SupplierName = dataArray[8];
 		this.RegionCode = dataArray[9];
 		this.Name = dataArray[0];
 		this.valid = true;
+		
+		//0.05% chance that the name is different on the passport and ticket
 		if(Math.random() < 0.05){
 			this.valid = false;
 
@@ -14,13 +17,10 @@ class Ticket{
 			}).responseText;
 
 			var dataArrayTicket = this.data.split(';');
-			var rand = Math.random();
-			if(rand<0.33) this.SupplierName = dataArrayTicket[0];
-			else if(rand<0.66) this.RegionCode = dataArrayTicket[1];
-			else this.Name = dataArrayTicket[2];
+			this.Name = dataArrayTicket[2];
 		}
-		console.log(this.SupplierName + ' ' + this.RegionCode + ' ' + this.Name);
 
+		//set initial location of the ticket
 		this.location = {
 			x: 200,
 			y: 600

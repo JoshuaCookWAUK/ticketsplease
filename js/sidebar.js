@@ -115,6 +115,21 @@ class Sidebar {
 		else if(document.getElementById("passport-de")==null && State.getPass().getCountryRegionCode()=='de') {
 			this.validationMessage = this.validationMessage +'false region code de';
 		}
+        else if(document.getElementById("validTicket-roi")==null && State.getPass().getRegionCode()=='roi') {
+            this.validationMessage = this.validationMessage +'false ticket code roi';
+        }
+        else if(document.getElementById("validTicket-us")==null && State.getPass().getRegionCode()=='us') {
+            this.validationMessage = this.validationMessage +'false ticket code us';
+        }
+        else if(document.getElementById("validTicket-esp")==null && State.getPass().getRegionCode()=='esp') {
+            this.validationMessage = this.validationMessage +'false ticket code esp';
+        }
+        else if(document.getElementById("validTicket-hk")==null && State.getPass().getRegionCode()=='hk') {
+            this.validationMessage = this.validationMessage +'false ticket code hk';
+        }
+        else if(document.getElementById("validTicket-cn")==null && State.getPass().getRegionCode()=='cn') {
+            this.validationMessage = this.validationMessage +'false ticket code cn';
+        }
 		if(document.getElementById("validTicket-gb")==null && State.getTicket().getRegionCode()=='gb') {
 			this.validationMessage = this.validationMessage +'false ticket code gb';
 		}
@@ -123,6 +138,24 @@ class Sidebar {
 		}
 		else if(document.getElementById("validTicket-de")==null && State.getTicket().getRegionCode()=='de') {
 			this.validationMessage = this.validationMessage +'false ticket code de';
+		}
+        else if(document.getElementById("validTicket-roi")==null && State.getTicket().getRegionCode()=='roi') {
+            this.validationMessage = this.validationMessage +'false ticket code roi';
+        }
+        else if(document.getElementById("validTicket-us")==null && State.getTicket().getRegionCode()=='us') {
+            this.validationMessage = this.validationMessage +'false ticket code us';
+        }
+        else if(document.getElementById("validTicket-esp")==null && State.getTicket().getRegionCode()=='esp') {
+            this.validationMessage = this.validationMessage +'false ticket code esp';
+        }
+        else if(document.getElementById("validTicket-hk")==null && State.getTicket().getRegionCode()=='hk') {
+            this.validationMessage = this.validationMessage +'false ticket code hk';
+        }
+        else if(document.getElementById("validTicket-cn")==null && State.getTicket().getRegionCode()=='cn') {
+            this.validationMessage = this.validationMessage +'false ticket code cn';
+        }
+		if(document.getElementsByClassName(State.getTicket().getSupplier().replace(/\s+/g, ''))==null){
+			this.validationMessage = this.validationMessage +'Supplier not in valid tickets';
 		}
 	}
 

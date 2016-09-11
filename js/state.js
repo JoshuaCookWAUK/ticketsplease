@@ -7,7 +7,7 @@ class State {
 		this.pass = new Passport();
 		this.ticket = new Ticket(this.pass.dataArray);
 		if(this.ticket.valid == false){
-			this.validationNote = this.validationNote + 'Ticket and Supplier are not consistent.\n';
+			this.validationNote = this.validationNote + 'Ticket and passport names are not consistent.\n';
 			this.valid = false;
 		}
 		clearInterval(this.instance);
@@ -32,7 +32,7 @@ class State {
 		this.pass = new Passport();
 		this.ticket = new Ticket(this.pass.dataArray);
 		if(this.ticket.valid == false){
-			this.validationNote = this.validationNote + 'Ticket and Supplier are not consistent.\n';
+			this.validationNote = this.validationNote + 'Ticket and passport names are not consistent.\n';
 			this.valid = false;
 		}
 		Canvas.getActiveCanvas().resetFiredState();
