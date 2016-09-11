@@ -1,6 +1,6 @@
 class State {
-	static createGame() {
-		this.score = 2;
+	static createGame(strikes) {
+		this.score = strikes;
 		this.validationNote = '';
 		this.valid = true;
 		this.pass = new Passport();
