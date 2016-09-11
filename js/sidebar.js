@@ -39,13 +39,13 @@ class Sidebar {
 				case 'acceptPerson':
 					this.validate();
 					console.log(this.validationMessage);
-					if(this.validationMessage == '') console.log('Correct');
+					if(this.validationMessage == '') correct();
 					else wrong();
 					break;
 				case 'declinePerson':
 					this.validate();
 					console.log(this.validationMessage);
-					if(this.validationMessage == '') console.log('Wrong');
+					if(this.validationMessage == '') wrong();
 					else correct();
             }
             function hasAttribute(e, name) {
@@ -57,16 +57,28 @@ class Sidebar {
                 return false;
             }
             function wrong(){
-                var w = window.open('','','width=100,height=100');
-                w.document.write('YOU ARE WRONG!');
+				State.score = State.score - 1;
+				var w = window.open('','','width=100,height=100');
+				if(State.score <= 0) w.document.write('Game Over');
+                else w.document.write('YOU ARE WRONG!');
                 w.focus();
-                setTimeout(function() {w.close();}, 5000);
+                setTimeout(function() {
+								w.close(); 
+								if(State.score > 0) State.recreateGame();
+								else{
+									parent.setActiveSidebar('main');
+									Canvas.setActiveCanvas('main');
+								}
+							}
+							, 1000);
             }
             function correct(){
+				//State.score = State.score + 5;
+				console.log(State.score);
                 var w = window.open('','','width=100,height=100');
                 w.document.write('YOU ARE CORRECT!');
                 w.focus();
-                setTimeout(function() {w.close();}, 5000);
+                setTimeout(function() {w.close(); State.recreateGame();}, 1000);
             }
         });
     }

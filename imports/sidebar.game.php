@@ -1,10 +1,11 @@
 <?php
     include "../php/credentials.php";
     $validPassportCONN = getConnection();
-    $validPassportCONN->query("SET @param  = 1");
+    $validPassportCONN->query("SET @param  = ".(string)rand(1,2));
     $validPassports = $validPassportCONN->query("CALL spValidNatGet(@param)");
+	$randomTicketAmount = rand(5,11);
     $validTicketCONN = getConnection();
-    $validTicketCONN->query("SET @ticketAmount  = 4");
+    $validTicketCONN->query("SET @ticketAmount  = ".(string)$randomTicketAmount);
     $validTickets = $validTicketCONN->query("CALL spValidTicketGet(@ticketAmount)");
 ?>
 <sidebar-header>
@@ -24,7 +25,14 @@
         <sidebar-item data-func="declinePerson" data-icon="decline" data-style="decline">
             <p>Decline</p>
         </sidebar-item>
+        <sidebar-break></sidebar-break>
+        <sidebar-item data-func="pause" data-icon="pause" data-style="pause">
+            <p>Pause</p>
+        </sidebar-item>
     </sidebar-group>
+
+
+
     <sidebar-break></sidebar-break>
     <sidebar-title>
         <h3>Valid Passports</h3>
