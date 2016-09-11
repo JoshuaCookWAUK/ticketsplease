@@ -11,8 +11,11 @@
 <sidebar-header>
     <h3>Tickets Please!</h3>
 </sidebar-header>
+<sidebar-header-sub>
+    <h3>Occam's Razor</h3>
+</sidebar-header-sub>
 <sidebar-inner id="sidebar-game">
-<sidebar-group id="sidebar-group-main">
+    <sidebar-group id="sidebar-group-main">
         <sidebar-item id="main-menu" data-func="backToMenu" data-icon="arrow-left">
             <p>Main Menu</p>
         </sidebar-item>
@@ -30,9 +33,6 @@
             <p>Pause</p>
         </sidebar-item>
     </sidebar-group>
-
-
-
     <sidebar-break></sidebar-break>
     <sidebar-item id="valid-passports" data-id="valid-passports" data-icon="plus" data-expandable>
         <p>Valid Passports</p>

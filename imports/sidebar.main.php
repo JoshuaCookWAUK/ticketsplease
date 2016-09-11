@@ -1,10 +1,13 @@
 <?php
     include "../php/credentials.php";
     $query = mysqli_query(getConnection(), "SELECT * FROM nationality");
- ?>
- <sidebar-header>
+?>
+<sidebar-header>
     <h3>Tickets Please!</h3>
 </sidebar-header>
+<sidebar-header-sub>
+    <h3>Occam's Razor</h3>
+</sidebar-header-sub>
 <sidebar-inner id="sidebar-main">
     <sidebar-group id="sidebar-group-main">
         <sidebar-item id="new-game" data-id="new-game" data-icon="plus" data-expandable>
