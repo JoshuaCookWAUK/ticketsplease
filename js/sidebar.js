@@ -1,12 +1,30 @@
 class Sidebar {
     static initialise() {
         this.setActiveSidebar('main');
+        $('html').on('click', 'sidebar-item[data-expandable]', function() {
+            $('.sidebar-item').children('expand').removeClass('expanded');
+            $('.sidebar-sub-group:not([data-parent=' + $(this).attr('data-id') + '])').each(function() {
+                $(this).attr('data-expanded', 'false');
+                $(this).children('expand').removeClass('expanded');
+            });
+            if($('sidebar-sub-group[data-parent=' + $(this).attr('data-id') + ']').attr('data-expanded') != 'true') {
+                $('sidebar-sub-group[data-parent=' + $(this).attr('data-id') + ']').attr('data-expanded', 'true');
+                $(this).children('expand').addClass('expanded');
+            } else {
+                $('sidebar-sub-group[data-parent=' + $(this).attr('data-id') + ']').attr('data-expanded', 'false');
+                $(this).children('expand').removeClass('expanded');
+            }
+        });
         $('html').on('click', 'sidebar-item', (e, parent = this)=>{
-            switch(e.currentTarget.attributes['data-func'].value) {
+            var action = ['', ''];
+            if(hasAttribute(e, 'data-func')) {
+                action = e.currentTarget.attributes['data-func'].value.split('-');
+            }
+            switch(action[0]) {
                 case "newGame":
                     parent.setActiveSidebar('game');
                     Canvas.setActiveCanvas('game', true);
-					State.createGame();
+                    State.createGame(action[1]);
                     break;
 				case "continueGame":
 					if(State.getPass() != null){
@@ -32,6 +50,14 @@ class Sidebar {
                 case 'pause':
                     Canvas.getActiveCanvas().stop();
                     break;
+            }
+            function hasAttribute(e, name) {
+                for(var i = 0; i < e.currentTarget.attributes.length; i++) {
+                    if(e.currentTarget.attributes[i].name == name) {
+                        return true;
+                    }
+                }
+                return false;
             }
             function wrong(){
 				State.score = State.score - 1;

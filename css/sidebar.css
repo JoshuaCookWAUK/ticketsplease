@@ -22,7 +22,18 @@ sidebar-group {
     max-height: 240px;
     overflow-y: auto;
 }
-
+sidebar-sub-group {
+    display: block;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+sidebar-sub-group[data-expanded="true"] {
+	display: block;
+	visibility: visible;
+}
+sidebar-sub-group[data-expanded="false"] {
+	display: none;
+	visibility: hidden;
+}
 sidebar-header {
     display: block;
     width: 100%;
