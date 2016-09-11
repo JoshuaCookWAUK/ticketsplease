@@ -2,7 +2,7 @@
     /* connection details */
     include "../php/credentials.php";
     $validPassportCONN = getConnection();
-    $validPassportCONN->query("SET @param  = ".(string)rand(1,2));
+    $validPassportCONN->query("SET @param  = ".(string)rand(3, 6));
     $validPassports = $validPassportCONN->query("CALL spValidNatGet(@param)");
 	$randomTicketAmount = rand(2, 6);
     $validTicketCONN = getConnection();
@@ -51,7 +51,7 @@
     </sidebar-item>
     <sidebar-sub-group data-expanded="false" data-parent="valid-tickets">
         <?php while($queryData = $validTickets->fetch_assoc()): /* get valid tickets information until its populated */ ?>
-            <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-func="viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
+            <sidebar-item id="validTicket-<?= $queryData["Name"] ?>" data-func="viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p id="ticket-<?= $queryData['RegionCode']?>" class="<?= str_replace(' ', '', $queryData['Name'])?>"><?= $queryData["Name"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>

@@ -40,7 +40,8 @@ class Ticket{
 			async: false
 		}).responseText;
 		var dataArrayTicket = this.data.split(';');
-		this.Name = dataArrayTicket[2];
+		if(Math.random() < 0.2)
+			this.Name = dataArrayTicket[2];
 		this.location = {
 			x: 400,
 			y: 200

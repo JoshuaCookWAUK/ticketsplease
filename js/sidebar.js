@@ -116,7 +116,9 @@ class Sidebar {
     static isValid() {
         if(document.getElementById('validPassport-' + State.getPassport().getRegionCode()) == null)
 			return false;
-        if(document.getElementById('validTicket-' + State.getTicket().getRegionCode()) == null)
+        if(document.getElementById('validTicket-' + State.getTicket().getSupplier()) == null)
+			return false;
+        if(State.getPassport().getName() != State.getTicket().getName())
 			return false;
         return true;
     }

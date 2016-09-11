@@ -12,7 +12,9 @@ class State {
 		this.validationNote = '';
 		this.valid = true;
 		this.pass = new Passport();
+		console.log(this.pass.getName());
 		this.ticket = new Ticket(this.pass.dataArray);
+		console.log(this.ticket.getName());
 		if(this.ticket.valid == false) {
 			this.validationNote += 'Ticket and Supplier are not consistent.\n';
 			this.valid = false;
@@ -31,7 +33,9 @@ class State {
 		this.validationNote = '';
 		this.valid = true;
 		this.pass = new Passport();
+		console.log(this.pass.getName());
 		this.ticket = new Ticket(this.pass.dataArray);
+		console.log(this.ticket.getName());
 		if(this.ticket.valid == false){
 			this.validationNote += 'Ticket and Supplier are not consistent.\n';
 			this.valid = false;
