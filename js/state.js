@@ -15,4 +15,7 @@ class State {
 	getPass(){
 		return this.pass;
 	}
+	getTicket(){
+		return this.ticket;
+	}
 }

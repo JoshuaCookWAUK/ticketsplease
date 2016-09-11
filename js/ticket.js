@@ -1,7 +1,7 @@
 class Ticket{
 	constructor(dataArray) {
-		this.SupplierName = dataArray[7];
-		this.RegionCode = dataArray[8];
+		this.SupplierName = dataArray[8];
+		this.RegionCode = dataArray[9];
 		this.Name = dataArray[0];
 		this.valid = true;
 		if(Math.random() < 0.05){
