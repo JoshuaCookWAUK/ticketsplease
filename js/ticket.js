@@ -25,7 +25,6 @@ class Ticket{
 			x: 200,
 			y: 600
 		};
-		
 	}
     
 	getSupplier(){
@@ -47,8 +46,18 @@ class Ticket{
 		context.fillStyle = "#212121";
 		context.font = "20px Arial";
 		context.fillText(
-			"Name: " + this.Name,
+			"Name of holder: " + this.Name,
 			this.location.x + 50,
+			this.location.y + 100
+		);
+		context.fillText(
+			"Supplier: " + this.SupplierName,
+			this.location.x + 50,
+			this.location.y + 50
+		);
+		context.fillText(
+			"RegionCode: " + this.RegionCode,
+			this.location.x + 500,
 			this.location.y + 50
 		);
 	}
