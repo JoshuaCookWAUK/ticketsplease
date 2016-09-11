@@ -16,6 +16,7 @@ class Sidebar {
             }
         });
         $('html').on('click', 'sidebar-item', (e, parent = this)=>{
+            console.log(e);
             var action = ['', ''];
             if(hasAttribute(e, 'data-func')) {
                 action = e.currentTarget.attributes['data-func'].value.split('-');
@@ -31,7 +32,7 @@ class Sidebar {
             	    Canvas.setActiveCanvas('main');
                     break;
                 case 'acceptPerson':
-                    if(!State.isPaused()){
+                    if(!State.isPaused()) {
                         this.validate();
                         console.log(this.validationMessage);
                         if(this.validationMessage == '') correct();
@@ -40,7 +41,7 @@ class Sidebar {
                     break;
 
 				case 'declinePerson':
-                    if(!State.isPaused()){
+                    if(!State.isPaused()) {
                         this.validate();
     					console.log(this.validationMessage);
     					if(this.validationMessage == '') wrong();
@@ -48,11 +49,14 @@ class Sidebar {
                     }
                     break;
                 case 'pause':
-                    if(!State.isPaused()){
+                    if(!State.isPaused()) {
+                        e.currentTarget.innerHTML = "<p>Resume</p>";
+                        e.currentTarget.attributes["data-icon"].value="resume";
                         Canvas.getActiveCanvas().stop();
                         State.pause(true);
-                    }
-                    else {
+                    } else {
+                        e.currentTarget.innerHTML = "<p>Pause</p>";
+                        e.currentTarget.attributes["data-icon"].value="pause";
                         Canvas.getActiveCanvas().resume();
                         State.pause(false);
                     }
@@ -66,26 +70,26 @@ class Sidebar {
                 }
                 return false;
             }
-            function wrong(){
+            function wrong() {
 				State.score = State.score - 1;
-				var w = window.open('','','width=100,height=100');
+				var w = window.open('','','width=200,height=100,top=400,left=500');
 				if(State.score <= 0) w.document.write('Game Over');
                 else w.document.write('YOU ARE WRONG!');
                 w.focus();
                 setTimeout(function() {
 								w.close();
 								if(State.score > 0) State.recreateGame();
-								else{
+								else {
 									parent.setActiveSidebar('main');
 									Canvas.setActiveCanvas('main');
 								}
 							}
 							, 1000);
             }
-            function correct(){
+            function correct() {
 				//State.score = State.score + 5;
 				console.log(State.score);
-                var w = window.open('','','width=100,height=100');
+                var w = window.open('','','width=200,height=100,top=400,left=500');
                 w.document.write('YOU ARE CORRECT!');
                 w.focus();
                 setTimeout(function() {w.close(); State.recreateGame();}, 1000);
@@ -93,25 +97,25 @@ class Sidebar {
         });
     }
 
-	static validate(){
+	static validate() {
 		this.valid = State.isValid();
 		this.validationMessage = State.validationNote;
-		if(document.getElementById("passport-gb")==null && State.getPass().getCountryRegionCode()=='gb'){
+		if(document.getElementById("passport-gb")==null && State.getPass().getCountryRegionCode()=='gb') {
 			this.validationMessage = this.validationMessage +'false region code gb';
 		}
-		else if(document.getElementById("passport-fr")==null && State.getPass().getCountryRegionCode()=='fr'){
+		else if(document.getElementById("passport-fr")==null && State.getPass().getCountryRegionCode()=='fr') {
 			this.validationMessage = this.validationMessage +'false region code fr';
 		}
-		else if(document.getElementById("passport-de")==null && State.getPass().getCountryRegionCode()=='de'){
+		else if(document.getElementById("passport-de")==null && State.getPass().getCountryRegionCode()=='de') {
 			this.validationMessage = this.validationMessage +'false region code de';
 		}
-		if(document.getElementById("validTicket-gb")==null && State.getTicket().getRegionCode()=='gb'){
+		if(document.getElementById("validTicket-gb")==null && State.getTicket().getRegionCode()=='gb') {
 			this.validationMessage = this.validationMessage +'false ticket code gb';
 		}
-		else if(document.getElementById("validTicket-fr")==null && State.getTicket().getRegionCode()=='fr'){
+		else if(document.getElementById("validTicket-fr")==null && State.getTicket().getRegionCode()=='fr') {
 			this.validationMessage = this.validationMessage +'false ticket code fr';
 		}
-		else if(document.getElementById("validTicket-de")==null && State.getTicket().getRegionCode()=='de'){
+		else if(document.getElementById("validTicket-de")==null && State.getTicket().getRegionCode()=='de') {
 			this.validationMessage = this.validationMessage +'false ticket code de';
 		}
 	}
