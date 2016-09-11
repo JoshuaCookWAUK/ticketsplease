@@ -10,18 +10,14 @@ class Input {
             }
         });
         document.addEventListener("mousedown", (e, parent = this)=>{
-            parent.mouseButtons = {
-                lmb: ((e.which == 1) ? true : false),
-                mmb: ((e.which == 2) ? true : false),
-                rmb: ((e.which == 3) ? true : false)
-            }
+            if(e.which == 1) parent.mouseButtons.lmb = true;
+            if(e.which == 2) parent.mouseButtons.mmb = true;
+            if(e.which == 3) parent.mouseButtons.rmb = true;
         });
         document.addEventListener("mouseup", (e, parent = this)=>{
-            parent.mouseButtons = {
-                lmb: ((e.which == 1) ? false : true),
-                mmb: ((e.which == 2) ? false : true),
-                rmb: ((e.which == 3) ? false : true)
-            }
+            if(e.which == 1) parent.mouseButtons.lmb = false;
+            if(e.which == 2) parent.mouseButtons.mmb = false;
+            if(e.which == 3) parent.mouseButtons.rmb = false;
         });
         document.addEventListener("mousewheel", (e, parent = this)=>{
             parent.mouseScroll = {
