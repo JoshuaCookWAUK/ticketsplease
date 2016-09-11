@@ -10,7 +10,7 @@
         <sidebar-item id="new-game" data-func="newGame" data-icon="plus">
             <p>New Game</p>
         </sidebar-item>
-        <sidebar-item id="continue-game" data-func="continueGame" data-icon="arrow-right" data-disabled>
+        <sidebar-item id="continue-game" data-func="continueGame" data-icon="arrow-right">
             <p>Continue Game</p>
         </sidebar-item>
     </sidebar-group>
