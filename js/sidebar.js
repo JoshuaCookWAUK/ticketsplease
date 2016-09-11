@@ -6,7 +6,7 @@ class Sidebar {
                 case "newGame":
                     parent.setActiveSidebar('game');
                     Canvas.setActiveCanvas('game', true);
-					Canvas.state = new State();
+					State.createGame();
                     break;
 				case "continueGame":
 					parent.setActiveSidebar('game');
@@ -17,24 +17,24 @@ class Sidebar {
             	    Canvas.setActiveCanvas('main');
                     break;
 				case 'acceptPerson':
-					this.valid = Canvas.state.isValid();
-					this.validationMessage = Canvas.state.validationNote;
-					if(document.getElementById("passport-gb")==null && Canvas.state.getPass().getCountryRegionCode()=='gb'){
+					this.valid = State.isValid();
+					this.validationMessage = State.validationNote;
+					if(document.getElementById("passport-gb")==null && State.getPass().getCountryRegionCode()=='gb'){
 						this.validationMessage = this.validationMessage +'false region code gb';
 					}
-					else if(document.getElementById("passport-fr")==null && Canvas.state.getPass().getCountryRegionCode()=='fr'){
+					else if(document.getElementById("passport-fr")==null && State.getPass().getCountryRegionCode()=='fr'){
 						this.validationMessage = this.validationMessage +'false region code fr';
 					}
-					else if(document.getElementById("passport-de")==null && Canvas.state.getPass().getCountryRegionCode()=='de'){
+					else if(document.getElementById("passport-de")==null && State.getPass().getCountryRegionCode()=='de'){
 						this.validationMessage = this.validationMessage +'false region code de';
 					}
-					if(document.getElementById("validTicket-gb")==null && Canvas.state.getTicket().getRegionCode()=='gb'){
+					if(document.getElementById("validTicket-gb")==null && State.getTicket().getRegionCode()=='gb'){
 						this.validationMessage = this.validationMessage +'false ticket code gb';
 					}
-					else if(document.getElementById("validTicket-fr")==null && Canvas.state.getTicket().getRegionCode()=='fr'){
+					else if(document.getElementById("validTicket-fr")==null && State.getTicket().getRegionCode()=='fr'){
 						this.validationMessage = this.validationMessage +'false ticket code fr';
 					}
-					else if(document.getElementById("validTicket-de")==null && Canvas.state.getTicket().getRegionCode()=='de'){
+					else if(document.getElementById("validTicket-de")==null && State.getTicket().getRegionCode()=='de'){
 						this.validationMessage = this.validationMessage +'false ticket code de';
 					}
 					console.log(this.validationMessage);
@@ -42,24 +42,24 @@ class Sidebar {
 					else console.log('Wrong');
 					break;
 				case 'declinePerson':
-					this.valid = Canvas.state.isValid();
-					this.validationMessage = Canvas.state.validationNote;
-					if(document.getElementById("passport-gb")==null && Canvas.state.getPass().getCountryRegionCode()=='gb'){
+					this.valid = State.isValid();
+					this.validationMessage = State.validationNote;
+					if(document.getElementById("passport-gb")==null && State.getPass().getCountryRegionCode()=='gb'){
 						this.validationMessage = this.validationMessage +'false region code gb';
 					}
-					else if(document.getElementById("passport-fr")==null && Canvas.state.getPass().getCountryRegionCode()=='fr'){
+					else if(document.getElementById("passport-fr")==null && State.getPass().getCountryRegionCode()=='fr'){
 						this.validationMessage = this.validationMessage +'false region code fr';
 					}
-					else if(document.getElementById("passport-de")==null && Canvas.state.getPass().getCountryRegionCode()=='de'){
+					else if(document.getElementById("passport-de")==null && State.getPass().getCountryRegionCode()=='de'){
 						this.validationMessage = this.validationMessage +'false region code de';
 					}
-					if(document.getElementById("validTicket-gb")==null && Canvas.state.getTicket().getRegionCode()=='gb'){
+					if(document.getElementById("validTicket-gb")==null && State.getTicket().getRegionCode()=='gb'){
 						this.validationMessage = this.validationMessage +'false ticket code gb';
 					}
-					else if(document.getElementById("validTicket-fr")==null && Canvas.state.getTicket().getRegionCode()=='fr'){
+					else if(document.getElementById("validTicket-fr")==null && State.getTicket().getRegionCode()=='fr'){
 						this.validationMessage = this.validationMessage +'false ticket code fr';
 					}
-					else if(document.getElementById("validTicket-de")==null && Canvas.state.getTicket().getRegionCode()=='de'){
+					else if(document.getElementById("validTicket-de")==null && State.getTicket().getRegionCode()=='de'){
 						this.validationMessage = this.validationMessage +'false ticket code de';
 					}
 					console.log(this.validationMessage);
@@ -68,7 +68,7 @@ class Sidebar {
             }
         });
     }
-	
+
     static setActiveSidebar(name, params) {
         $.ajax({
             url: 'imports/sidebar.' + name + '.php',

@@ -1,5 +1,5 @@
 class State {
-	constructor(){
+	static createGame() {
 		this.validationNote = '';
 		this.valid = true;
 		this.pass = new Passport();
@@ -9,13 +9,13 @@ class State {
 			this.valid = false;
 		}
 	}
-	isValid(){
+	static isValid() {
 		return this.valid;
 	}
-	getPass(){
+	static getPass() {
 		return this.pass;
 	}
-	getTicket(){
+	static getTicket() {
 		return this.ticket;
 	}
 }

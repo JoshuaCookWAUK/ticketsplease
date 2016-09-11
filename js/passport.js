@@ -1,5 +1,5 @@
 class Passport{
-	/*	var dataArray - stores information about returned persons. 
+	/*	var dataArray - stores information about returned persons.
 		dataArray[0] = Name
 		dataArray[1] = Gender
 		dataArray[2] = Country
@@ -19,8 +19,12 @@ class Passport{
 		}).responseText;
 		this.dataArray = this.dataString.split(';');
 		console.log(this.dataArray);
+		this.location = {
+			x: 100,
+			y: 100
+		};
     }
-	
+
 	getName(){
 		return this.dataArray[0];
 	}
@@ -50,5 +54,19 @@ class Passport{
 	}
 	getRegionCode(){
 		return this.dataArray[9];
+	}
+	render(context) {
+		context.drawImage(
+			Graphics.getGraphicByName('passport').image,
+			this.location.x,
+			this.location.y
+		);
+		context.fillStyle = "#212121";
+		context.font = "20px Arial";
+		context.fillText(
+			"Some Text",
+			this.location.x + 100,
+			this.location.y + 100
+		);
 	}
 }

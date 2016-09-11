@@ -35,7 +35,7 @@ class CanvasGame {
         parent.resize();
         parent.context.clearRect(0, 0, parent.canvas.width, parent.canvas.height);
         parent.desk.render(parent.context);
-        parent.context.drawImage(Graphics.getGraphicByName('passport').image, 100, 100);
+        State.getPass().render(parent.context);
     }
 }
 /*
