@@ -1,6 +1,7 @@
 class State {
 	static createGame(strikes) {
 		this.score = strikes;
+		this.paused = false;
 		this.validationNote = '';
 		this.valid = true;
 		this.pass = new Passport();
@@ -11,9 +12,19 @@ class State {
 		}
 		clearInterval(this.instance);
 		this.instance = setInterval((e, parent = this)=>{
-			parent.getPass().update();
-			parent.getTicket().update();
+			if(!this.paused){
+				parent.getPass().update();
+				parent.getTicket().update();
+			}
 		}, 10);
+	}
+
+	static isPaused(){
+		return this.paused;
+	}
+
+	static pause(pause){
+		this.paused = pause;
 	}
 	static recreateGame(){
 		this.validationNote = '';

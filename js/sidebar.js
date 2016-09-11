@@ -26,29 +26,36 @@ class Sidebar {
                     Canvas.setActiveCanvas('game', true);
                     State.createGame(action[1]);
                     break;
-				case "continueGame":
-					if(State.getPass() != null){
-						parent.setActiveSidebar('game');
-						Canvas.setActiveCanvas('game', true);
-					}
-                    break;
                 case 'backToMenu':
                     parent.setActiveSidebar('main');
             	    Canvas.setActiveCanvas('main');
                     break;
-				case 'acceptPerson':
-					this.validate();
-					console.log(this.validationMessage);
-					if(this.validationMessage == '') correct();
-					else wrong();
-					break;
+                case 'acceptPerson':
+                    if(!State.isPaused()){
+                        this.validate();
+                        console.log(this.validationMessage);
+                        if(this.validationMessage == '') correct();
+                        else wrong();
+                    }
+                    break;
+
 				case 'declinePerson':
-					this.validate();
-					console.log(this.validationMessage);
-					if(this.validationMessage == '') wrong();
-					else correct();
+                    if(!State.isPaused()){
+                        this.validate();
+    					console.log(this.validationMessage);
+    					if(this.validationMessage == '') wrong();
+    					else correct();
+                    }
+                    break;
                 case 'pause':
-                    Canvas.getActiveCanvas().stop();
+                    if(!State.isPaused()){
+                        Canvas.getActiveCanvas().stop();
+                        State.pause(true);
+                    }
+                    else {
+                        Canvas.getActiveCanvas().resume();
+                        State.pause(false);
+                    }
                     break;
             }
             function hasAttribute(e, name) {

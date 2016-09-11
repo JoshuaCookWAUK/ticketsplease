@@ -16,9 +16,6 @@
 [data-icon="arrow-left"] {
     background-image: url('../images/gfx/icons/arrow-left.png');
 }
-[data-icon="arrow-right"] {
-    background-image: url('../images/gfx/icons/arrow-right.png');
-}
 [data-icon="plus"] {
     background-image: url('../images/gfx/icons/plus.png');
 }
@@ -30,4 +27,7 @@
 }
 [data-icon="pause"] {
     background-image: url('../images/gfx/icons/pause.png');
+}
+[data-icon="resume"] {
+    background-image: url('../images/gfx/icons/resume.png');
 }

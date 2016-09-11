@@ -21,9 +21,6 @@
                 <p>Expert</p>
             </sidebar-item>
 		</sidebar-sub-group>
-        <sidebar-item id="continue-game" data-func="continueGame" data-icon="arrow-right" data-disabled>
-            <p>Continue Game</p>
-        </sidebar-item>
     </sidebar-group>
     </sidebar-group>
 </sidebar-inner>
