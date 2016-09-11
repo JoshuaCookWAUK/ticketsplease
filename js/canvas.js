@@ -1,9 +1,13 @@
 class Canvas {
     static initialise() {
         this.canvas = new Array();
+        this.activeCanvas = -1;
     }
     static addCanvas(name, reference) {
         this.canvas.push({name: name, ref: reference});
+    }
+    static getActiveCanvas() {
+        return this.canvas[this.activeCanvas].ref;
     }
     static setActiveCanvas(name, intialise) {
         var hasCanvas = this.hasCanvas(name);
@@ -14,6 +18,7 @@ class Canvas {
                 this.canvas[hasCanvas.index].ref.initialise();
             }
             this.canvas[hasCanvas.index].ref.resume();
+            this.activeCanvas = hasCanvas.index;
         }
     }
     static hasCanvas(name) {

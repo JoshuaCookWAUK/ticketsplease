@@ -45,11 +45,35 @@ class Input {
         return this.mouseScroll;
     }
     static mouseInBounds(bounds) {
-        if(this.mouseLocation.x > bounds.x1
-    		&& this.mouseLocation.x < bounds.x2
-    		&& this.mouseLocation.y > bounds.y1
-    		&& this.mouseLocation.y < bounds.y2
+        var canvasBounds = Canvas.getActiveCanvas().getBounds();
+        if(this.mouseLocation.x > (canvasBounds.x1 + bounds.x1)
+    		&& this.mouseLocation.x < (canvasBounds.x1 + bounds.x2)
+    		&& this.mouseLocation.y > (canvasBounds.y1 + bounds.y1)
+    		&& this.mouseLocation.y < (canvasBounds.y1 + bounds.y2)
     	) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    static mouseDifference(prevLocation) {
+        var difference = {
+            x: Math.abs(this.mouseLocation.x - prevLocation.x),
+            y: Math.abs(this.mouseLocation.y - prevLocation.y)
+        }
+    	if(prevLocation.x > this.mouseLocation.x) difference.x = -difference.x;
+    	if(prevLocation.y > this.mouseLocation.y) difference.y = -difference.y;
+    	return difference;
+    }
+    static outBoundsX(location, size) {
+        if(location < 0 || (location + size.w) > Canvas.getActiveCanvas().getSize().w) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    static outBoundsY(location, size) {
+        if(location < 0 || (location + size.h) > Canvas.getActiveCanvas().getSize().h) {
             return true;
         } else {
             return false;

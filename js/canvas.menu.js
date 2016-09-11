@@ -6,6 +6,9 @@ class CanvasMenu {
     getBounds() {
         return this.bounds;
     }
+    getSize() {
+        return this.size;
+    }
     stop() {
         clearInterval(this.instance);
     }
@@ -21,6 +24,10 @@ class CanvasMenu {
             x2: $(window).width(),
             y2: $(window).height()
         };
+        this.size = {
+            w: (this.bounds.x2 - this.bounds.x1),
+            h: (this.bounds.y2 - this.bounds.y1)
+        }
         this.$jqhandle.attr('height', (this.bounds.y2 - this.bounds.y1));
         this.$jqhandle.attr('width', (this.bounds.x2 - this.bounds.x1));
     	this.$jqhandle.css({
