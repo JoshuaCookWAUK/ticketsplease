@@ -5,6 +5,7 @@ class Canvas {
     }
     static addCanvas(name, reference) {
         this.canvas.push({name: name, ref: reference});
+        this.canvas[this.canvas.length - 1].ref.initialise();
     }
     static getActiveCanvas() {
         return this.canvas[this.activeCanvas].ref;

@@ -39,7 +39,8 @@ class CanvasMenu {
     render(parent) {
         parent.resize();
         parent.context.clearRect(0, 0, parent.canvas.width, parent.canvas.height);
-        centerTextXY(parent.context, "Welcome to Tickets Please!", "30", parent.bounds, {x:null, y:-10});
-        centerTextXY(parent.context, "To begin a game, select New Game from the menu.", "15", parent.bounds, {x:null, y:10});
+        centerTextXY(parent.context, 'Welcome to Tickets Please!', '#212121', '30', parent.bounds, {x:null, y:-10});
+        centerTextXY(parent.context, 'To begin a game, select New Game from the menu.', '#212121', '15', parent.bounds, {x:null, y:10});
+        centerTextXY(parent.context, "Instructions: Don't let anyone through our borders if they don't have a valid passport and ticket!", '#212121', "15", parent.bounds, {x:null, y:30});
     }
 }

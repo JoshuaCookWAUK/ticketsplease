@@ -34,12 +34,12 @@
 
 
     <sidebar-break></sidebar-break>
-    <sidebar-item id="valid-tickets" data-id="valid-passports" data-icon="plus" data-expandable>
+    <sidebar-item id="valid-passports" data-id="valid-passports" data-icon="plus" data-expandable>
         <p>Valid Passports</p>
     </sidebar-item>
     <sidebar-sub-group data-expanded="false" data-parent="valid-passports">
         <?php while($queryData = $validPassports->fetch_assoc()): ?>
-            <sidebar-item id="passport-<?= $queryData["RegionCode"] ?>" data-func="viewFlag-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
+            <sidebar-item id="validPassport-<?= $queryData["RegionCode"] ?>" data-func="viewFlag-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p id="passport-<?= $queryData["RegionCode"] ?>"><?= $queryData["Country"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
@@ -50,7 +50,7 @@
     <sidebar-sub-group data-expanded="false" data-parent="valid-tickets">
         <?php while($queryData = $validTickets->fetch_assoc()): ?>
             <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-func="viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
-                <p id="validTicket-<?= $queryData['RegionCode']?>" class="<?= str_replace(' ', '', $queryData['Name'])?>"><?= $queryData["Name"] ?></p>
+                <p id="ticket-<?= $queryData['RegionCode']?>" class="<?= str_replace(' ', '', $queryData['Name'])?>"><?= $queryData["Name"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
     </sidebar-sub-group>

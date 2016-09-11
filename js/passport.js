@@ -19,18 +19,20 @@ class Passport{
 			async: false
 		}).responseText;
 
+
 		//Put the database information into a string array called dataArray
 		this.dataArray = this.dataString.split(';');
+		console.log(this.dataArray);
 
 		//Set initial location of passport
 		this.location = {
-			x: 100,
-			y: 100
+			x: 50,
+			y: 50
 		};
         this.locationActual = this.location;
         this.size = {
-            w: 800,
-            h: 500
+            w: 500,
+            h: 298
         };
         this.bounds = {
             x1: this.location.x,
@@ -54,7 +56,7 @@ class Passport{
 	getCountry(){
 		return this.dataArray[2];
 	}
-	getCountryRegionCode(){
+	getRegionCode(){
 		return this.dataArray[3];
 	}
 	getSkinTone(){
@@ -72,9 +74,6 @@ class Passport{
 	getSupplier(){
 		return this.dataArray[8];
 	}
-	getRegionCode(){
-		return this.dataArray[9];
-	}
 
 	//Code to render the passport
 	render(context) {
@@ -85,26 +84,31 @@ class Passport{
 			this.location.y
 		);
 		context.fillStyle = "#212121";
-		context.font = "20px Lucida Console";
+		context.font = "16px Lucida Console";
 		context.fillText(
-			"Name: " + this.dataArray[0],
-			this.location.x + 400,
-			this.location.y + 50
+			this.dataArray[0].split(' ')[0],
+			this.location.x + 216,
+			this.location.y + 70
 		);
 		context.fillText(
-			"Nationality: " + this.dataArray[2],
-			this.location.x + 400,
-			this.location.y + 100
+			this.dataArray[0].split(' ')[1],
+			this.location.x + 216,
+			this.location.y + 120
 		);
 		context.fillText(
-			"Gender: " + this.dataArray[1],
-			this.location.x + 400,
-			this.location.y + 150
+			this.dataArray[2],
+			this.location.x + 216,
+			this.location.y + 170
+		);
+		context.fillText(
+			this.dataArray[1].substring(0, 1).toUpperCase(),
+			this.location.x + 216,
+			this.location.y + 220
 		);
 		context.drawImage(
 			Graphics.getGraphicByName(this.getGender()).image,
-			this.location.x + 30,
-			this.location.y + 30
+			this.location.x + 10,
+			this.location.y + 36
 		);
 	}
     update() {

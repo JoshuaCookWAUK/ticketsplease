@@ -1,9 +1,11 @@
 class CanvasGame {
     constructor() {
         this.resize();
+        this.paused = false;
     }
     initialise() {
         this.desk = new Desk(this);
+        this.paused = false;
     }
     getBounds() {
         return this.bounds;
@@ -12,9 +14,12 @@ class CanvasGame {
         return this.size;
     }
     stop() {
+        this.paused = true;
+        this.render(this);
         clearInterval(this.instance);
     }
     resume() {
+        this.paused = false;
         this.instance = setInterval(()=>{ this.render(this) }, 10);
     }
     resize() {
@@ -42,28 +47,39 @@ class CanvasGame {
         parent.resize();
         parent.context.clearRect(0, 0, parent.canvas.width, parent.canvas.height);
         parent.desk.render(parent.context);
-        if(State.getPassedState() != 2) {
+        if(State.getPassedState() != 2
+            && State.getPassport() != undefined
+            && State.getTicket() != undefined)
+        {
             State.getPassport().render(parent.context);
 		    State.getTicket().render(parent.context);
         }
         if(State.getPassedState() == 0) {
             parent.context.drawImage(
                 Graphics.getGraphicByName('failed').image,
-                (this.getSize().w / 2 - 200),
-                (this.getBounds().y2 / 2 - 200)
+                (parent.getSize().w / 2 - 200),
+                (parent.getBounds().y2 / 2 - 200)
             );
         } else if(State.getPassedState() == 1) {
             parent.context.drawImage(
                 Graphics.getGraphicByName('passed').image,
-                (this.getSize().w / 2 - 200),
-                (this.getBounds().y2 / 2 - 200)
+                (parent.getSize().w / 2 - 200),
+                (parent.getBounds().y2 / 2 - 200)
             );
         } else if(State.getPassedState() == 2) {
             parent.context.drawImage(
                 Graphics.getGraphicByName('fired').image,
-                (this.getSize().w / 2 - 256),
-                (this.getBounds().y2 - 512)
+                (parent.getSize().w / 2 - 256),
+                (parent.getBounds().y2 - 512)
             );
+        }
+        if(parent.paused) {
+        	parent.context.beginPath();
+        	parent.context.fillStyle = "rgba(0, 0, 0, 0.75)";
+        	parent.context.rect(0, 0, parent.size.w, parent.size.h);
+        	parent.context.fill();
+        	parent.context.closePath();
+            centerTextXY(parent.context, 'Paused', '#FEFEFE', '30', parent.bounds, {x:null, y:-10});
         }
     }
 }

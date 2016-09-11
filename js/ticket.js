@@ -43,8 +43,8 @@ class Ticket{
 			this.Name = dataArrayTicket[2];
 		}
 		this.location = {
-			x: 500,
-			y: 500
+			x: 400,
+			y: 200
 		};
         this.locationActual = this.location;
         this.size = {
@@ -86,7 +86,7 @@ class Ticket{
 		if(this.RegionCode == 'hk') return 'Hong Kong';
 		if(this.RegionCode == 'roi') return 'Ireland';
 		if(this.RegionCode == 'esp') return 'Spain';
-		if(this.RegionCode == 'us') return 'United States of America';
+		if(this.RegionCode == 'us') return 'USA';
 		return 'Error: Add region code to getNationality()';
 	}
 	render(context) {
