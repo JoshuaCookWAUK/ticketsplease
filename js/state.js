@@ -35,11 +35,7 @@ class State {
 			this.validationNote = this.validationNote + 'Ticket and Supplier are not consistent.\n';
 			this.valid = false;
 		}
-		clearInterval(this.instance);
-		this.instance = setInterval((e, parent = this)=>{
-			parent.getPass().update();
-			parent.getTicket().update();
-		}, 10);
+		Canvas.getActiveCanvas().resetFiredState();
 	}
 	static isValid() {
 		return this.valid;

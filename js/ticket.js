@@ -37,6 +37,7 @@ class Ticket{
             y2: (this.location.y + this.size.h)
         };
         this.capturedLocation = null;
+		this.approved = -1;
 	}
 	getBounds() {
 		return this.bounds;
@@ -49,6 +50,12 @@ class Ticket{
 	}
 	getName(){
 		return this.Name;
+	}
+	approve() {
+		this.approved = 1;
+	}
+	decline() {
+		this.approved = 0;
 	}
 	getNationality(){
 		if(this.RegionCode == 'gb') return 'Great Britain';
@@ -90,6 +97,19 @@ class Ticket{
 			this.location.x + 653,
 			this.location.y + 100
 		);
+		if(this.approved == 1) {
+			context.drawImage(
+				Graphics.getGraphicByName('stamp-approved').image,
+				this.location.x + 143,
+				this.location.y + 48
+			);
+		} else if(this.approved == 0) {
+			context.drawImage(
+				Graphics.getGraphicByName('stamp-denied').image,
+				this.location.x + 143,
+				this.location.y + 48
+			);
+		}
 	}
     update() {
         if(Input.mouseInBounds(this.getBounds()) && Input.getMouseButtons().lmb) {
