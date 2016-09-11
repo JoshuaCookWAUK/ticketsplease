@@ -1,8 +1,8 @@
 class Desk {
     constructor(canvas) {
         this.graphics = new Array();
-        for(var x = 0; x < Math.ceil(8192 / 512); x++) {
-            for(var y = 0; y < Math.ceil(4096 / 512); y++) {
+        for(var x = 0; x < Math.ceil(2560 / 512); x++) {
+            for(var y = 0; y < Math.ceil(1600 / 512); y++) {
                 var seed = Math.floor(1 + (Math.random() * 12));
                 var src = 'desk' + (seed > 10 ? ((seed - 10)) : '');
                 this.graphics.push({
