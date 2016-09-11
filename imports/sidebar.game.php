@@ -25,7 +25,14 @@
         <sidebar-item data-func="declinePerson" data-icon="decline" data-style="decline">
             <p>Decline</p>
         </sidebar-item>
+        <sidebar-break></sidebar-break>
+        <sidebar-item data-func="pause" data-icon="pause" data-style="pause">
+            <p>Pause</p>
+        </sidebar-item>
     </sidebar-group>
+
+
+
     <sidebar-break></sidebar-break>
     <sidebar-title>
         <h3>Valid Passports</h3>
