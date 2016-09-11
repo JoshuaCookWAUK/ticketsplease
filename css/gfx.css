@@ -27,6 +27,15 @@ images stored locally in 'images'
 [data-icon="flag-esp"] {
     background-image: url('../images/gfx/flags/esp.png');
 }
+[data-icon="flag-us"] {
+    background-image: url('../images/gfx/flags/us.png');
+}
+[data-icon="flag-za"] {
+    background-image: url('../images/gfx/flags/za.png');
+}
+[data-icon="flag-nl"] {
+    background-image: url('../images/gfx/flags/nl.png');
+}
 [data-icon="arrow-left"] {
     background-image: url('../images/gfx/icons/arrow-left.png');
 }
