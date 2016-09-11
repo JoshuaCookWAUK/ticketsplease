@@ -13,6 +13,12 @@
 [data-icon="flag-cn"] {
     background-image: url('../images/gfx/flags/cn.png');
 }
+[data-icon="flag-roi"] {
+    background-image: url('../images/gfx/flags/roi.png');
+}
+[data-icon="flag-us"] {
+    background-image: url('../images/gfx/flags/us.png');
+}
 [data-icon="arrow-left"] {
     background-image: url('../images/gfx/icons/arrow-left.png');
 }
