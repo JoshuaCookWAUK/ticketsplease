@@ -40,7 +40,8 @@ class Ticket{
 		if(this.RegionCode == 'gb') return 'Great Britain';
 		if(this.RegionCode == 'fr') return 'France';
 		if(this.RegionCode == 'de') return 'Germany';
-		if(this.RegionCode == 'hk') return 'China';
+		if(this.RegionCode == 'cn') return 'China';
+		if(this.RegionCode == 'hk') return 'Hong Kong';
 		return 'Error: Add region code to getNationality()';
 	}
 	render(context) {
