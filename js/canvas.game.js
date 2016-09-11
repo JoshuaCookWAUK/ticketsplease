@@ -4,10 +4,6 @@ class CanvasGame {
     }
     initialise() {
         this.desk = new Desk(this);
-        this.isFired = -1;
-    }
-    resetFiredState() {
-        this.isFired = -1;
     }
     getBounds() {
         return this.bounds;
@@ -20,12 +16,6 @@ class CanvasGame {
     }
     resume() {
         this.instance = setInterval(()=>{ this.render(this) }, 10);
-    }
-    fired() {
-        this.isFired = 1;
-    }
-    passed() {
-        this.isFired = 0;
     }
     resize() {
         this.canvasid = 'canvas'
@@ -52,21 +42,28 @@ class CanvasGame {
         parent.resize();
         parent.context.clearRect(0, 0, parent.canvas.width, parent.canvas.height);
         parent.desk.render(parent.context);
-        State.getPass().render(parent.context);
-		State.getTicket().render(parent.context);
-        if(this.isFired == 0) {
-			parent.context.drawImage(
-				Graphics.getGraphicByName('pass').image,
-				(this.getSize().w / 2 - 256),
-				(this.getBounds().y2 - 512)
-			);
+        if(State.getPassedState() != 2) {
+            State.getPassport().render(parent.context);
+		    State.getTicket().render(parent.context);
         }
-        if(this.isFired == 1) {
-			parent.context.drawImage(
-				Graphics.getGraphicByName('fired').image,
-				(this.getSize().w / 2 - 256),
-				(this.getBounds().y2 - 512)
-			);
+        if(State.getPassedState() == 0) {
+            parent.context.drawImage(
+                Graphics.getGraphicByName('failed').image,
+                (this.getSize().w / 2 - 200),
+                (this.getBounds().y2 / 2 - 200)
+            );
+        } else if(State.getPassedState() == 1) {
+            parent.context.drawImage(
+                Graphics.getGraphicByName('passed').image,
+                (this.getSize().w / 2 - 200),
+                (this.getBounds().y2 / 2 - 200)
+            );
+        } else if(State.getPassedState() == 2) {
+            parent.context.drawImage(
+                Graphics.getGraphicByName('fired').image,
+                (this.getSize().w / 2 - 256),
+                (this.getBounds().y2 - 512)
+            );
         }
     }
 }

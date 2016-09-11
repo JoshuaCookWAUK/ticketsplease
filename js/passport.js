@@ -77,22 +77,26 @@ class Passport{
 		);
 		context.fillStyle = "#212121";
 		context.font = "20px Lucida Console";
-			context.fillText(
-				"Name: " + this.dataArray[0],
-				this.location.x + 400,
-				this.location.y + 50
-			);
-
-			context.fillText(
-				"Nationality: " + this.dataArray[2],
-				this.location.x + 400,
-				this.location.y + 100
-			);
-			context.fillText(
-				"Gender: " + this.dataArray[1],
-				this.location.x + 400,
-				this.location.y + 150
-			);
+		context.fillText(
+			"Name: " + this.dataArray[0],
+			this.location.x + 400,
+			this.location.y + 50
+		);
+		context.fillText(
+			"Nationality: " + this.dataArray[2],
+			this.location.x + 400,
+			this.location.y + 100
+		);
+		context.fillText(
+			"Gender: " + this.dataArray[1],
+			this.location.x + 400,
+			this.location.y + 150
+		);
+		context.drawImage(
+			Graphics.getGraphicByName(this.getGender()).image,
+			this.location.x + 30,
+			this.location.y + 30
+		);
 	}
     update() {
         if(Input.mouseInBounds(this.getBounds()) && Input.getMouseButtons().lmb) {

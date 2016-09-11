@@ -1,5 +1,13 @@
+/*
+    Sidebar Class
+    -----
+    This handles anything to do with the sidebar. It handles the dropdown
+    functionality of the menu items and also handles what happens when
+    you accept or decline a ticket or pause the game.
+*/
 class Sidebar {
     static initialise() {
+        this.clickable = true;
         this.setActiveSidebar('main');
         $('html').on('click', 'sidebar-item[data-expandable]', function() {
             $('.sidebar-item').children('expand').removeClass('expanded');
@@ -16,7 +24,6 @@ class Sidebar {
             }
         });
         $('html').on('click', 'sidebar-item', (e, parent = this)=>{
-            console.log(e);
             var action = ['', ''];
             if(hasAttribute(e, 'data-func')) {
                 action = e.currentTarget.attributes['data-func'].value.split('-');
@@ -32,21 +39,15 @@ class Sidebar {
             	    Canvas.setActiveCanvas('main');
                     break;
                 case 'acceptPerson':
-                    if(!State.isPaused()) {
+                    if(!State.isPaused() && this.isClickable()) {
                         State.getTicket().approve();
-                        this.validate();
-                        console.log(this.validationMessage);
-                        if(this.validationMessage == '') correct();
-                        else wrong();
+                        (parent.isValid() ? correct(parent) : wrong(parent));
                     }
                     break;
 				case 'declinePerson':
-                    if(!State.isPaused()) {
+                    if(!State.isPaused() && this.isClickable()) {
                         State.getTicket().decline();
-                        this.validate();
-    					console.log(this.validationMessage);
-    					if(this.validationMessage == '') wrong();
-    					else correct();
+                        (parent.isValid() ? correct(parent) : wrong(parent));
                     }
                     break;
                 case 'pause':
@@ -71,61 +72,54 @@ class Sidebar {
                 }
                 return false;
             }
-            function wrong() {
-				State.score = State.score - 1;
-                Canvas.getActiveCanvas().fired();
-				var w = window.open('','','width=200,height=100,top=400,left=500');
-				if(State.score <= 0) {
-                    Canvas.getActiveCanvas().fired();
-                    w.document.write('Game Over');
+            function wrong(parent) {
+                parent.clickable = false;
+                State.setScore(State.getScore() - 1);
+                if(State.getScore() > 0) {
+                    State.setPassedState(0); // failed
+                } else {
+                    State.setPassedState(2); // fired
                 }
-                else w.document.write('YOU ARE WRONG!');
-                w.focus();
-                setTimeout(function() {
-								w.close();
-								if(State.score > 0) State.recreateGame();
-								else {
-									parent.setActiveSidebar('main');
-									Canvas.setActiveCanvas('main');
-								}
-							}
-							, 1000);
+                setTimeout(()=>{
+                    State.setPassedState(-1); // nothing
+                    if(State.getScore() > 0) {
+                        State.recreateGame();
+                    } else {
+                        parent.setActiveSidebar('main');
+                        Canvas.setActiveCanvas('main');
+                    }
+                    parent.clickable = true;
+                }, (State.getScore() > 0 ? 1000 : 5000));
             }
-            function correct() {
-				//State.score = State.score + 5;
-                Canvas.getActiveCanvas().passed();
-				console.log(State.score);
-                var w = window.open('','','width=200,height=100,top=400,left=500');
-                w.document.write('YOU ARE CORRECT!');
-                w.focus();
-                setTimeout(function() {w.close(); State.recreateGame();}, 1000);
+            function correct(parent) {
+                parent.clickable = false;
+                State.setPassedState(1); // passed
+                setTimeout(()=>{
+                    State.setPassedState(-1); // nothing
+                    State.recreateGame();
+                    parent.clickable = true;
+                }, 1000);
             }
         });
     }
-
-	static validate() {
-		this.valid = State.isValid();
-		this.validationMessage = State.validationNote;
-		if(document.getElementById("passport-gb")==null && State.getPass().getCountryRegionCode()=='gb') {
-			this.validationMessage = this.validationMessage +'false region code gb';
-		}
-		else if(document.getElementById("passport-fr")==null && State.getPass().getCountryRegionCode()=='fr') {
-			this.validationMessage = this.validationMessage +'false region code fr';
-		}
-		else if(document.getElementById("passport-de")==null && State.getPass().getCountryRegionCode()=='de') {
-			this.validationMessage = this.validationMessage +'false region code de';
-		}
-		if(document.getElementById("validTicket-gb")==null && State.getTicket().getRegionCode()=='gb') {
-			this.validationMessage = this.validationMessage +'false ticket code gb';
-		}
-		else if(document.getElementById("validTicket-fr")==null && State.getTicket().getRegionCode()=='fr') {
-			this.validationMessage = this.validationMessage +'false ticket code fr';
-		}
-		else if(document.getElementById("validTicket-de")==null && State.getTicket().getRegionCode()=='de') {
-			this.validationMessage = this.validationMessage +'false ticket code de';
-		}
-	}
-
+    static isClickable() {
+        return this.clickable;
+    }
+    static isValid() {
+        if(document.getElementById("passport-gb") == null && State.getPassport().getCountryRegionCode()=='gb')
+            return false;
+        if(document.getElementById("passport-fr")==null && State.getPassport().getCountryRegionCode()=='fr')
+            return false;
+        if(document.getElementById("passport-de")==null && State.getPassport().getCountryRegionCode()=='de')
+            return false;
+        if(document.getElementById("validTicket-gb")==null && State.getTicket().getRegionCode()=='gb')
+            return false;
+        if(document.getElementById("validTicket-fr")==null && State.getTicket().getRegionCode()=='fr')
+            return false;
+        if(document.getElementById("validTicket-de")==null && State.getTicket().getRegionCode()=='de')
+            return false;
+        return true;
+    }
     static setActiveSidebar(name, params) {
         $.ajax({
             url: 'imports/sidebar.' + name + '.php',

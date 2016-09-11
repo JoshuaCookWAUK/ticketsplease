@@ -1,8 +1,34 @@
+/*
+	Ticket Class
+	-----
+	This stores information about the ticket and is also responsible
+	for the rendering of the ticket.
+*/
 class Ticket{
 	constructor(dataArray) {
+		this.months = [
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'August',
+			'September',
+			'October',
+			'November',
+			'December'
+		];
 		this.SupplierName = dataArray[8];
 		this.RegionCode = dataArray[9];
 		this.Name = dataArray[0];
+		this.FlightNumber = this.SupplierName.substring(0, 3).toUpperCase() + Math.floor(100 + (Math.random() * 999));
+		this.SeatNumber = String.fromCharCode(Math.floor(1 + (Math.random() * 10)) + 64) + Math.floor(1 + (Math.random() * 22) + 27);
+		this.gateNumber = String.fromCharCode(Math.floor(1 + (Math.random() * 7)) + 64) + Math.floor(1 + (Math.random() * 22) + 27);
+		var date = new Date();
+		this.departureDate = this.months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+		this.boardingTime = date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 		this.valid = true;
 		if(Math.random() < 0.05){
 			this.valid = false;
@@ -22,13 +48,13 @@ class Ticket{
 		console.log(this.SupplierName + ' ' + this.RegionCode + ' ' + this.Name);
 
 		this.location = {
-			x: 200,
-			y: 600
+			x: 500,
+			y: 500
 		};
         this.locationActual = this.location;
         this.size = {
-            w: 886,
-            h: 353
+            w: 620,
+            h: 260
         };
         this.bounds = {
             x1: this.location.x,
@@ -74,40 +100,99 @@ class Ticket{
 			this.location.x,
 			this.location.y
 		);
-
 		context.fillStyle = "#212121";
-		context.font = "16px Arial";
+		context.font = "20px Arial";
 		context.fillText(
-			"Name of holder: " + this.Name,
-			this.location.x + 50,
-			this.location.y + 100
+			this.SupplierName,
+			(this.location.x + 101) + ((344 / 2) - (context.measureText(this.SupplierName).width / 2)),
+			(this.location.y + 17) + (43 / 2)
 		);
+		context.font = "14px Arial";
+		// Passenger
 		context.fillText(
-			"Supplier: " + this.SupplierName,
-			this.location.x + 50,
-			this.location.y + 150
+			this.Name,
+			this.location.x + 30,
+			this.location.y + 94
 		);
+		// Passenger
 		context.fillText(
-			"Country: " + this.getNationality(),
-			this.location.x + 50,
+			this.Name,
+			this.location.x + 451,
+			this.location.y + 94
+		);
+		// Departure Date
+		context.fillText(
+			this.departureDate,
+			this.location.x + 200,
+			this.location.y + 94
+		);
+		context.font = "20px Arial";
+		// Flight Number LHS
+		context.fillText(
+			this.FlightNumber,
+			this.location.x + 29,
+			this.location.y + 143
+		);
+		// Departure Airport
+		context.fillText(
+			this.getNationality(),
+			this.location.x + 130,
+			this.location.y + 143
+		);
+		// Boarding Time Top
+		context.fillText(
+			this.boardingTime,
+			this.location.x + 285,
+			this.location.y + 143
+		);
+		// Boarding Time Bottom
+		context.fillText(
+			this.boardingTime,
+			this.location.x + 328,
 			this.location.y + 200
 		);
+		// Boarding Time RHS
 		context.fillText(
-			"Name: " + this.Name,
-			this.location.x + 653,
-			this.location.y + 100
+			this.boardingTime,
+			this.location.x + 450,
+			this.location.y + 157
+		);
+		// Gate Number
+		context.fillText(
+			this.gateNumber,
+			this.location.x + 384,
+			this.location.y + 143
+		);
+		// Where's my seat LHS?
+		context.fillText(
+			this.SeatNumber,
+			this.location.x + 130,
+			this.location.y + 200
+		);
+		// Where's my seat RHS?
+		context.fillText(
+			this.SeatNumber,
+			this.location.x + 450,
+			this.location.y + 215
+		);
+		context.fillStyle = "#FEFEFE";
+		// Flight Number RHS
+		context.fillText(
+			this.FlightNumber,
+			(this.location.x + 445) + ((165 / 2) - (context.measureText(this.FlightNumber).width / 2)),
+			(this.location.y + 17) + (43 / 2)
 		);
 		if(this.approved == 1) {
 			context.drawImage(
 				Graphics.getGraphicByName('stamp-approved').image,
-				this.location.x + 143,
-				this.location.y + 48
+				this.location.x + (this.size.w / 2) - 150,
+				this.location.y + (this.size.h / 2) - 64
 			);
 		} else if(this.approved == 0) {
 			context.drawImage(
 				Graphics.getGraphicByName('stamp-denied').image,
-				this.location.x + 143,
-				this.location.y + 48
+				this.location.x + (this.size.w / 2) - 150,
+				this.location.y + (this.size.h / 2) - 64
 			);
 		}
 	}
