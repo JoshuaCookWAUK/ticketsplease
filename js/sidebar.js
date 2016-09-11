@@ -148,6 +148,9 @@ class Sidebar {
         else if(document.getElementById("validTicket-cn")==null && State.getTicket().getRegionCode()=='cn') {
             this.validationMessage = this.validationMessage +'false ticket code cn';
         }
+		if(document.getElementsByClassName(State.getTicket().getSupplier().replace(/\s+/g, ''))==null){
+			this.validationMessage = this.validationMessage +'Supplier not in valid tickets';
+		}
 	}
 
     static setActiveSidebar(name, params) {

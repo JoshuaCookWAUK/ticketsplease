@@ -50,7 +50,7 @@
     <sidebar-sub-group data-expanded="false" data-parent="valid-tickets">
         <?php while($queryData = $validTickets->fetch_assoc()): ?>
             <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-func="viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
-                <p id="validTicket-<?= $queryData['RegionCode'].' '.str_replace(' ', '', $queryData['Name'])?>"><?= $queryData["Name"] ?></p>
+                <p id="validTicket-<?= $queryData['RegionCode']?>" class="<?= str_replace(' ', '', $queryData['Name'])?>"><?= $queryData["Name"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
     </sidebar-sub-group>
