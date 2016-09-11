@@ -75,12 +75,12 @@ sidebar-item:not([data-disabled]):hover {
     opacity: 1;
 }
 
-#accept-button:hover {
+sidebar-item[data-style="accept"]:hover {
     background-color: green;
     opacity: 1;
 }
 
-#decline-button:hover {
+sidebar-item[data-style="decline"]:hover {
     background-color: red;
     opacity: 1;
 }

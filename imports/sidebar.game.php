@@ -18,10 +18,10 @@
     </sidebar-group>
     <sidebar-break></sidebar-break>
     <sidebar-group id="sidebar-group-buttons">
-        <sidebar-item id="accept-button" data-func="acceptPerson" data-icon="accept">
+        <sidebar-item data-func="acceptPerson" data-icon="accept" data-style="accept">
             <p>Accept</p>
         </sidebar-item>
-        <sidebar-item id="decline-button" data-func="declinePerson" data-icon="decline">
+        <sidebar-item data-func="declinePerson" data-icon="decline" data-style="decline">
             <p>Decline</p>
         </sidebar-item>
     </sidebar-group>
