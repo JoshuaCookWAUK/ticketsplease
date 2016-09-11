@@ -36,15 +36,22 @@ class Ticket{
 	getName(){
 		return this.Name;
 	}
+	getNationality(){
+		if(this.RegionCode == 'gb') return 'Great Britain';
+		if(this.RegionCode == 'fr') return 'France';
+		if(this.RegionCode == 'de') return 'Germany';
+		if(this.RegionCode == 'hk') return 'China';
+		return 'Error: Add region code to getNationality()';
+	}
 	render(context) {
-		context.beginPath();
-		context.fillStyle = "#fefefe";
-		context.rect(this.location.x, this.location.y, 1000, 200);
-		context.fill();
-		context.closePath();
+		context.drawImage(
+			Graphics.getGraphicByName('ticket').image,
+			this.location.x,
+			this.location.y
+		);
 		
 		context.fillStyle = "#212121";
-		context.font = "20px Arial";
+		context.font = "16px Arial";
 		context.fillText(
 			"Name of holder: " + this.Name,
 			this.location.x + 50,
@@ -53,12 +60,17 @@ class Ticket{
 		context.fillText(
 			"Supplier: " + this.SupplierName,
 			this.location.x + 50,
-			this.location.y + 50
+			this.location.y + 150
 		);
 		context.fillText(
-			"RegionCode: " + this.RegionCode,
-			this.location.x + 500,
-			this.location.y + 50
+			"Country: " + this.getNationality(),
+			this.location.x + 50,
+			this.location.y + 200
+		);
+		context.fillText(
+			"Name: " + this.Name,
+			this.location.x + 653,
+			this.location.y + 100
 		);
 	}
 }
