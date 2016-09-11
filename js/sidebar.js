@@ -22,17 +22,29 @@ class Sidebar {
 					this.validate();
 					console.log(this.validationMessage);
 					if(this.validationMessage == '') console.log('Correct');
-					else console.log('Wrong');
+					else wrong();
 					break;
 				case 'declinePerson':
 					this.validate();
 					console.log(this.validationMessage);
 					if(this.validationMessage == '') console.log('Wrong');
-					else console.log('Correct');
+					else correct();
+            }
+            function wrong(){
+                var w = window.open('','','width=100,height=100');
+                w.document.write('YOU ARE WRONG!');
+                w.focus();
+                setTimeout(function() {w.close();}, 5000);
+            }
+            function correct(){
+                var w = window.open('','','width=100,height=100');
+                w.document.write('YOU ARE CORRECT!');
+                w.focus();
+                setTimeout(function() {w.close();}, 5000);
             }
         });
     }
-	
+
 	static validate(){
 		this.valid = State.isValid();
 		this.validationMessage = State.validationNote;
