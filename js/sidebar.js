@@ -29,6 +29,9 @@ class Sidebar {
 					console.log(this.validationMessage);
 					if(this.validationMessage == '') wrong();
 					else correct();
+                case 'pause':
+                    Canvas.getActiveCanvas().stop();
+                    break;
             }
             function wrong(){
 				State.score = State.score - 1;
@@ -37,7 +40,7 @@ class Sidebar {
                 else w.document.write('YOU ARE WRONG!');
                 w.focus();
                 setTimeout(function() {
-								w.close(); 
+								w.close();
 								if(State.score > 0) State.recreateGame();
 								else{
 									parent.setActiveSidebar('main');
