@@ -34,24 +34,24 @@
 
 
     <sidebar-break></sidebar-break>
-    <sidebar-title>
-        <h3>Valid Passports</h3>
-    </sidebar-title>
-    <sidebar-group id="sidebar-group-passports">
+    <sidebar-item id="valid-tickets" data-id="valid-passports" data-icon="plus" data-expandable>
+        <p>Valid Passports</p>
+    </sidebar-item>
+    <sidebar-sub-group data-expanded="false" data-parent="valid-passports">
         <?php while($queryData = $validPassports->fetch_assoc()): ?>
             <sidebar-item id="passport-<?= $queryData["RegionCode"] ?>" data-func="viewFlag-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p id="passport-<?= $queryData["RegionCode"] ?>"><?= $queryData["Country"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
-    </sidebar-group>
-    <sidebar-title>
-        <h3>Valid Tickets</h3>
-    </sidebar-title>
-    <sidebar-group id="sidebar-group-ticket">
+    </sidebar-sub-group>
+    <sidebar-item id="valid-tickets" data-id="valid-tickets" data-icon="plus" data-expandable>
+        <p>Valid Tickets</p>
+    </sidebar-item>
+    <sidebar-sub-group data-expanded="false" data-parent="valid-tickets">
         <?php while($queryData = $validTickets->fetch_assoc()): ?>
             <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-func="viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p id="validTicket-<?= $queryData['RegionCode'] ?>"><?= $queryData["Name"] ?></p>
             </sidebar-item>
         <?php endwhile; ?>
-    </sidebar-group>
+    </sidebar-sub-group>
 </sidebar-inner>
