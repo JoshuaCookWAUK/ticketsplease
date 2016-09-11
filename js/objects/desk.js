@@ -1,5 +1,11 @@
+/*
+	Desk Class
+	-----
+	Stores the desk object.
+*/
 class Desk {
     constructor(canvas) {
+        /* Create a new random assortment of tiles for the desk. */
         this.graphics = new Array();
         for(var x = 0; x < Math.ceil(2560 / 512); x++) {
             for(var y = 0; y < Math.ceil(1600 / 512); y++) {

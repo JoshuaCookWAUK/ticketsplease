@@ -6,9 +6,11 @@
     you accept or decline a ticket or pause the game.
 */
 class Sidebar {
+    /* Initialise the sidebar. */
     static initialise() {
         this.clickable = true;
         this.setActiveSidebar('main');
+        /* Sidebar item click event. */
         $('html').on('click', 'sidebar-item[data-expandable]', function() {
             $('.sidebar-item').children('expand').removeClass('expanded');
             $('.sidebar-sub-group:not([data-parent=' + $(this).attr('data-id') + '])').each(function() {
@@ -28,6 +30,7 @@ class Sidebar {
             if(hasAttribute(e, 'data-func')) {
                 action = e.currentTarget.attributes['data-func'].value.split('-');
             }
+            /* Check what the value of action is. */
             switch(action[0]) {
                 case "newGame":
                     parent.setActiveSidebar('game');
@@ -64,6 +67,7 @@ class Sidebar {
                     }
                     break;
             }
+            /* Does the element have the specified attribute? */
             function hasAttribute(e, name) {
                 for(var i = 0; i < e.currentTarget.attributes.length; i++) {
                     if(e.currentTarget.attributes[i].name == name) {
@@ -72,6 +76,7 @@ class Sidebar {
                 }
                 return false;
             }
+            /* Player was wrong. */
             function wrong(parent) {
                 parent.clickable = false;
                 State.setScore(State.getScore() - 1);
@@ -91,6 +96,7 @@ class Sidebar {
                     parent.clickable = true;
                 }, (State.getScore() > 0 ? 1000 : 5000));
             }
+            /* Player was correct. */
             function correct(parent) {
                 parent.clickable = false;
                 State.setPassedState(1); // passed
@@ -102,9 +108,11 @@ class Sidebar {
             }
         });
     }
+    /* Check to see if accept / decline buttons clickable. */
     static isClickable() {
         return this.clickable;
     }
+    /* Check to see if the passport / ticket is allowed. */
     static isValid() {
         if(document.getElementById('validPassport-' + State.getPassport().getRegionCode()) == null)
 			return false;
@@ -112,6 +120,7 @@ class Sidebar {
 			return false;
         return true;
     }
+    /* Set the active sidebar. */
     static setActiveSidebar(name, params) {
         $.ajax({
             url: 'imports/sidebar.' + name + '.php',

@@ -1,3 +1,9 @@
+/*
+	utilCanvasHelper
+	-----
+	Used to help with certain canvas tasks so that you don't have to
+	use the same code.
+*/
 function centerTextXY(context, text, colour, size, bounds, offset) {
 	context.fillStyle = colour;
 	context.font = size + "px Arial";

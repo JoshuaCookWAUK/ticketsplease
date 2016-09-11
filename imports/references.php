@@ -12,7 +12,6 @@
 <script src="js/ticket.js"></script>
 <script src="js/sidebar.js"></script>
 <script src="js/utils/utilCanvasHelper.js"></script>
-<script src="js/utils/utilSizes.js"></script>
 <!-- CSS -->
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 <link type="text/css" rel="stylesheet" href="css/sidebar.css" />

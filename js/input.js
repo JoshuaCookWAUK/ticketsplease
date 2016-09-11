@@ -1,4 +1,10 @@
+/*
+	Input Class
+	-----
+	Handles mouse inputs and provides some useful mouse functions.
+*/
 class Input {
+    /* Initialsie all of the event listeners. */
     static initialise() {
         this.mouseLocation = {x: -1, y: -1};
         this.mouseButtons = {lmb: false, mmb: false, rmb: false};
@@ -35,15 +41,19 @@ class Input {
             }
         });
     }
+    /* Return the mouse location. */
     static getMouseLocation() {
         return this.mouseLocation;
     }
+    /* Get the state of the mouse buttons. */
     static getMouseButtons() {
         return this.mouseButtons;
     }
+    /* Get the delta valeus of the mouse scroll. */
     static getMouseScroll() {
         return this.mouseScroll;
     }
+    /* Check to see if the mouse is within a given boundary. */
     static mouseInBounds(bounds) {
         var canvasBounds = Canvas.getActiveCanvas().getBounds();
         if(this.mouseLocation.x > (canvasBounds.x1 + bounds.x1)
@@ -56,15 +66,17 @@ class Input {
             return false;
         }
     }
-    static mouseDifference(prevLocation) {
+    /* Get the difference between a given location and the mouse location. */
+    static mouseDifference(location) {
         var difference = {
-            x: Math.abs(this.mouseLocation.x - prevLocation.x),
-            y: Math.abs(this.mouseLocation.y - prevLocation.y)
+            x: Math.abs(this.mouseLocation.x - location.x),
+            y: Math.abs(this.mouseLocation.y - location.y)
         }
-    	if(prevLocation.x > this.mouseLocation.x) difference.x = -difference.x;
-    	if(prevLocation.y > this.mouseLocation.y) difference.y = -difference.y;
+    	if(location.x > this.mouseLocation.x) difference.x = -difference.x;
+    	if(location.y > this.mouseLocation.y) difference.y = -difference.y;
     	return difference;
     }
+    /* Check to see if an element is out of the bounds on X. */
     static outBoundsX(location, size) {
         if(location < 0 || (location + size.w) > Canvas.getActiveCanvas().getSize().w) {
             return true;
@@ -72,6 +84,7 @@ class Input {
             return false;
         }
     }
+    /* Check to see if an element is out of the bounds on Y. */
     static outBoundsY(location, size) {
         if(location < 0 || (location + size.h) > Canvas.getActiveCanvas().getSize().h) {
             return true;

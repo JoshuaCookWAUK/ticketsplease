@@ -1,20 +1,32 @@
+/*
+	CanvasMenu Class
+	-----
+	The canvas for the menu.
+*/
 class CanvasMenu {
+    /* Default constructor. */
     constructor() {
         this.resize();
     }
+    /* Initialise the canvas. */
     initialise() {}
+    /* Get the bounds of the canvas. */
     getBounds() {
         return this.bounds;
     }
+    /* Get the size of the canvas. */
     getSize() {
         return this.size;
     }
+    /* Pause the canvas on the current frame. */
     stop() {
         clearInterval(this.instance);
     }
+    /* Resume the canvas rendering. */
     resume() {
         this.instance = setInterval(()=>{ this.render(this) }, 10);
     }
+    /* Work out the canvas size, bounds and resize the canvas. */
     resize() {
         this.canvasid = 'canvas'
         this.$jqhandle = $('#canvas');
@@ -36,6 +48,7 @@ class CanvasMenu {
     	this.canvas = document.getElementById(this.canvasid);
     	this.context = this.canvas.getContext("2d");
     }
+    /* Render the canvas. */
     render(parent) {
         parent.resize();
         parent.context.clearRect(0, 0, parent.canvas.width, parent.canvas.height);

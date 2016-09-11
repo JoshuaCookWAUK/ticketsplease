@@ -1,3 +1,8 @@
+/*
+	Input Class
+	-----
+	Handles mouse inputs and provides some useful mouse functions.
+*/
 class Passport{
 	/*	var dataArray - stores information about returned persons.
 		dataArray[0] = Name
@@ -11,6 +16,7 @@ class Passport{
 		dataArray[8] = Supplier
 		dataArray[9] = RegionCode
 	*/
+	/* Default constructor. */
 	constructor() {
 		//Call database to get the person and supplier info
 		this.dataString = $.ajax({
@@ -43,41 +49,48 @@ class Passport{
         this.capturedLocation = null;
     }
 
-	//A collection of methods that pass information about the passport from dataArray
+	/* Get the bounds of the passport. */
 	getBounds() {
 		return this.bounds;
 	}
+	/* Get the persons name. */
 	getName(){
 		return this.dataArray[0];
 	}
+	/* Get the persons gender. */
 	getGender(){
 		return this.dataArray[1];
 	}
+	/* Get the persons nationality. */
 	getCountry(){
 		return this.dataArray[2];
 	}
+	/* Get the region code of the nationaltiy. */
 	getRegionCode(){
 		return this.dataArray[3];
 	}
+	/* Get the skin tone of the person. */
 	getSkinTone(){
 		return this.dataArray[4];
 	}
+	/* Get additional notes. */
 	getNotes(){
 		return this.dataArray[5];
 	}
+	/* Get the issue date of the ticket. */
 	getissueDate(){
 		return this.dataArray[6];
 	}
+	/* Get the expiry date of the passport. */
 	getexpiryDate(){
 		return this.dataArray[7];
 	}
+	/* ? */
 	getSupplier(){
 		return this.dataArray[8];
 	}
-
-	//Code to render the passport
+	/* Render the passport. */
 	render(context) {
-		//Draw the passport graphic
 		context.drawImage(
 			Graphics.getGraphicByName('passport').image,
 			this.location.x,
@@ -111,6 +124,7 @@ class Passport{
 			this.location.y + 36
 		);
 	}
+	/* Anything that wants to be updated every frame. */
     update() {
         if(Input.mouseInBounds(this.getBounds()) && Input.getMouseButtons().lmb) {
             if(this.capturedLocation == null)
