@@ -62,11 +62,22 @@ class Passport{
 			this.location.y
 		);
 		context.fillStyle = "#212121";
-		context.font = "20px Arial";
-		context.fillText(
-			"Some Text",
-			this.location.x + 100,
-			this.location.y + 100
-		);
+		context.font = "20px Lucida Console";
+			context.fillText(
+				"Name: " + this.dataArray[0],
+				this.location.x + 400,
+				this.location.y + 50
+			);
+
+			context.fillText(
+				"Nationality: " + this.dataArray[2],
+				this.location.x + 400,
+				this.location.y + 100
+			);
+			context.fillText(
+				"Gender: " + this.dataArray[1],
+				this.location.x + 400,
+				this.location.y + 150
+			);
 	}
 }
