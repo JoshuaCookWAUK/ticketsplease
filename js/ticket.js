@@ -19,6 +19,7 @@ class Ticket{
 			else if(rand<0.66) this.RegionCode = dataArrayTicket[1];
 			else this.Name = dataArrayTicket[2];
 		}
+		console.log(this.SupplierName + ' ' + this.RegionCode + ' ' + this.Name);
 	}
     
 	getSupplier(){
