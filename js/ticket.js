@@ -20,6 +20,12 @@ class Ticket{
 			else this.Name = dataArrayTicket[2];
 		}
 		console.log(this.SupplierName + ' ' + this.RegionCode + ' ' + this.Name);
+		
+		this.location = {
+			x: 200,
+			y: 600
+		};
+		
 	}
     
 	getSupplier(){
@@ -30,5 +36,20 @@ class Ticket{
 	}
 	getName(){
 		return this.Name;
+	}
+	render(context) {
+		context.beginPath();
+		context.fillStyle = "#fefefe";
+		context.rect(this.location.x, this.location.y, 1000, 200);
+		context.fill();
+		context.closePath();
+		
+		context.fillStyle = "#212121";
+		context.font = "20px Arial";
+		context.fillText(
+			"Name: " + this.Name,
+			this.location.x + 50,
+			this.location.y + 50
+		);
 	}
 }
