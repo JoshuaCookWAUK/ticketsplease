@@ -1,12 +1,10 @@
-
-
 <?php
     /* connection details */
     include "../php/credentials.php";
     $validPassportCONN = getConnection();
     $validPassportCONN->query("SET @param  = ".(string)rand(1,2));
     $validPassports = $validPassportCONN->query("CALL spValidNatGet(@param)");
-	$randomTicketAmount = rand(5,11);
+	$randomTicketAmount = rand(2, 6);
     $validTicketCONN = getConnection();
     $validTicketCONN->query("SET @ticketAmount  = ".(string)$randomTicketAmount);
     $validTickets = $validTicketCONN->query("CALL spValidTicketGet(@ticketAmount)");
@@ -42,31 +40,20 @@
         <p>Valid Passports</p>
     </sidebar-item>
     <sidebar-sub-group data-expanded="false" data-parent="valid-passports">
-        <?php
-            /* get valid passports information until its populated. */
-            while($queryData = $validPassports->fetch_assoc()):
-        ?>
+        <?php while($queryData = $validPassports->fetch_assoc()): /* get valid passports information until its populated. */ ?>
             <sidebar-item id="validPassport-<?= $queryData["RegionCode"] ?>" data-func="viewFlag-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p id="passport-<?= $queryData["RegionCode"] ?>"><?= $queryData["Country"] ?></p>
             </sidebar-item>
-
-        <?php
-            endwhile;
-        ?>
+        <?php endwhile; ?>
     </sidebar-sub-group>
     <sidebar-item id="valid-tickets" data-id="valid-tickets" data-icon="plus" data-expandable>
         <p>Valid Tickets</p>
     </sidebar-item>
     <sidebar-sub-group data-expanded="false" data-parent="valid-tickets">
-        <?php
-            /* get valid tickets information until its populated */
-            while($queryData = $validTickets->fetch_assoc()):
-        ?>
+        <?php while($queryData = $validTickets->fetch_assoc()): /* get valid tickets information until its populated */ ?>
             <sidebar-item id="validTicket-<?= $queryData["RegionCode"] ?>" data-func="viewTicket-<?= $queryData["RegionCode"] ?>" data-icon="flag-<?= $queryData["RegionCode"] ?>">
                 <p id="ticket-<?= $queryData['RegionCode']?>" class="<?= str_replace(' ', '', $queryData['Name'])?>"><?= $queryData["Name"] ?></p>
             </sidebar-item>
-        <?php
-            endwhile;
-        ?>
+        <?php endwhile; ?>
     </sidebar-sub-group>
 </sidebar-inner>

@@ -33,18 +33,14 @@ class Ticket{
 		this.departureDate = this.months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 		this.boardingTime = date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 		this.valid = true;
-		//random probability of different requirements showing
-		if(Math.random() < 0.05){
-			this.valid = false;
-			this.data = $.ajax({
+		this.valid = false;
+		this.data = $.ajax({
 			url: 'ajax/ajaxGetRandomReqs.php',
 			type: 'GET',
 			async: false
-			}).responseText;
-
-			var dataArrayTicket = this.data.split(';');
-			this.Name = dataArrayTicket[2];
-		}
+		}).responseText;
+		var dataArrayTicket = this.data.split(';');
+		this.Name = dataArrayTicket[2];
 		this.location = {
 			x: 400,
 			y: 200
