@@ -1,3 +1,8 @@
+/*
+data icons to set each flag to the nationality given
+images stored locally in 'images'
+*/
+
 [data-icon="flag-gb"] {
     background-image: url('../images/gfx/flags/gb.png');
 }

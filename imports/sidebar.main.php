@@ -2,6 +2,7 @@
     include "../php/credentials.php";
     $query = mysqli_query(getConnection(), "SELECT * FROM nationality");
 ?>
+<!-- basic sidebar layout for main menu -->
 <sidebar-header>
     <h3>Tickets Please!</h3>
 </sidebar-header>

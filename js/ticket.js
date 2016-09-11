@@ -5,6 +5,8 @@
 	for the rendering of the ticket.
 */
 class Ticket{
+	//create array for months so when using getMonth
+	//the integer returned can be pointing to the index of the array
 	constructor(dataArray) {
 		this.months = [
 			'January',
@@ -20,6 +22,7 @@ class Ticket{
 			'November',
 			'December'
 		];
+		//declare variables
 		this.SupplierName = dataArray[8];
 		this.RegionCode = dataArray[9];
 		this.Name = dataArray[0];
@@ -30,9 +33,9 @@ class Ticket{
 		this.departureDate = this.months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 		this.boardingTime = date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 		this.valid = true;
+		//random probability of different requirements showing
 		if(Math.random() < 0.05){
 			this.valid = false;
-
 			this.data = $.ajax({
 			url: 'ajax/ajaxGetRandomReqs.php',
 			type: 'GET',
@@ -89,6 +92,7 @@ class Ticket{
 		if(this.RegionCode == 'us') return 'USA';
 		return 'Error: Add region code to getNationality()';
 	}
+	/* rendering instead of putting rendering all the canvas all the time. */
 	render(context) {
 		context.drawImage(
 			Graphics.getGraphicByName('ticket').image,
@@ -103,75 +107,75 @@ class Ticket{
 			(this.location.y + 17) + (43 / 2)
 		);
 		context.font = "14px Arial";
-		// Passenger
+		/* Passenger */
 		context.fillText(
 			this.Name,
 			this.location.x + 30,
 			this.location.y + 94
 		);
-		// Passenger
+		/* Passenger */
 		context.fillText(
 			this.Name,
 			this.location.x + 451,
 			this.location.y + 94
 		);
-		// Departure Date
+		/* Departure Date */
 		context.fillText(
 			this.departureDate,
 			this.location.x + 200,
 			this.location.y + 94
 		);
 		context.font = "20px Arial";
-		// Flight Number LHS
+		/* Flight Number LHS */
 		context.fillText(
 			this.FlightNumber,
 			this.location.x + 29,
 			this.location.y + 143
 		);
-		// Departure Airport
+		/* Departure Airport */
 		context.fillText(
 			this.getNationality(),
 			this.location.x + 130,
 			this.location.y + 143
 		);
-		// Boarding Time Top
+		/* Boarding Time Top */
 		context.fillText(
 			this.boardingTime,
 			this.location.x + 285,
 			this.location.y + 143
 		);
-		// Boarding Time Bottom
+		/* Boarding Time Bottom */
 		context.fillText(
 			this.boardingTime,
 			this.location.x + 328,
 			this.location.y + 200
 		);
-		// Boarding Time RHS
+		/* Boarding Time RHS */
 		context.fillText(
 			this.boardingTime,
 			this.location.x + 450,
 			this.location.y + 157
 		);
-		// Gate Number
+		/* Gate Number */
 		context.fillText(
 			this.gateNumber,
 			this.location.x + 384,
 			this.location.y + 143
 		);
-		// Where's my seat LHS?
+		/* Where's my seat LHS? */
 		context.fillText(
 			this.SeatNumber,
 			this.location.x + 130,
 			this.location.y + 200
 		);
-		// Where's my seat RHS?
+		/* Where's my seat RHS? */
 		context.fillText(
 			this.SeatNumber,
 			this.location.x + 450,
 			this.location.y + 215
 		);
 		context.fillStyle = "#FEFEFE";
-		// Flight Number RHS
+		/* Flight Number RHS */
 		context.fillText(
 			this.FlightNumber,
 			(this.location.x + 445) + ((165 / 2) - (context.measureText(this.FlightNumber).width / 2)),
@@ -191,6 +195,7 @@ class Ticket{
 			);
 		}
 	}
+	/* Anything that wants to be updated every frame */
     update() {
         if(Input.mouseInBounds(this.getBounds()) && Input.getMouseButtons().lmb) {
             if(this.capturedLocation == null)

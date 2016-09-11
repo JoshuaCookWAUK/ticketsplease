@@ -27,8 +27,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spPersonGet` ()  NO SQL
 BEGIN
 
-	
-
+--declare variables
 	DECLARE 	p_nameRand 		INT;
     DECLARE 	p_lastnameRand	INT;
 	DECLARE  	p_natRand 		INT;
@@ -42,82 +41,82 @@ BEGIN
 	DECLARE   	p1				INT DEFAULT 0;
 	DECLARE		issueDate		DateTime;
 	DECLARE   	expiryDate		DateTime;
-  
-		SET p_nameRand =	(	SELECT	floor(1+rand()*count(*)) 
+
+	SET p_nameRand =	(	SELECT	floor(1+rand()*count(*))
 							FROM 	name);
-    SET p_lastnameRand =(	SELECT 	floor(1+rand()*count(*)) 
+    SET p_lastnameRand =(	SELECT 	floor(1+rand()*count(*))
 							FROM 	lastname);
-	SET p_natRand = 	(	SELECT 	floor(1+rand()*count(*)) 
+	SET p_natRand = 	(	SELECT 	floor(1+rand()*count(*))
 							FROM 	nationality);
-	SET p_skinRand = 	(	SELECT 	floor(1+rand()*count(*)) 
+	SET p_skinRand = 	(	SELECT 	floor(1+rand()*count(*))
 							FROM 	skintone);
-	SET p_noteRand = 	(	SELECT 	floor(1+rand()*count(*)) 
+	SET p_noteRand = 	(	SELECT 	floor(1+rand()*count(*))
 							FROM 	notes);
-    SET p_supplierRand =(	SELECT 	floor(1+rand()*count(*)) 
+    SET p_supplierRand =(	SELECT 	floor(1+rand()*count(*))
 							FROM 	supplier);
-    SET p_hairRand = 	(	SELECT 	floor(1+rand()*count(*)) 
+    SET p_hairRand = 	(	SELECT 	floor(1+rand()*count(*))
 							FROM 	hairstyle);
-                            
-		SET p_noteCount = 	(	SELECT 	count(*) 
+
+		SET p_noteCount = 	(	SELECT 	count(*)
 							FROM 	notes);
-	SET p_noteAmount = 	(	SELECT 	floor(1+RAND()*5));
-    
+		SET p_noteAmount = 	(	SELECT 	floor(1+RAND()*5));
+
     	SET issueDate = 	TIMESTAMPADD(SECOND
 									, FLOOR(RAND() * TIMESTAMPDIFF(SECOND
 																   , '2011-01-01 00:00:00', '2016-12-31 00:00:00'))
 									, '2011-01-01 00:00:00');
 	SET expiryDate = 	DATE_ADD(issueDate
 								, INTERVAL 5 YEAR);
-  
+
 		concatNotes: LOOP
 		SET p1 = p1 + 1;
 		if p1 < p_noteAmount 	THEN
 			SET p_noteRand = 	(SELECT floor(1+rand()*p_noteCount));
-			SET p_note = 		CONCAT(p_note, (SELECT Notes 
-												FROM notes 
+			SET p_note = 		CONCAT(p_note, (SELECT Notes
+												FROM notes
 												WHERE ID = p_noteRand));
 			SET p_note = 		CONCAT(p_note, ':');
 			ITERATE concatNotes;
 		END IF;
 		LEAVE concatNotes;
 	END LOOP concatNotes;
-    
-    	INSERT INTO person (NameID, 
-						lastnameID, 
-						NationalityID, 
-						SkinToneID, 
-						HairID, 
-						SupplierID, 
-						Notes, 
-						IssueDate, 
-						ExpiryDate
-	)VALUES (p_nameRand , 
-			p_lastnameRand, 
-            p_natRand, 
-            p_skinRand, 
-            p_hairRand, 
-            p_supplierRand, 
-            p_note, 
-            issueDate, 
-            expiryDate);
-  
-		
-	SELECT 	CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, 
-			nam.Gender, 
-            nat.Country, 
-            nat.RegionCode as natRegionCode, 
-            st.SkinTone, 
-            p_note as Notes, 
-            issueDate, 
-            expiryDate, 
-            sup.Name as Supplier, 
+
+	INSERT INTO person (NameID,
+				lastnameID,
+				NationalityID,
+				SkinToneID,
+				HairID,
+				SupplierID,
+				Notes,
+				IssueDate,
+				ExpiryDate
+		)VALUES (p_nameRand ,
+				p_lastnameRand,
+	            p_natRand,
+	            p_skinRand,
+	            p_hairRand,
+	            p_supplierRand,
+	            p_note,
+	            issueDate,
+	            expiryDate);
+
+
+	SELECT 	CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name,
+			nam.Gender,
+            nat.Country,
+            nat.RegionCode as natRegionCode,
+            st.SkinTone,
+            p_note as Notes,
+            issueDate,
+            expiryDate,
+            sup.Name as Supplier,
             sup.RegionCode
-	FROM 	name nam, 
-			Nationality nat, 
-            skintone st, 
-            lastname lst, 
+	FROM 	name nam,
+			Nationality nat,
+            skintone st,
+            lastname lst,
             supplier sup
-	WHERE 	nam.ID = p_nameRand 
+	WHERE 	nam.ID = p_nameRand
 	AND 	nat.ID = p_natRand
 	AND 	st.ID = p_skinRand
     AND		lst.ID = p_lastnameRand
@@ -126,22 +125,22 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
 
-	
+
 
 		DECLARE 	p_nameRand 		INT;
     DECLARE 	p_lastnameRand	INT;
-    
+
     	DECLARE 	natCount 		INT;
-    
+
         DECLARE 	whileCount 		INT;
-		
-    SET 		natCount = (		SELECT count(*) 
+
+    SET 		natCount = (		SELECT count(*)
 									FROM supplier);
-	SET			p_nameRand = (		SELECT floor(1+rand()*count(*)) 
+	SET			p_nameRand = (		SELECT floor(1+rand()*count(*))
 									FROM name);
-    SET 		p_lastnameRand = (	SELECT floor(1+rand()*count(*)) 
+    SET 		p_lastnameRand = (	SELECT floor(1+rand()*count(*))
 									FROM lastname);
-    
+
 	SET 	whileCount = 0;
 	WHILE 	whileCount < natCount DO
 		SET 	whileCount = whileCount + 1;
@@ -149,25 +148,25 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spReqGet` ()  BEGIN
 		SET 	randAssign = floor(1+rand()*1000)
 		WHERE 	ID = whileCount;
 	END WHILE;
-        
+
 		SELECT 	s.Name as SupplierName,
 			s.RegionCode as RegionCode,
             CONCAT(nam.Name,CONCAT(' ',lst.name)) as PersonName
-	FROM	supplier s, 
-			name nam, 
+	FROM	supplier s,
+			name nam,
             lastname lst
-    WHERE 	nam.ID = p_nameRand 
+    WHERE 	nam.ID = p_nameRand
     AND 	lst.ID = p_lastnameRand
 	ORDER BY s.RandAssign
     LIMIT 1;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidNatGet` (IN `amount` INT)  BEGIN
-	
+
 	DECLARE 	natCount INT;
     DECLARE 	whileCount INT;
-    
-        SET 	natCount = (SELECT count(*) 
+
+        SET 	natCount = (SELECT count(*)
 						FROM nationality);
     SET 	whileCount = 0;
 	WHILE 	whileCount < natCount DO
@@ -176,28 +175,28 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidNatGet` (IN `amount` INT)  B
 		SET 	randAssign = floor(1+rand()*1000)
 		WHERE 	ID = whileCount;
 	END WHILE;
-        
-	
+
+
 	IF amount = 0 then
-		SELECT 	Country,RegionCode 
-		FROM 	nationality 
+		SELECT 	Country,RegionCode
+		FROM 	nationality
 		ORDER BY RandAssign;
     ELSE
-		SELECT 	Country,RegionCode 
-		FROM 	nationality 
+		SELECT 	Country,RegionCode
+		FROM 	nationality
 		ORDER BY RandAssign
 		LIMIT 	amount;
 	END IF;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidTicketGet` (IN `amount` INT)  BEGIN
-	
+
 	DECLARE natCount INT;
     DECLARE whileCount INT;
-    
-        SET 	natCount = (	SELECT 	count(*) 
+
+        SET 	natCount = (	SELECT 	count(*)
 							FROM 	supplier);
-                            
+
 	    SET 	whileCount = 0;
 	WHILE 	whileCount < natCount DO
 		SET 	whileCount = whileCount + 1;
@@ -205,14 +204,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spValidTicketGet` (IN `amount` INT)
 		SET 	randAssign = floor(1+rand()*1000)
 		WHERE 	ID = whileCount;
 	END WHILE;
-        
+
 			IF amount = 0 THEN
-		SELECT 	Name,RegionCode 
-		FROM 	supplier 
+		SELECT 	Name,RegionCode
+		FROM 	supplier
 		ORDER BY RandAssign;
-	ELSE 
-		SELECT 	Name,RegionCode 
-		FROM 	supplier 
+	ELSE
+		SELECT 	Name,RegionCode
+		FROM 	supplier
 		ORDER BY RandAssign
 		LIMIT 	amount;
     end IF;

@@ -5,6 +5,7 @@
 	ticket and passport are stored here.
 */
 class State {
+	/* creates the game */
 	static createGame(strikes) {
 		this.score = strikes;
 		this.paused = false;
@@ -25,6 +26,7 @@ class State {
 		}, 10);
 		this.passedState = -1;	// -1 = nothing, 0 = failed, 1 = passed, 2 = fired
 	}
+	/* After timeout it recreates the passport and boarding ticket to be populated */
 	static recreateGame(){
 		this.validationNote = '';
 		this.valid = true;
@@ -36,9 +38,12 @@ class State {
 		}
 		this.passedState = -1;
 	}
+
+	/* what state are we at currently */
 	static getPassedState() {
 		return this.passedState;
 	}
+	/* Wrong/Correct function sets the passed state */
 	static setPassedState(state) {
 		this.passedState = state;
 	}

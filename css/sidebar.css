@@ -1,3 +1,5 @@
+/* sidebar css */
+
 sidebar {
     display: block;
     position: fixed;
@@ -105,7 +107,7 @@ sidebar-item:not([data-disabled]):hover {
     background-color: rgba(255, 255, 255, 0.125);
     opacity: 1;
 }
-
+/* give background colours for accept/decline, more user friendly. */
 sidebar-item[data-style="accept"]:hover {
     background-color: green;
     opacity: 1;

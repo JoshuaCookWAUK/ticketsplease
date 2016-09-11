@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <title>Game</title>
-        <?php include "imports/references.php"; ?>
+        <?php
+            include "imports/references.php";
+        ?>
     </head>
     <body>
         <sidebar>
