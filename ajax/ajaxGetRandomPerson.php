@@ -8,6 +8,8 @@
 	printf(";");
 	printf($Results['Country']);
 	printf(";");
+	printf($Results['natRegionCode']);
+	printf(";");
 	printf($Results['SkinTone']);
 	printf(";");
 	printf($Results['Notes']);

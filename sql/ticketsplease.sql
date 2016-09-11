@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2016 at 06:53 PM
+-- Generation Time: Sep 11, 2016 at 10:30 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -84,7 +84,7 @@ BEGIN
             issueDate, 
             expiryDate);
   
-	select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, st.SkinTone, p_note as Notes, issueDate, expiryDate, sup.Name as Supplier, sup.RegionCode
+	select CONCAT(nam.Name,CONCAT(' ',lst.name)) as Name, nam.Gender, nat.Country, nat.RegionCode as natRegionCode, st.SkinTone, p_note as Notes, issueDate, expiryDate, sup.Name as Supplier, sup.RegionCode
 	from name nam, Nationality nat, skintone st, lastname lst, supplier sup
 	where nam.ID = p_nameRand 
 	AND nat.ID = p_natRand
@@ -289,9 +289,9 @@ CREATE TABLE `nationality` (
 --
 
 INSERT INTO `nationality` (`ID`, `Country`, `RegionCode`, `RandAssign`) VALUES
-(1, 'Great Britain', 'gb', 488),
-(2, 'France', 'fr', 611),
-(3, 'Germany', 'de', 590);
+(1, 'Great Britain', 'gb', 196),
+(2, 'France', 'fr', 15),
+(3, 'Germany', 'de', 486);
 
 -- --------------------------------------------------------
 
@@ -334,6 +334,8 @@ CREATE TABLE `person` (
   `ExpiryDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `skintone`
 --
@@ -369,17 +371,17 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`ID`, `Name`, `RegionCode`, `RandAssign`) VALUES
-(1, 'AsiaAir', 'hk', 848),
-(2, 'China Air', 'cn', 512),
-(3, 'Qantas', 'gb', 15),
-(4, 'British Airways	 ', 'fr', 537),
-(5, 'easyJet', 'de', 638),
-(6, 'Alitalia', 'gb', 582),
-(7, 'Iberia Group', 'gb', 994),
-(8, 'Norwegian Air Shuttle', 'fr', 223),
-(9, 'el plano', 'de', 134),
-(10, 'Air Berlin Group', 'de', 2),
-(11, 'Air France KLM', 'fr', 605);
+(1, 'AsiaAir', 'hk', 865),
+(2, 'China Air', 'cn', 436),
+(3, 'Qantas', 'gb', 585),
+(4, 'British Airways	 ', 'fr', 619),
+(5, 'easyJet', 'de', 338),
+(6, 'Alitalia', 'gb', 832),
+(7, 'Iberia Group', 'gb', 147),
+(8, 'Norwegian Air Shuttle', 'fr', 239),
+(9, 'el plano', 'de', 751),
+(10, 'Air Berlin Group', 'de', 40),
+(11, 'Air France KLM', 'fr', 945);
 
 --
 -- Indexes for dumped tables

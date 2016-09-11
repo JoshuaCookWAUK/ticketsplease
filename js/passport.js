@@ -3,12 +3,13 @@ class Passport{
 		dataArray[0] = Name
 		dataArray[1] = Gender
 		dataArray[2] = Country
-		dataArray[3] = SkinTone
-		dataArray[4] = Notes
-		dataArray[5] = issueDate
-		dataArray[6] = expiryDate
-		dataArray[7] = Supplier
-		dataArray[8] = RegionCode
+		dataArray[3] = CountryRegionCode
+		dataArray[4] = SkinTone
+		dataArray[5] = Notes
+		dataArray[6] = issueDate
+		dataArray[7] = expiryDate
+		dataArray[8] = Supplier
+		dataArray[9] = RegionCode
 	*/
 	constructor() {
 		this.dataString = $.ajax({
@@ -17,6 +18,7 @@ class Passport{
 			async: false
 		}).responseText;
 		this.dataArray = this.dataString.split(';');
+		console.log(this.dataArray);
     }
 	
 	getName(){
@@ -28,22 +30,25 @@ class Passport{
 	getCountry(){
 		return this.dataArray[2];
 	}
-	getSkinTone(){
+	getCountryRegionCode(){
 		return this.dataArray[3];
 	}
-	getNotes(){
+	getSkinTone(){
 		return this.dataArray[4];
 	}
-	getissueDate(){
+	getNotes(){
 		return this.dataArray[5];
 	}
-	getexpiryDate(){
+	getissueDate(){
 		return this.dataArray[6];
 	}
-	getSupplier(){
+	getexpiryDate(){
 		return this.dataArray[7];
 	}
-	getRegionCode(){
+	getSupplier(){
 		return this.dataArray[8];
+	}
+	getRegionCode(){
+		return this.dataArray[9];
 	}
 }
